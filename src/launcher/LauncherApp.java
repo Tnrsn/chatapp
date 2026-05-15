@@ -24,6 +24,9 @@ public class LauncherApp extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 	
+		DBManagement db = new DBManagement();
+		db.ConnectServer();
+		
 		//Do not add SceneSwitcher class here
 		Parent root = FXMLLoader.load(getClass().getResource("LauncherApp.fxml"));
 
@@ -32,7 +35,6 @@ public class LauncherApp extends Application {
 		scene.getStylesheets().add(css);
 
 		stage.setScene(scene);
-		
 //		Removes OS's control bar. Can be used to customize the app even further
 //		stage.initStyle(StageStyle.UNDECORATED);
 		
