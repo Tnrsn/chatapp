@@ -13,4 +13,9 @@ public class RegisterController {
 		sceneSwitch.SwitchScene("LauncherApp.FXML", "application.css", event);
 		
 	}
+	
+	public void Register(ActionEvent event)
+	{
+		
+	}
 }
