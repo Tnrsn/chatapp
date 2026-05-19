@@ -8,12 +8,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launcher.Controller">
    <children>
-      <TextField layoutX="150.0" layoutY="125.0" promptText="E-MAIL / USERNAME" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+      <TextField fx:id="usernameTextField" layoutX="150.0" layoutY="125.0" promptText="E-MAIL / USERNAME" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <PasswordField layoutX="150.0" layoutY="210.0" prefHeight="35.0" prefWidth="300.0" promptText="PASSWORD" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+      <PasswordField fx:id="passwordTextField" layoutX="150.0" layoutY="210.0" prefHeight="35.0" prefWidth="300.0" promptText="PASSWORD" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
          <font>
             <Font size="18.0" />
          </font>
