@@ -1,11 +1,11 @@
-package launcher;
+package main;
 
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import launcher.DBManagement;
+import main.DBManagement;
 
 public class RegisterController {
 
@@ -13,7 +13,7 @@ public class RegisterController {
 	public void SwitchToLoginScene(ActionEvent event) throws IOException
 	{
 		SceneSwitcher sceneSwitch = new SceneSwitcher();
-		sceneSwitch.SwitchScene("LauncherApp.FXML", "application.css", event);
+		sceneSwitch.SwitchScene("Login.FXML", "Login.css", event);
 		
 	}
 	

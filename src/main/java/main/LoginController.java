@@ -1,4 +1,4 @@
-package launcher;
+package main;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,13 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class Controller {
+public class LoginController {
 	
 	public void Register(ActionEvent event) throws IOException {
 		System.out.println("Register");
 		
 		SceneSwitcher switchScene = new SceneSwitcher();
-		switchScene.SwitchScene("RegisterScene.fxml", "application.css", event);
+		switchScene.SwitchScene("RegisterScene.fxml", "Login.css", event);
 	}
 	
 	@FXML
@@ -26,10 +26,15 @@ public class Controller {
 	@FXML
 	private TextField passwordTextField;
 	public void Login(ActionEvent event) throws IOException, InterruptedException {
-		//This function should open "mainapp" if SignIn successful
 		
 		DBManagement db = new DBManagement();
-		db.SignIn(usernameTextField, passwordTextField);
+		
+		if(db.SignIn(usernameTextField, passwordTextField))
+		{
+			//Mainapp should open inside of here
+			SceneSwitcher sceneSwitcher = new SceneSwitcher();
+			sceneSwitcher.SwitchScene("MainScene.FXML", "MainScene.css", event);
+		}
 		
 //		File jar = new File("src/mainapp.jar");
 //		System.out.println(jar.getAbsolutePath());

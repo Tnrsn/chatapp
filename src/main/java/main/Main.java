@@ -1,4 +1,4 @@
-package launcher;
+package main;
 	
 
 import javafx.application.Application;
@@ -12,11 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
 
-public class LauncherApp extends Application {
+public class Main extends Application {
 	public static void main(String[] args) {
-//		try {
-//		Runtime.getRuntime().exec("/mainapp/Main.java");
-//		} catch (Exception e){}
 		launch(args);
 	}
 	
@@ -28,10 +25,10 @@ public class LauncherApp extends Application {
 		db.ConnectServer();
 		
 		//Do not add SceneSwitcher class here
-		Parent root = FXMLLoader.load(getClass().getResource("LauncherApp.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 
 		Scene scene = new Scene(root);
-		String css = this.getClass().getResource("application.css").toExternalForm();
+		String css = this.getClass().getResource("MainScene.css").toExternalForm();
 		scene.getStylesheets().add(css);
 
 		stage.setScene(scene);

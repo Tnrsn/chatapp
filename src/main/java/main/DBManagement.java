@@ -1,4 +1,4 @@
-package launcher;
+package main;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -63,7 +63,7 @@ public class DBManagement {
 	    System.out.println(response.body());
 	}
 	
-	public void SignIn(TextField usernameField, TextField passwordField) throws IOException, InterruptedException {
+	public boolean SignIn(TextField usernameField, TextField passwordField) throws IOException, InterruptedException {
 		String username = usernameField.getText();
 		String password = passwordField.getText();
 		
@@ -84,8 +84,18 @@ public class DBManagement {
 
 	    HttpResponse<String> response =
 	            client.send(request, HttpResponse.BodyHandlers.ofString());
-
-	    System.out.println("Response: " + response.statusCode());
-	    System.out.println(response.body());
+	    
+//	    System.out.println("Response: " + response.statusCode());
+	    if(response.body() == "User not found" || response.body() == "Wrong Password")
+	    {
+	    	return false;
+	    }
+	    else if(response.body() == "Login success")
+	    {
+	    	return true;
+	    }
+	    
+	    return false;
+//	    System.out.println(response.body());
 	}
 }
