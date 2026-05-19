@@ -33,7 +33,7 @@ public class DBManagement {
 		}
 	}
 	
-	
+	//This function is called from LoginController.java
 	public void SignUp(TextField usernameField, TextField passwordField, TextField emailField) throws IOException, InterruptedException
 	{
 	    String username = usernameField.getText();
@@ -63,15 +63,16 @@ public class DBManagement {
 	    System.out.println(response.body());
 	}
 	
-	public boolean SignIn(TextField usernameField, TextField passwordField) throws IOException, InterruptedException {
-		String username = usernameField.getText();
+	//This function is called from LoginController.java
+	public boolean SignIn(TextField emailField, TextField passwordField) throws IOException, InterruptedException {
+		String username = emailField.getText();
 		String password = passwordField.getText();
 		
 		HttpClient client = HttpClient.newHttpClient();
 
 	    String json = """
 	    {
-	        "username": "%s",
+	        "email": "%s",
 	        "password": "%s"
 	    }
 	    """.formatted(username, password);
@@ -85,17 +86,14 @@ public class DBManagement {
 	    HttpResponse<String> response =
 	            client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
-//	    System.out.println("Response: " + response.statusCode());
-	    if(response.body() == "User not found" || response.body() == "Wrong Password")
-	    {
-	    	return false;
-	    }
-	    else if(response.body() == "Login success")
+	    System.out.println(response.statusCode());
+	    if(response.statusCode() == 200)
 	    {
 	    	return true;
 	    }
-	    
-	    return false;
-//	    System.out.println(response.body());
+	    else
+	    {
+	    	return false;
+	    }
 	}
 }

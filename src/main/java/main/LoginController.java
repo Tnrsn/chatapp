@@ -22,18 +22,22 @@ public class LoginController {
 	}
 	
 	@FXML
-	private TextField usernameTextField;
+	private TextField emailTextField;
 	@FXML
 	private TextField passwordTextField;
 	public void Login(ActionEvent event) throws IOException, InterruptedException {
 		
 		DBManagement db = new DBManagement();
 		
-		if(db.SignIn(usernameTextField, passwordTextField))
+		if(db.SignIn(emailTextField, passwordTextField))
 		{
-			//Mainapp should open inside of here
 			SceneSwitcher sceneSwitcher = new SceneSwitcher();
-			sceneSwitcher.SwitchScene("MainScene.FXML", "MainScene.css", event);
+			sceneSwitcher.SwitchScene("MainScene.fxml", "MainScene.css", event);
+			System.out.println("Login Successful");
+		}
+		else
+		{
+			System.out.println("Login Unsuccessful");
 		}
 		
 //		File jar = new File("src/mainapp.jar");
