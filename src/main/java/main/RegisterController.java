@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import main.DBManagement;
 
 public class RegisterController {
 
@@ -28,7 +27,7 @@ public class RegisterController {
 	{
 		System.out.println("Register Has Started");
 		
-		DBManagement db = new DBManagement();
-		db.SignUp(usernameTextField, passwordTextField, emailTextField);
+		ServerManagement server = new ServerManagement();
+		server.SignUp(usernameTextField, passwordTextField, emailTextField);
 	}
 }

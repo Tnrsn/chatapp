@@ -1,20 +1,15 @@
 package main;
 
-import java.io.File;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class LoginController {
 	
-	public void Register(ActionEvent event) throws IOException {
+	public void Register(ActionEvent event) throws IOException 
+	{
 		System.out.println("Register");
 		
 		SceneSwitcher switchScene = new SceneSwitcher();
@@ -25,23 +20,26 @@ public class LoginController {
 	private TextField emailTextField;
 	@FXML
 	private TextField passwordTextField;
-	public void Login(ActionEvent event) throws IOException, InterruptedException {
+	public void Login(ActionEvent event) throws IOException, InterruptedException 
+	{
 		
-		DBManagement db = new DBManagement();
+		ServerManagement server = new ServerManagement();
 		
-		if(db.SignIn(emailTextField, passwordTextField))
+		if(server.SignIn(emailTextField, passwordTextField))
 		{
+			//Login Successful
 			SceneSwitcher sceneSwitcher = new SceneSwitcher();
 			sceneSwitcher.SwitchScene("MainScene.fxml", "MainScene.css", event);
 			System.out.println("Login Successful");
+
+
+			//Set MainScene's properties from here
+			MainController.getPrimaryStage().setResizable(true);
 		}
-		else
+		else 
 		{
+			//Login Unsuccessful
 			System.out.println("Login Unsuccessful");
 		}
-		
-//		File jar = new File("src/mainapp.jar");
-//		System.out.println(jar.getAbsolutePath());
-//		new ProcessBuilder("java", "-jar", jar.getAbsolutePath()).start();
 	}
 }

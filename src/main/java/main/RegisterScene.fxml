@@ -13,11 +13,6 @@
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="emailTextField" layoutX="50.0" layoutY="321.0" promptText="E-Mail" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
       <PasswordField fx:id="passwordTextField" layoutX="50.0" layoutY="173.0" promptText="Password" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="18.0" />
@@ -28,6 +23,11 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
+      <TextField fx:id="emailTextField" layoutX="50.0" layoutY="321.0" promptText="E-Mail" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
       <Button layoutX="50.0" layoutY="419.0" mnemonicParsing="false" onAction="#ConfirmRegister" prefHeight="52.0" prefWidth="300.0" text="Confirm" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="16.0" />
