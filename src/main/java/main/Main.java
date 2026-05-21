@@ -15,9 +15,6 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-	
-//		ServerManagement db = new ServerManagement();
-//		db.ConnectServer();
 		
 		//Do not add SceneSwitcher class here
 		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));

@@ -9,8 +9,8 @@
     <version>1.0</version>
 
     <properties>
-        <maven.compiler.release>26</maven.compiler.release>
-        <javafx.version>26.0.1</javafx.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <javafx.version>21.0.4</javafx.version>
     </properties>
     <dependencies>
         <dependency>
