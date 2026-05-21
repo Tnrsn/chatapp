@@ -12,31 +12,12 @@ import java.sql.SQLException;
 import javafx.scene.control.TextField;
 
 public class ServerManagement {
-
-	//This part should change for security sake
-	private String jdbcURL = "jdbc:postgresql://localhost:5432/ChatAppDB";
-	private String username = "postgres";
-	private String password = "12345";
 	
-	private static String adress = "http://localhost:8080";
-	//*********
+	private static String adress = "http://26.94.2.223:8080"; //"http://x.x.x.x:8080"
 	
-	private Connection connection;
 	private static String usertoken;
 	
-	public void ConnectServer()
-	{
-		try {
-			connection = DriverManager.getConnection(jdbcURL, username, password);
-			
-			System.out.println("Connection to the server was successful.");
-		} catch (SQLException e) {
-			System.out.println("Connection to the server failed");
-			e.printStackTrace();
-		}
-	}
-	
-// /auth/
+	// /auth/
 	//This function is called from LoginController.java
 	public void SignUp(TextField usernameField, TextField passwordField, TextField emailField) throws IOException, InterruptedException
 	{

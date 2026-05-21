@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,11 +21,11 @@ public class LoginController {
 	private TextField emailTextField;
 	@FXML
 	private TextField passwordTextField;
-	public void Login(ActionEvent event) throws IOException, InterruptedException 
+	public void Login(ActionEvent event) throws IOException, InterruptedException, SQLException 
 	{
 		
 		ServerManagement server = new ServerManagement();
-		
+
 		if(server.SignIn(emailTextField, passwordTextField))
 		{
 			//Login Successful
@@ -38,7 +39,7 @@ public class LoginController {
 		}
 		else 
 		{
-			//Login Unsuccessful
+//			Login Unsuccessful
 			System.out.println("Login Unsuccessful");
 		}
 	}
