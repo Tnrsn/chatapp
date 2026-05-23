@@ -1,12 +1,13 @@
 package main;
 
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class WindowController {
 
-    private static final int RESIZE_MARGIN = 25;
+    private static final int RESIZE_MARGIN = 15;
 
     private static double xOffset;
     private static double yOffset;
@@ -85,16 +86,16 @@ public class WindowController {
         });
     }
 
-    public static void setDraggable(Scene scene, Stage stage)
+    public static void setDraggable(Node node, Stage stage)
     {
-        scene.setOnMousePressed(e -> {
+        node.setOnMousePressed(e -> {
             xOffset = e.getSceneX();
             yOffset = e.getSceneY();
         });
 
-        scene.setOnMouseDragged(e -> {
+        node.setOnMouseDragged(e -> {
 
-            if (scene.getCursor() == Cursor.DEFAULT)
+            if (node.getScene().getCursor() == Cursor.DEFAULT)
             {
                 stage.setX(e.getScreenX() - xOffset);
                 stage.setY(e.getScreenY() - yOffset);

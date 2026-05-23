@@ -11,12 +11,10 @@
 
 .label {
     -fx-text-fill: #C2BFC0;
-    -fx-font-size: 14px;
 }
 
 /* Text fields */
-.text-field,
-.password-field {
+.text-field{
     -fx-background-color: #2A2829;
     -fx-text-fill: #E4E1E2;
 
@@ -24,14 +22,11 @@
 
     -fx-border-color: #343234;
 
-    -fx-border-radius: 12;
-    -fx-background-radius: 12;
-
-    -fx-font-size: 18px;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
 }
 
-.text-field:focused,
-.password-field:focused {
+.text-field:focused{
     -fx-border-color: #8B8B8B;
     -fx-background-color: #302D2F;
 
@@ -59,8 +54,8 @@
     -fx-font-weight: bold;
 
 
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
 
     -fx-border-color: #4A4A4A;
     -fx-border-width: 1;
@@ -90,4 +85,57 @@
 		    #1A1A1A 100%);
 
     -fx-text-fill: #BDBDBD;
+}
+
+/* Toolbar */
+#toolBar {
+    -fx-background-color: #333333;
+    -fx-background-insets: 0;
+
+    -fx-border-color: transparent;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0, 0, 0, 0.15),
+        14,
+        0.15,
+        0,
+        2
+    );
+}
+
+#closeAppButton {
+	-fx-background-color: #333333;
+	-fx-border-color: transparent;
+}
+
+#closeAppButton:hover {
+	-fx-background-color: #D10000;
+	-fx-border-color: transparent;
+}
+
+#closeAppButton:pressed {
+	-fx-background-color: #FF5C5C;
+	-fx-border-color: transparent;
+}
+
+#windowControlButtons {
+	-fx-background-color: #333333;
+	-fx-border-color: transparent;
+}
+
+#windowControlButtons:hover {
+	-fx-background-color: #474747;
+	-fx-border-color: transparent;
+}
+
+#windowControlButtons:pressed {
+	-fx-background-color: #666666;
+	-fx-border-color: transparent;
+}
+
+/* ------- */
+
+#sideBar {
+	-fx-background-color: #292929;
 }

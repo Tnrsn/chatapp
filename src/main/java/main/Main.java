@@ -1,11 +1,9 @@
 package main;
-	
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -33,7 +31,6 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
-		
 	}
 	
 }
