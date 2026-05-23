@@ -1,0 +1,46 @@
+package main;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+
+public class LoginController {
+	
+	public void Register(ActionEvent event) throws IOException 
+	{
+		System.out.println("Register");
+		
+		SceneSwitcher switchScene = new SceneSwitcher();
+		switchScene.SwitchScene("RegisterScene.fxml", "Login.css", event);
+	}
+	
+	@FXML
+	private TextField emailTextField;
+	@FXML
+	private TextField passwordTextField;
+	public void Login(ActionEvent event) throws IOException, InterruptedException, SQLException 
+	{
+		
+		ServerManagement server = new ServerManagement();
+
+		if(server.SignIn(emailTextField, passwordTextField))
+		{
+			//Login Successful
+			SceneSwitcher sceneSwitcher = new SceneSwitcher();
+			sceneSwitcher.SwitchScene("MainScene.fxml", "MainScene.css", event);
+			System.out.println("Login Successful");
+
+
+			//Set MainScene's properties from here
+			MainController.getPrimaryStage().setResizable(true);
+		}
+		else 
+		{
+//			Login Unsuccessful
+			System.out.println("Login Unsuccessful");
+		}
+	}
+}

@@ -6,14 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launcher.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.RegisterController">
    <children>
       <TextField fx:id="usernameTextField" layoutX="50.0" layoutY="91.0" promptText="Username" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="emailTextField" layoutX="50.0" layoutY="321.0" promptText="E-Mail" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -28,6 +23,11 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
+      <TextField fx:id="emailTextField" layoutX="50.0" layoutY="321.0" promptText="E-Mail" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
       <Button layoutX="50.0" layoutY="419.0" mnemonicParsing="false" onAction="#ConfirmRegister" prefHeight="52.0" prefWidth="300.0" text="Confirm" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="16.0" />
