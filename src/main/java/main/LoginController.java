@@ -14,7 +14,7 @@ public class LoginController {
 		System.out.println("Register");
 		
 		SceneSwitcher switchScene = new SceneSwitcher();
-		switchScene.SwitchScene("RegisterScene.fxml", "Login.css", event);
+		switchScene.SwitchToRegisterScene(event);
 	}
 	
 	@FXML
@@ -30,12 +30,9 @@ public class LoginController {
 		{
 			//Login Successful
 			SceneSwitcher sceneSwitcher = new SceneSwitcher();
-			sceneSwitcher.SwitchScene("MainScene.fxml", "MainScene.css", event);
+			sceneSwitcher.SwitchToMainScene(event);
 			System.out.println("Login Successful");
 
-
-			//Set MainScene's properties from here
-			MainController.getPrimaryStage().setResizable(true);
 		}
 		else 
 		{

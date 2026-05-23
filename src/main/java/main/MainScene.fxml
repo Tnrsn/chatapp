@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainSceneController">
@@ -15,11 +16,10 @@
 		        <ColumnConstraints hgrow="ALWAYS" />
 		    </columnConstraints>
 		    <rowConstraints>
-		        <RowConstraints minHeight="50" prefHeight="50" vgrow="NEVER" />
+		        <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
 		        <RowConstraints vgrow="ALWAYS" />
-		        <RowConstraints minHeight="60" prefHeight="60" vgrow="NEVER" />
+		        <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="NEVER" />
 		    </rowConstraints>
-		    <TextField maxWidth="Infinity" prefHeight="25.0" prefWidth="1598.0" promptText="Search..." GridPane.columnIndex="1" GridPane.rowIndex="0" />
 		    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1" />
 		    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
 		        <columnConstraints>
@@ -32,6 +32,11 @@
 		               <RowConstraints />
 		            </rowConstraints>
 		    </GridPane>
+         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowSpan="2">
+            <children>
+         		    <TextField maxWidth="Infinity" prefHeight="25.0" prefWidth="1598.0" promptText="Search..." />
+            </children>
+         </HBox>
 		</GridPane>
    </children>
 </AnchorPane>

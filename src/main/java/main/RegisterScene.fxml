@@ -18,7 +18,7 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <PasswordField layoutX="50.0" layoutY="245.0" promptText="Re-Enter Password" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+      <PasswordField fx:id="repasswordTextField" layoutX="50.0" layoutY="245.0" promptText="Re-Enter Password" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="18.0" />
          </font>
