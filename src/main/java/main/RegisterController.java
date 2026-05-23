@@ -12,8 +12,7 @@ public class RegisterController {
 	public void SwitchToLoginScene(ActionEvent event) throws IOException
 	{
 		SceneSwitcher sceneSwitch = new SceneSwitcher();
-		sceneSwitch.SwitchScene("Login.FXML", "Login.css", event);
-		
+		sceneSwitch.SwitchToLoginScene(event);
 	}
 	
 	@FXML
@@ -21,13 +20,25 @@ public class RegisterController {
 	@FXML
 	private TextField passwordTextField;
 	@FXML
+	private TextField repasswordTextField; //Re enter password field
+	@FXML
 	private TextField emailTextField;
 	
 	public void ConfirmRegister(ActionEvent event) throws IOException, InterruptedException
 	{
 		System.out.println("Register Has Started");
 		
-		ServerManagement server = new ServerManagement();
-		server.SignUp(usernameTextField, passwordTextField, emailTextField);
+		if(passwordTextField.getText().equals(repasswordTextField.getText()))
+		{
+			ServerManagement server = new ServerManagement();
+			SceneSwitcher ss = new SceneSwitcher();
+			
+			server.SignUp(usernameTextField, passwordTextField, emailTextField);
+			ss.SwitchToMainScene(event);
+		}
+		else
+		{
+			System.out.println("Passwords are not matching");
+		}
 	}
 }

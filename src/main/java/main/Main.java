@@ -4,6 +4,8 @@ package main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -16,20 +18,22 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		
-		//Do not add SceneSwitcher class here
+//		Make sure you run the project with java21
+//		System.out.println(System.getProperty("java.home"));
+//		System.out.println(System.getProperty("java.version"));
+//		System.out.println(System.getProperty("java.runtime.version"));
+		
+		//Do not use SceneSwitcher class here for now.
 		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 
 		Scene scene = new Scene(root);
-		String css = this.getClass().getResource("MainScene.css").toExternalForm();
+		String css = this.getClass().getResource("Login.css").toExternalForm();
 		scene.getStylesheets().add(css);
-
-		MainController.setPrimaryStage(stage);
-		stage.setScene(scene);
-//		Removes OS's control bar. Can be used to customize the app even further
-//		stage.initStyle(StageStyle.UNDECORATED);
 		
-		stage.setResizable(false);
+		stage.setScene(scene);
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
+		
 	}
 	
 }
