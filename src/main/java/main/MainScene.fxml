@@ -18,6 +18,7 @@
          <children>
             <VBox fx:id="sideBar" alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="260.0" HBox.hgrow="NEVER">
                <children>
+                  <HBox fx:id="sideDragBar" prefHeight="50.0" prefWidth="238.0" />
                   <Region maxWidth="-Infinity" prefWidth="205.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="64.0" prefWidth="205.0">
                      <children>

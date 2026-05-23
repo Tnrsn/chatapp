@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: #201E1F;
+    -fx-background-color: #1E1C1D;
     -fx-font-family: "Segoe UI";
 }
 
@@ -20,71 +20,31 @@
 
     -fx-prompt-text-fill: #6F6B6C;
 
-    -fx-border-color: #343234;
+    -fx-border-color: transparent;
 
     -fx-border-radius: 4;
     -fx-background-radius: 4;
 }
 
-.text-field:focused{
-    -fx-border-color: #8B8B8B;
-    -fx-background-color: #302D2F;
-
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(190,190,190,0.18),
-        16,
-        0.01,
-        0,
-        0
-    );
+.text-field:focused {
+    -fx-background-color: #322F31;
+    -fx-border-color: #6F6F6F;
+    -fx-border-width: 1;
 }
 
 /* Buttons */
 .button {
-
-    -fx-background-color:
-        linear-gradient(to bottom,
-        #333333 0%,
-        #292929 100%);
-
-    -fx-text-fill: #D6D6D6;
-
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-
-
+    -fx-background-color: #2E2C2D;
     -fx-background-radius: 4;
-    -fx-border-radius: 4;
-
-    -fx-border-color: #4A4A4A;
-    -fx-border-width: 1;
-
-    -fx-cursor: hand;
-
-    -fx-effect: null;
+    -fx-text-fill: #DADADA;
 }
 
 .button:hover {
-
-    -fx-background-color:
-	    linear-gradient(to bottom,
-	    #3F3F3F 0%,
-	    #313131 100%);
-
-    -fx-text-fill: white;
-
-    -fx-border-color: #666666;
+    -fx-background-color: #3A3839;
 }
 
 .button:pressed {
-
-    -fx-background-color:
-        linear-gradient(to bottom,
-		    #242424 0%,
-		    #1A1A1A 100%);
-
-    -fx-text-fill: #BDBDBD;
+    -fx-background-color: #242223;
 }
 
 /* Toolbar */

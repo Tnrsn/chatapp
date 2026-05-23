@@ -1,7 +1,6 @@
 package main;
 
 import java.io.IOException;
-import java.lang.management.PlatformLoggingMXBean;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,14 +13,15 @@ public class MainSceneController {
 	
 	@FXML
 	private HBox toolBar;
-	
+	@FXML
+	private HBox sideDragBar;
 	public void initialize()
 	{
 	    Platform.runLater(() -> {
-
 	        Stage stage = (Stage)toolBar.getScene().getWindow();
 
 	        WindowController.setDraggable(toolBar, stage);
+	        WindowController.setDraggable(sideDragBar, stage);
 	    });
 	}
 	
