@@ -42,6 +42,6 @@
                </font></Button>
          </children>
       </HBox>
-      <Label fx:id="errorText" layoutX="236.0" layoutY="257.0" text="error" />
+      <Label fx:id="errorText" layoutX="236.0" layoutY="257.0" text="error" visible="false" />
    </children>
 </AnchorPane>
