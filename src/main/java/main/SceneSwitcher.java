@@ -49,8 +49,8 @@ public class SceneSwitcher {
 		Stage stage = SwitchScene("RegisterScene.fxml", "Login.css", event);
 		
 		//---Set properties---
-		stage.setResizable(true);
-		WindowController.setResizable(scene, stage);
+//		stage.setResizable(true);
+//		WindowController.setResizable(scene, stage);
 		WindowController.setDraggable(scene, stage);
 		stage.show();
 	}
@@ -60,7 +60,8 @@ public class SceneSwitcher {
 		Stage stage = SwitchScene("Login.fxml", "Login.css", event);
 		
 		//---Set Properties---
-		stage.setResizable(true);
+//		stage.setResizable(true);
+		WindowController.setDraggable(scene, stage);
 		
 		stage.show();
 	}
