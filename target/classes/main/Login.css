@@ -60,8 +60,8 @@
     -fx-font-weight: bold;
 
 
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
+    -fx-background-radius: 2;
+    -fx-border-radius: 2;
 
     -fx-border-color: #4A4A4A;
     -fx-border-width: 1;
@@ -91,6 +91,19 @@
 		    #1A1A1A 100%);
 
     -fx-text-fill: #BDBDBD;
+}
+
+#closeButton{       
+	
+ -fx-background-color: transparent;
+    -fx-text-fill: #D6D6D6; 
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+   
+}
+ #closeButton:hover {
+    -fx-background-color: #E81123;
+    -fx-text-fill: white;
 }
 
 #loginToolBar {
