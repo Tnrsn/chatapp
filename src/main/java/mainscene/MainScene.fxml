@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="100.0" prefHeight="900.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="100.0" prefHeight="900.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainscene.MainSceneController">
    <children>
       <HBox layoutX="74.0" layoutY="155.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,7 +23,7 @@
                   <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="64.0" prefWidth="205.0">
                      <children>
                         <Region maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" />
-                        <Label alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="130.0" text="Username">
+                        <Label fx:id="usernameLabel" alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="130.0" text="Username">
                            <font>
                               <Font name="System Bold" size="22.0" />
                            </font>

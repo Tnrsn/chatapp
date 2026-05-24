@@ -1,4 +1,4 @@
-package main;
+package app;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;

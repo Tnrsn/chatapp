@@ -1,11 +1,14 @@
-package main;
+package mainscene;
 
 import java.io.IOException;
 
+import app.ServerManagement;
+import app.WindowController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -15,6 +18,8 @@ public class MainSceneController {
 	private HBox toolBar;
 	@FXML
 	private HBox sideDragBar;
+	@FXML
+	private Label usernameLabel;
 	public void initialize()
 	{
 	    Platform.runLater(() -> {
@@ -23,6 +28,16 @@ public class MainSceneController {
 	        WindowController.setDraggable(toolBar, stage);
 	        WindowController.setDraggable(sideDragBar, stage);
 	    });
+	    
+	    try {
+			usernameLabel.setText(ServerManagement.getUsername());
+		} catch (IOException e) {
+			System.out.println("Something went wrong");
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			System.out.println("Something went wrong");
+			e.printStackTrace();
+		} 
 	}
 	
 	public void MinimizeWindow(ActionEvent event)

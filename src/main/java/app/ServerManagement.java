@@ -1,4 +1,4 @@
-package main;
+package app;
 
 import java.io.IOException;
 import java.net.URI;
@@ -8,8 +8,10 @@ import java.net.http.HttpResponse;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.scene.control.TextField;
+import login.LoginResponse;
 
 public class ServerManagement {
 	
@@ -74,18 +76,17 @@ public class ServerManagement {
 	    HttpResponse<String> response =
 	            client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
-//	    System.out.println(response.statusCode());
-	    if(response.statusCode() == 200)
-	    {
-	    	//login successful
-	    	getToken();
-	    	return true;
-	    }
-	    else
-	    {
-	    	//login unsuccessful
-	    	return false;
-	    }
+	    System.out.println(response.body());
+	    
+	    try { //I'll fix here later, it returns username too and I'm not using it... but it works
+	    	ObjectMapper mapper = new ObjectMapper();
+	    	LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
+	    	
+		    usertoken = data.token;
+	    	return true; //login successful
+		} catch (Exception e) {
+			return false; //login unsuccessful
+		}
 	}
 	
 	
@@ -120,6 +121,23 @@ public class ServerManagement {
 	            client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
 	    return Boolean.parseBoolean(response.body());
+	}
+	
+	public static String getUsername() throws IOException, InterruptedException
+	{
+		HttpClient client = HttpClient.newHttpClient();
+		System.out.println("AAAAAA" + usertoken);
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(adress + "/auth/username?token=" + usertoken))
+	            .GET()
+	            .build();
+	    
+	    HttpResponse<String> response =
+	            client.send(request, HttpResponse.BodyHandlers.ofString());
+	    
+	    String username = response.body();
+	    System.out.println("Username " + username);
+	    return username;
 	}
 //****
 }
