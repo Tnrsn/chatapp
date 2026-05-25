@@ -96,6 +96,46 @@
 
 /* ------- */
 
+/* Sidebarr */
 #sideBar {
-	-fx-background-color: #292929;
+    -fx-background-color: #333333;
+}
+
+.titled-pane {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.titled-pane > .title {
+    -fx-background-color: #252525;
+    -fx-border-color: transparent;
+    
+
+}
+
+.titled-pane > .title > .text {
+    -fx-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.titled-pane > .title > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.titled-pane > .title > .arrow-button > .arrow {
+    -fx-background-color: #434343;
+}
+
+.titled-pane > .content {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#friendScroll > .viewport {
+    -fx-background-color: transparent;
 }

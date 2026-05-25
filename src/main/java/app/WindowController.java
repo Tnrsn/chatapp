@@ -7,20 +7,18 @@ import javafx.stage.Stage;
 
 public class WindowController {
 
-    private static final int RESIZE_MARGIN = 15;
+    private static final int RESIZE_MARGIN = 13;
 
     private static double xOffset;
     private static double yOffset;
-    
-//    private static final double MIN_W = 400;
-//    private static final double MIN_H = 300;
 
     public static void setResizable(Scene scene, Stage stage, double min_x, double min_y) {
 
-        // HARD SAFETY LIMITS (important)
+        // -------LIMITS---------
         stage.setMinWidth(min_y);
         stage.setMinHeight(min_x);
-
+        //------------------------
+        
         scene.setOnMouseMoved(e -> {
 
             double x = e.getSceneX();

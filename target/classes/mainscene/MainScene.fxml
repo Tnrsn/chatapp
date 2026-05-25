@@ -2,8 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -11,27 +14,61 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="100.0" prefHeight="900.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainscene.MainSceneController">
    <children>
-      <HBox layoutX="74.0" layoutY="155.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox layoutX="74.0" layoutY="155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox fx:id="sideBar" alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="260.0" HBox.hgrow="NEVER">
-               <children>
-                  <HBox fx:id="sideDragBar" prefHeight="50.0" prefWidth="238.0" />
-                  <Region maxWidth="-Infinity" prefWidth="205.0" VBox.vgrow="ALWAYS" />
-                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="64.0" prefWidth="205.0">
-                     <children>
-                        <Region maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" />
-                        <Label fx:id="usernameLabel" alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="130.0" text="Username">
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
+			<BorderPane fx:id="sideBar" prefHeight="900.0" prefWidth="475.0" HBox.hgrow="NEVER">
+			    <top>
+			        <HBox fx:id="sideDragBar" maxHeight="62.0" minHeight="62.0" prefHeight="62.0" prefWidth="260.0" />
+			    </top>
+			    <center>
+					<VBox fillWidth="true" prefWidth="260.0" VBox.vgrow="ALWAYS">
+			            <children>
+							<TitledPane text="Friends">
+							    <content>
+							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
+									    <content>
+									        <VBox fx:id="friendsList">
+                                       <children>
+                                          <AnchorPane prefHeight="75.0" prefWidth="235.0">
+                                             <children>
+                                                <Text layoutX="53.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You don't have any friends :(" wrappingWidth="237.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                       </children></VBox>
+									    </content>
+									</ScrollPane>
+							    </content>
+							</TitledPane>
+							
+							<TitledPane text="Servers">
+							    <content>
+							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
+									    <content>
+									        <VBox fx:id="friendList" />
+									    </content>
+									</ScrollPane>
+							    </content>
+							</TitledPane>
+			            </children>
+			        </VBox>
+			    </center>
+			    <bottom>
+			        <HBox alignment="CENTER_LEFT" maxHeight="64.0" minHeight="64.0" prefHeight="64.0" prefWidth="260.0">
+			            <children>
+			                <Region prefHeight="60.0" prefWidth="60.0" />
+			                <Label fx:id="usernameLabel" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="130.0" text="Username">
+			                    <font>
+			                        <Font name="System Bold" size="22.0" />
+			                    </font>
+			                </Label>
+			            </children>
+			        </HBox>
+			    </bottom>
+			</BorderPane>
       		<GridPane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
       		    <columnConstraints>
       		        <ColumnConstraints hgrow="ALWAYS" />
