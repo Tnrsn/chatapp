@@ -46,7 +46,7 @@ public class SceneSwitcher {
 	
 	public void SwitchToRegisterScene(ActionEvent event) throws IOException
 	{
-		Stage stage = SwitchScene("RegisterScene.fxml", "Login.css", event);
+		Stage stage = SwitchScene("/main/RegisterScene.fxml", "/main/Login.css", event);
 		
 		//---Set properties---
 		// Add an initialize function inside the LoginController and call setDraggable from there, just like in WindowController.
@@ -56,7 +56,7 @@ public class SceneSwitcher {
 	
 	public void SwitchToLoginScene(ActionEvent event) throws IOException
 	{
-		Stage stage = SwitchScene("Login.fxml", "Login.css", event);
+		Stage stage = SwitchScene("/main/Login.fxml", "/main/Login.css", event);
 		
 		//---Set Properties---
 		
