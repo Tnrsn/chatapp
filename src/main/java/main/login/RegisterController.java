@@ -1,23 +1,19 @@
-package main;
+package main.login;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import main.app.SceneSwitcher;
 import main.app.ServerManagement;
+import main.app.WindowController;
 
 public class RegisterController {
-
-
-	public void SwitchToLoginScene(ActionEvent event) throws IOException
-	{
-		SceneSwitcher sceneSwitch = new SceneSwitcher();
-		sceneSwitch.SwitchToLoginScene(event);
-	}
-	
 	@FXML
 	private Label errorText;
 	@FXML
@@ -28,6 +24,25 @@ public class RegisterController {
 	private TextField repasswordTextField; //Re enter password field
 	@FXML
 	private TextField emailTextField;
+	@FXML
+	private BorderPane toolBar;
+	
+	public void initialize()
+	{
+		//Sets the window draggable
+		Platform.runLater(() -> {
+			Stage stage = (Stage)toolBar.getScene().getWindow();
+			WindowController.setDraggable(toolBar, stage);
+//			System.out.println("AAAAAAAAAA");
+		});
+	}
+	
+	public void SwitchToLoginScene(ActionEvent event) throws IOException
+	{
+		SceneSwitcher sceneSwitch = new SceneSwitcher();
+		sceneSwitch.SwitchToLoginScene(event);
+	}
+	
 	
 	public void ConfirmRegister(ActionEvent event) throws IOException, InterruptedException
 	{

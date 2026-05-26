@@ -22,10 +22,10 @@ public class Main extends Application {
 //		System.out.println(System.getProperty("java.runtime.version"));
 		
 		//Do not use SceneSwitcher class here for now.
-		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/main/login/Login.fxml"));
 
 		Scene scene = new Scene(root);
-		String css = this.getClass().getResource("Login.css").toExternalForm();
+		String css = this.getClass().getResource("/main/login/Login.css").toExternalForm();
 		scene.getStylesheets().add(css);
 		
 		stage.setScene(scene);

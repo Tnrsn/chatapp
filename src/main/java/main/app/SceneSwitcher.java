@@ -20,7 +20,6 @@ public class SceneSwitcher {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML));
 		Parent root = loader.load();
 
-//		stage.initStyle(StageStyle.UNDECORATED);
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		
 		scene = new Scene(root);
@@ -46,7 +45,7 @@ public class SceneSwitcher {
 	
 	public void SwitchToRegisterScene(ActionEvent event) throws IOException
 	{
-		Stage stage = SwitchScene("/main/RegisterScene.fxml", "/main/Login.css", event);
+		Stage stage = SwitchScene("/main/login/RegisterScene.fxml", "/main/login/Login.css", event);
 		
 		//---Set properties---
 		// Add an initialize function inside the LoginController and call setDraggable from there, just like in WindowController.
@@ -56,7 +55,7 @@ public class SceneSwitcher {
 	
 	public void SwitchToLoginScene(ActionEvent event) throws IOException
 	{
-		Stage stage = SwitchScene("/main/Login.fxml", "/main/Login.css", event);
+		Stage stage = SwitchScene("/main/login/Login.fxml", "/main/login/Login.css", event);
 		
 		//---Set Properties---
 		

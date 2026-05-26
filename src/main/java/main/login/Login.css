@@ -106,7 +106,7 @@
     -fx-text-fill: white;
 }
 
-#loginToolBar {
+#toolBar {
     -fx-background-color: linear-gradient(
         from 0% 0% to 0% 100%,
         #1F1D1E,

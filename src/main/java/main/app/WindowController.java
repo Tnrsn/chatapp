@@ -86,17 +86,19 @@ public class WindowController {
     public static void setDraggable(Node node, Stage stage)
     {
         node.setOnMousePressed(e -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
+            xOffset = e.getScreenX() - stage.getX();
+            yOffset = e.getScreenY() - stage.getY();
         });
 
         node.setOnMouseDragged(e -> {
-
-            if (node.getScene().getCursor() == Cursor.DEFAULT)
-            {
+            if (e.isPrimaryButtonDown()) {
                 stage.setX(e.getScreenX() - xOffset);
                 stage.setY(e.getScreenY() - yOffset);
             }
         });
+        
+//        node.setOnMousePressed(e -> System.out.println("PRESSED"));
+//        node.setOnMouseDragged(e -> System.out.println("DRAGGED"));
+//        node.setOnMouseReleased(e -> System.out.println("RELEASED"));
     }
 }
