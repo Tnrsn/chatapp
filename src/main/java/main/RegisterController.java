@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.app.SceneSwitcher;
 import main.app.ServerManagement;
@@ -17,6 +18,8 @@ public class RegisterController {
 		sceneSwitch.SwitchToLoginScene(event);
 	}
 	
+	@FXML
+	private Label errorText;
 	@FXML
 	private TextField usernameTextField;
 	@FXML
@@ -39,8 +42,13 @@ public class RegisterController {
 			ss.SwitchToMainScene(event);
 		}
 		else
+			// errortext bura yazcan 
 		{
 			System.out.println("Passwords are not matching");
 		}
+	}
+	@FXML
+	public void closeWindow(ActionEvent event) {
+	    System.exit(0);
 	}
 }

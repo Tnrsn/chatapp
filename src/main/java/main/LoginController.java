@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import main.app.SceneSwitcher;
 import main.app.ServerManagement;
 
+
 public class LoginController {
 	
 	public void Register(ActionEvent event) throws IOException 
@@ -26,6 +27,24 @@ public class LoginController {
 	private TextField emailTextField;
 	@FXML
 	private TextField passwordTextField;
+	@FXML
+    public void initialize() {
+        emailTextField.setOnAction(event -> {
+            try {
+                Login(event);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        passwordTextField.setOnAction(event -> {
+            try {
+                Login(event);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 	public void Login(ActionEvent event) throws IOException, InterruptedException, SQLException 
 	{
 		
@@ -41,8 +60,13 @@ public class LoginController {
 		}
 		else 
 		{
-//			Login Unsuccessful
 			System.out.println("Login Unsuccessful");
+			errorText.setVisible(true);
+			errorText.setText("E-mail or password is incorrect.");
 		}
+	}
+	@FXML
+	public void closeWindow(ActionEvent event) {
+	    System.exit(0);
 	}
 }
