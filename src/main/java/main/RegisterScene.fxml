@@ -46,7 +46,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
          <children>
-            <Button fx:id="closeButton" mnemonicParsing="false" text="×">
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeWindow" text="X">
                <font>
                   <Font size="16.0" />
                </font>
