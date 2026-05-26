@@ -1,9 +1,7 @@
-package mainscene;
+package main.mainscene;
 
 import java.io.IOException;
 
-import app.ServerManagement;
-import app.WindowController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +15,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import mainscene.peopleblock.PeopleBlockController;
+import main.app.ServerManagement;
+import main.app.WindowController;
+import main.mainscene.peopleblock.PeopleBlockController;
+import main.mainscene.search.SearchManager;
 
 public class MainSceneController {
 	
@@ -72,7 +73,7 @@ public class MainSceneController {
 //	        for(int i = 0; i < 10; i++)
 //	        {
 //	            FXMLLoader loader = new FXMLLoader(
-//	                getClass().getResource("/mainscene/peopleblock/PeopleBlock.fxml")
+//	                getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
 //	            );
 //	            Parent block = loader.load();
 //	            PeopleBlockController controller = loader.getController();
@@ -117,7 +118,11 @@ public class MainSceneController {
 	}
 	
 	@FXML
-	private void handleSearch(ActionEvent event) {
+	private void handleSearch(ActionEvent event) throws IOException, InterruptedException {
 	    System.out.println("Searching stuff");
+	    
+	    
+	    SearchManager.searchPeople(searchField.getText());
 	}
+	
 }

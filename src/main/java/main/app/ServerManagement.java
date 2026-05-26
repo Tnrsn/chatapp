@@ -1,4 +1,4 @@
-package app;
+package main.app;
 
 import java.io.IOException;
 import java.net.URI;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.scene.control.TextField;
-import login.LoginResponse;
+import main.login.LoginResponse;
 
 public class ServerManagement {
 	
@@ -21,6 +21,12 @@ public class ServerManagement {
 	private static String adress = "http://localhost:8080";
 	
 	private static String usertoken;
+	
+	
+	public static String getAdress()
+	{
+		return adress;
+	}
 	
 	// /auth/
 	//This function is called from LoginController.java

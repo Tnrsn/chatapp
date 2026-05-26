@@ -1,4 +1,4 @@
-package app;
+package main.app;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ public class SceneSwitcher {
 	
 	public void SwitchToMainScene(ActionEvent event) throws IOException
 	{
-		Stage stage = SwitchScene("/mainscene/MainScene.fxml", "/mainscene/MainScene.css", event);
+		Stage stage = SwitchScene("/main/mainscene/MainScene.fxml", "/main/mainscene/MainScene.css", event);
 		
 		//---Set properties---
 		WindowController.setResizable(scene, stage, 600, 800);
