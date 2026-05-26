@@ -47,7 +47,6 @@ public class LoginController {
     }
 	public void Login(ActionEvent event) throws IOException, InterruptedException, SQLException 
 	{
-		
 		ServerManagement server = new ServerManagement();
 
 		if(server.SignIn(emailTextField, passwordTextField))
