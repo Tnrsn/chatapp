@@ -20,7 +20,7 @@
    <children>
       <HBox layoutX="74.0" layoutY="155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-			<BorderPane fx:id="sideBar" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="263.0" HBox.hgrow="NEVER">
+			<BorderPane fx:id="sideBar" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="900.0" prefWidth="263.0" HBox.hgrow="NEVER">
 			    <top>
 			        <HBox fx:id="sideDragBar" maxHeight="62.0" minHeight="62.0" prefHeight="62.0" prefWidth="260.0" />
 			    </top>
@@ -111,7 +111,7 @@
                            </Button>
                         </children>
                      </HBox>
-                     <VBox prefHeight="679.0" prefWidth="1563.0">
+                     <VBox maxHeight="1.7976931348623157E308" prefHeight="679.0" prefWidth="1563.0" VBox.vgrow="ALWAYS">
                         <children>
                            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="642.0" prefWidth="1537.0" VBox.vgrow="ALWAYS">
                               <children>

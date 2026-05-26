@@ -68,24 +68,25 @@ public class MainSceneController {
 	    
 	    
 	    // Loading a FXML to an another one...
-//	    try
-//	    {
-//	        for(int i = 0; i < 10; i++)
-//	        {
-//	            FXMLLoader loader = new FXMLLoader(
-//	                getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
-//	            );
-//	            Parent block = loader.load();
-//	            PeopleBlockController controller = loader.getController();
-//	            controller.setName("test " + i);
-//	            
-//	            searchResults.getChildren().add(block);
-//	        }
-//	    }
-//	    catch(Exception e)
-//	    {
-//	        e.printStackTrace();
-//	    }
+	    try
+	    {
+	        for(int i = 0; i < 10; i++)
+	        {
+	            FXMLLoader loader = new FXMLLoader(
+	                getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
+	            );
+	            
+	            Parent block = loader.load();
+	            PeopleBlockController controller = loader.getController();
+	            controller.setName("test " + i);
+	            
+	            searchResults.getChildren().add(block);
+	        }
+	    }
+	    catch(Exception e)
+	    {
+	        e.printStackTrace();
+	    }
 	}
 	
 	public void MinimizeWindow(ActionEvent event)
