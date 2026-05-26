@@ -1,4 +1,4 @@
-package main;
+package app;
 
 import java.io.IOException;
 
@@ -15,10 +15,10 @@ public class SceneSwitcher {
 	private Stage stage;
 	private Scene scene;
 	
-	//Please do not use this function on other classes, instead add a new function in this class to make setting properties easier
 	private Stage SwitchScene(String FXML, String CSS, ActionEvent event) throws IOException
 	{
-		Parent root = FXMLLoader.load(getClass().getResource(FXML));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML));
+		Parent root = loader.load();
 
 //		stage.initStyle(StageStyle.UNDECORATED);
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -36,10 +36,10 @@ public class SceneSwitcher {
 	
 	public void SwitchToMainScene(ActionEvent event) throws IOException
 	{
-		Stage stage = SwitchScene("MainScene.fxml", "MainScene.css", event);
+		Stage stage = SwitchScene("/mainscene/MainScene.fxml", "/mainscene/MainScene.css", event);
 		
 		//---Set properties---
-		stage.setResizable(true);
+		WindowController.setResizable(scene, stage, 600, 800);
 		
 		stage.show();
 	}
@@ -49,9 +49,8 @@ public class SceneSwitcher {
 		Stage stage = SwitchScene("RegisterScene.fxml", "Login.css", event);
 		
 		//---Set properties---
-//		stage.setResizable(true);
-//		WindowController.setResizable(scene, stage);
-		WindowController.setDraggable(scene, stage);
+		// Add an initialize function inside the LoginController and call setDraggable from there, just like in WindowController.
+//		WindowController.setDraggable(scene, stage);
 		stage.show();
 	}
 	
@@ -60,8 +59,6 @@ public class SceneSwitcher {
 		Stage stage = SwitchScene("Login.fxml", "Login.css", event);
 		
 		//---Set Properties---
-//		stage.setResizable(true);
-		WindowController.setDraggable(scene, stage);
 		
 		stage.show();
 	}

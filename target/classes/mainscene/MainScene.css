@@ -1,0 +1,160 @@
+.root {
+    -fx-background-color: #1E1C1D;
+    -fx-font-family: "Segoe UI";
+}
+
+.label.title {
+    -fx-text-fill: #F5F5F5;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.label {
+    -fx-text-fill: #C2BFC0;
+}
+
+/* Text fields */
+.text-field{
+    -fx-background-color: #2A2829;
+    -fx-text-fill: #E4E1E2;
+
+    -fx-prompt-text-fill: #6F6B6C;
+
+    -fx-border-color: transparent;
+
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.text-field:focused {
+    -fx-background-color: #322F31;
+    -fx-border-color: #6F6F6F;
+    -fx-border-width: 1;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #2E2C2D;
+    -fx-background-radius: 4;
+    -fx-text-fill: #DADADA;
+}
+
+.button:hover {
+    -fx-background-color: #3A3839;
+}
+
+.button:pressed {
+    -fx-background-color: #242223;
+}
+
+/* Toolbar */
+#toolBar {
+    -fx-background-color: #333333;
+    -fx-background-insets: 0;
+
+    -fx-border-color: transparent;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0, 0, 0, 0.15),
+        14,
+        0.15,
+        0,
+        2
+    );
+}
+
+#closeAppButton {
+	-fx-background-color: #333333;
+	-fx-border-color: transparent;
+}
+
+#closeAppButton:hover {
+	-fx-background-color: #D10000;
+	-fx-border-color: transparent;
+}
+
+#closeAppButton:pressed {
+	-fx-background-color: #FF5C5C;
+	-fx-border-color: transparent;
+}
+
+#windowControlButtons {
+	-fx-background-color: #333333;
+	-fx-border-color: transparent;
+}
+
+#windowControlButtons:hover {
+	-fx-background-color: #474747;
+	-fx-border-color: transparent;
+}
+
+#windowControlButtons:pressed {
+	-fx-background-color: #666666;
+	-fx-border-color: transparent;
+}
+
+/* ------- */
+
+/* -----------------Sidebarr */
+#sideBar {
+    -fx-background-color: #333333;
+}
+
+	.titled-pane {
+	    -fx-border-color: transparent;
+	    -fx-background-color: transparent;
+	
+	    -fx-focus-color: transparent;
+	    -fx-faint-focus-color: transparent;
+	}
+	
+	.titled-pane > .title {
+	    -fx-background-color: #252525;
+	    -fx-border-color: transparent;
+	}
+	
+	.titled-pane > .title > .text {
+	    -fx-fill: #FFFFFF;
+	    -fx-font-weight: bold;
+	    -fx-font-size: 16px;
+	}
+	
+	.titled-pane > .title > .arrow-button {
+	    -fx-background-color: transparent;
+	    -fx-border-color: transparent;
+	}
+	
+	.titled-pane > .title > .arrow-button > .arrow {
+	    -fx-background-color: #434343;
+	}
+	
+	.titled-pane > .content {
+	    -fx-background-color: transparent;
+	    -fx-border-color: transparent;
+	}
+	
+	#emptyListText {
+	    -fx-fill: #FFFFFF;
+	    -fx-font-weight: bold;
+	    -fx-font-size: 14;
+	    -fx-font-style: italic;
+	}
+	
+	#emptyListButton {
+	    -fx-background-color: #0000FF;
+	    -fx-background-radius: 4;
+	    -fx-text-fill: #DADADA;
+	}
+	
+	#emptyListButton:hover {
+	    -fx-background-color: #3333FF;
+	}
+	
+	#emptyListButton:pressed {
+	    -fx-background-color: #5555FF;
+	}
+	
+	#friendScroll > .viewport {
+	    -fx-background-color: transparent;
+	}

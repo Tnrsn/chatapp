@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="100.0" prefHeight="900.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainscene.MainSceneController">
+   <children>
+      <HBox layoutX="74.0" layoutY="155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+			<BorderPane fx:id="sideBar" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="263.0" HBox.hgrow="NEVER">
+			    <top>
+			        <HBox fx:id="sideDragBar" maxHeight="62.0" minHeight="62.0" prefHeight="62.0" prefWidth="260.0" />
+			    </top>
+			    <center>
+					<VBox fillWidth="true" prefWidth="260.0" VBox.vgrow="ALWAYS">
+			            <children>
+							<TitledPane text="Friends">
+							    <content>
+							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
+									    <content>
+									        <VBox fx:id="friendsList">
+                                       <children>
+                                          <VBox fx:id="emptyFriendBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="235.0" spacing="8.0">
+                                             <children>
+                                                <Text fx:id="emptyListText" strokeType="OUTSIDE" strokeWidth="0.0" text="Looks like you don't have any friends" textAlignment="CENTER" wrappingWidth="172.3525390625">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Text>
+                                                <Button fx:id="emptyListButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="94.0" text="Add Friends!" />
+                                             </children>
+                                          </VBox>
+                                       </children></VBox>
+									    </content>
+									</ScrollPane>
+							    </content>
+							</TitledPane>
+							
+							<TitledPane text="Servers">
+							    <content>
+							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
+									    <content>
+									        <VBox fx:id="friendList">
+                                       <children>
+                                          <VBox fx:id="emptyServerBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="235.0" spacing="8.0">
+                                             <children>
+                                                <Text fx:id="emptyListText" strokeType="OUTSIDE" strokeWidth="0.0" text="Looks like you are not in a server yet" textAlignment="CENTER" wrappingWidth="172.3525390625">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Text>
+                                                <Button fx:id="emptyListButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="94.0" text="Join a Server!" />
+                                             </children>
+                                          </VBox>
+                                       </children></VBox>
+									    </content>
+									</ScrollPane>
+							    </content>
+							</TitledPane>
+			            </children>
+			        </VBox>
+			    </center>
+			    <bottom>
+			        <HBox alignment="CENTER_LEFT" maxHeight="64.0" minHeight="64.0" prefHeight="64.0" prefWidth="260.0">
+			            <children>
+			                <Region prefHeight="60.0" prefWidth="60.0" />
+			                <Label fx:id="usernameLabel" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="130.0" text="Username">
+			                    <font>
+			                        <Font name="System Bold" size="22.0" />
+			                    </font>
+			                </Label>
+			            </children>
+			        </HBox>
+			    </bottom>
+			</BorderPane>
+      		<GridPane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+      		    <columnConstraints>
+      		        <ColumnConstraints hgrow="ALWAYS" />
+      		    </columnConstraints>
+      		    <rowConstraints>
+      		        <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+      		        <RowConstraints vgrow="ALWAYS" />
+      		        <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="NEVER" />
+      		    </rowConstraints>
+               <VBox fx:id="searchMenu" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                  <children>
+                     <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="200.0" spacing="400.0">
+                        <children>
+                           <Button fx:id="searchCategory" mnemonicParsing="false" text="Communities">
+                              <font>
+                                 <Font size="20.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="searchCategory" mnemonicParsing="false" text="People">
+                              <font>
+                                 <Font size="20.0" />
+                              </font>
+                           </Button>
+                        </children>
+                     </HBox>
+                     <VBox prefHeight="679.0" prefWidth="1563.0">
+                        <children>
+                           <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="642.0" prefWidth="1537.0" VBox.vgrow="ALWAYS">
+                              <children>
+                                 <ScrollPane hbarPolicy="NEVER" prefHeight="679.0" prefWidth="1129.0">
+                                    <content>
+                                       <VBox fx:id="searchResults" />
+                                    </content>
+                                 </ScrollPane>
+                                 <VBox prefHeight="200.0" prefWidth="100.0" />
+                              </children>
+                           </HBox>
+                        </children></VBox>
+                  </children>
+               </VBox>
+      		    <GridPane alignment="CENTER" GridPane.rowIndex="2">
+      		        <columnConstraints>
+      		            <ColumnConstraints hgrow="ALWAYS" />
+      		            <ColumnConstraints hgrow="NEVER" />
+      		        </columnConstraints>
+      		        <TextField fx:id="messageField" maxWidth="Infinity" prefHeight="40.0" prefWidth="1520.0" promptText="Type message..." GridPane.columnIndex="0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+      		        <Button minWidth="80" onAction="#SendMessage" prefHeight="38.0" prefWidth="80.0" text="Send" GridPane.columnIndex="1" />
+      		            <rowConstraints>
+      		               <RowConstraints />
+      		            </rowConstraints>
+      		    </GridPane>
+         		<HBox fx:id="toolBar" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="50.0" prefWidth="1800.0" GridPane.hgrow="ALWAYS">
+                  <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="70.0" />
+         		         <Label maxHeight="-Infinity" prefHeight="25.0" prefWidth="174.0" text="Channel_Name">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+         		         <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="120.0" />
+         		    <TextField fx:id="searchField" maxHeight="-Infinity" onAction="#handleSearch" prefHeight="30.0" prefWidth="645.0" promptText="Search..." HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+         		    <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="340.0" />
+                  <Button fx:id="windowControlButtons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#MinimizeWindow" prefHeight="42.0" prefWidth="40.0" text="_" HBox.hgrow="NEVER" />
+         		    <Button fx:id="windowControlButtons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#FullscreenWindow" prefHeight="40.0" prefWidth="40.0" text="◻" HBox.hgrow="NEVER" />
+         		    <Button fx:id="closeAppButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#CloseApp" prefHeight="40.0" prefWidth="40.0" text="×" HBox.hgrow="NEVER" />
+         		</HBox>
+      		</GridPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

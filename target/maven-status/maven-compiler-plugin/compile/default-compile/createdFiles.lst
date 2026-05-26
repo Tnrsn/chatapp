@@ -1,6 +1,2 @@
-main\ServerManagement.class
 main\RegisterController.class
 main\LoginController.class
-main\SceneSwitcher.class
-main\Main.class
-main\MainSceneController.class

@@ -2,6 +2,8 @@ package main;
 
 import java.io.IOException;
 
+import app.SceneSwitcher;
+import app.ServerManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
