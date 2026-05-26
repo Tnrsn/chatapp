@@ -1,9 +1,11 @@
-C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\app\SceneSwitcher.java
-C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\app\ServerManagement.java
-C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\app\WindowController.java
-C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\login\LoginResponse.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\app\SceneSwitcher.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\app\ServerManagement.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\app\WindowController.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\login\LoginResponse.java
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\LoginController.java
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\Main.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\MainSceneController.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\peopleblock\PeopleBlockController.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\search\SearchManager.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\user\User.java
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\RegisterController.java
-C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\mainscene\MainSceneController.java
-C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\mainscene\peopleblock\PeopleBlockController.java

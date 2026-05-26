@@ -1,4 +1,4 @@
-package mainscene.peopleblock;
+package main.mainscene.peopleblock;
 
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
