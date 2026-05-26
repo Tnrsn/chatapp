@@ -49,8 +49,8 @@ public class ServerManagement {
 	    HttpResponse<String> response =
 	            client.send(request, HttpResponse.BodyHandlers.ofString());
 
-	    System.out.println("Response: " + response.statusCode());
-	    System.out.println(response.body());
+//	    System.out.println("Response: " + response.statusCode());
+//	    System.out.println(response.body());
 	}
 	
 	//This function is called from LoginController.java
@@ -76,7 +76,7 @@ public class ServerManagement {
 	    HttpResponse<String> response =
 	            client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
-	    System.out.println(response.body());
+//	    System.out.println(response.body());
 	    
 	    try { //I'll fix here later, it returns username too and I'm not using it... but it works
 	    	ObjectMapper mapper = new ObjectMapper();
@@ -105,7 +105,7 @@ public class ServerManagement {
 	            client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
 	    usertoken = response.body();
-	    System.out.println("Token: " + usertoken);
+//	    System.out.println("Token: " + usertoken);
 	}
 	
 	public static boolean isTokenValid() throws IOException, InterruptedException
@@ -126,7 +126,7 @@ public class ServerManagement {
 	public static String getUsername() throws IOException, InterruptedException
 	{
 		HttpClient client = HttpClient.newHttpClient();
-		System.out.println("AAAAAA" + usertoken);
+//		System.out.println("AAAAAA" + usertoken);
 	    HttpRequest request = HttpRequest.newBuilder()
 	            .uri(URI.create(adress + "/auth/username?token=" + usertoken))
 	            .GET()
@@ -136,7 +136,7 @@ public class ServerManagement {
 	            client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
 	    String username = response.body();
-	    System.out.println("Username " + username);
+//	    System.out.println("Username " + username);
 	    return username;
 	}
 //****
