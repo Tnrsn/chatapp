@@ -38,10 +38,9 @@ public class SearchManager {
 	    for(User user : users)
 	    {
 	        System.out.println(user.username);
-//	        System.out.println(user.email);
 	        System.out.println(user.id);
 	    }
 	    
-	    return null;
+	    return users;
 	}
 }

@@ -40,7 +40,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Text>
-                                                <Button fx:id="emptyListButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="94.0" text="Add Friends!" />
+                                                <Button fx:id="emptyListButton" mnemonicParsing="false" onAction="#sidebarButtons" prefHeight="40.0" prefWidth="94.0" text="Add Friends!" />
                                              </children>
                                           </VBox>
                                        </children></VBox>
@@ -62,7 +62,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Text>
-                                                <Button fx:id="emptyListButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="94.0" text="Join a Server!" />
+                                                <Button fx:id="emptyListButton" mnemonicParsing="false" onAction="#sidebarButtons" prefHeight="40.0" prefWidth="94.0" text="Join a Server!" />
                                              </children>
                                           </VBox>
                                        </children></VBox>
@@ -95,9 +95,14 @@
       		        <RowConstraints vgrow="ALWAYS" />
       		        <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="NEVER" />
       		    </rowConstraints>
+               <ScrollPane fx:id="messageScroll" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                 <content>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                 </content>
+               </ScrollPane>
                <VBox fx:id="searchMenu" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                   <children>
-                     <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="200.0" spacing="400.0">
+                     <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="200.0" spacing="200.0">
                         <children>
                            <Button fx:id="searchCategory" mnemonicParsing="false" text="Communities">
                               <font>
@@ -109,15 +114,25 @@
                                  <Font size="20.0" />
                               </font>
                            </Button>
+                           <Button fx:id="searchCategory" mnemonicParsing="false" text="Friends">
+                              <font>
+                                 <Font size="20.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="searchCategory" mnemonicParsing="false" text="Requests">
+                              <font>
+                                 <Font size="20.0" />
+                              </font>
+                           </Button>
                         </children>
                      </HBox>
                      <VBox maxHeight="1.7976931348623157E308" prefHeight="679.0" prefWidth="1563.0" VBox.vgrow="ALWAYS">
                         <children>
                            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="642.0" prefWidth="1537.0" VBox.vgrow="ALWAYS">
                               <children>
-                                 <ScrollPane hbarPolicy="NEVER" prefHeight="679.0" prefWidth="1129.0">
+                                 <ScrollPane fx:id="searchScroll" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="679.0" prefWidth="1129.0">
                                     <content>
-                                       <VBox fx:id="searchResults" />
+                                       <VBox fx:id="searchResults" fillWidth="true" maxWidth="1.7976931348623157E308" />
                                     </content>
                                  </ScrollPane>
                                  <VBox prefHeight="200.0" prefWidth="100.0" />

@@ -18,7 +18,7 @@ public class ServerManagement {
 	//"http://x.x.x.x:8080"
 	//"http://26.94.2.223:8080" for radminvpn
 	//"http://localhost:8080"
-	private static String adress = "http://26.94.2.223:8080";
+	private static String adress = "http://localhost:8080";
 	
 	private static String usertoken;
 	
@@ -52,8 +52,13 @@ public class ServerManagement {
 	            .POST(HttpRequest.BodyPublishers.ofString(json))
 	            .build();
 
-	    HttpResponse<String> response =
-	            client.send(request, HttpResponse.BodyHandlers.ofString());
+	    HttpResponse<String> response;
+	    try {
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return;
+		}
 
 //	    System.out.println("Response: " + response.statusCode());
 //	    System.out.println(response.body());
@@ -79,11 +84,15 @@ public class ServerManagement {
 	            .POST(HttpRequest.BodyPublishers.ofString(json))
 	            .build();
 
-	    HttpResponse<String> response =
-	            client.send(request, HttpResponse.BodyHandlers.ofString());
+	    HttpResponse<String> response;
+	    try {
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return false;
+		}
 	    
 //	    System.out.println(response.body());
-	    
 	    try { //I'll fix here later, it returns username too and I'm not using it... but it works
 	    	ObjectMapper mapper = new ObjectMapper();
 	    	LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
@@ -107,8 +116,13 @@ public class ServerManagement {
 	            .POST(HttpRequest.BodyPublishers.noBody())
 	            .build();
 	    
-	    HttpResponse<String> response =
-	            client.send(request, HttpResponse.BodyHandlers.ofString());
+	    HttpResponse<String> response;
+	    try {
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return;
+		}
 	    
 	    usertoken = response.body();
 //	    System.out.println("Token: " + usertoken);
@@ -123,8 +137,13 @@ public class ServerManagement {
 	            .GET()
 	            .build();
 
-	    HttpResponse<String> response =
-	            client.send(request, HttpResponse.BodyHandlers.ofString());
+	    HttpResponse<String> response;
+	    try {
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return false;
+		}
 	    
 	    return Boolean.parseBoolean(response.body());
 	}
@@ -138,8 +157,13 @@ public class ServerManagement {
 	            .GET()
 	            .build();
 	    
-	    HttpResponse<String> response =
-	            client.send(request, HttpResponse.BodyHandlers.ofString());
+	    HttpResponse<String> response;
+	    try {
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return null;
+		}
 	    
 	    String username = response.body();
 //	    System.out.println("Username " + username);
