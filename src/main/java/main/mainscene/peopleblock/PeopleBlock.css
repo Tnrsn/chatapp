@@ -1,0 +1,12 @@
+.root {
+
+}
+
+#nameLabel {
+	-fx-fill: #FFFFFF;
+}
+
+#reqSentText {
+	-fx-fill: #FFFFFF;
+	-fx-font-weight: bold;
+}

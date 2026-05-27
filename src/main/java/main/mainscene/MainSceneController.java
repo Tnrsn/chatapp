@@ -1,6 +1,9 @@
 package main.mainscene;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.util.List;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +24,7 @@ import main.app.ServerManagement;
 import main.app.WindowController;
 import main.mainscene.peopleblock.PeopleBlockController;
 import main.mainscene.search.SearchManager;
+import main.mainscene.user.User;
 
 public class MainSceneController {
 	
@@ -33,6 +38,10 @@ public class MainSceneController {
 	@FXML
 	private Label usernameLabel;
 	
+	@FXML
+	private ScrollPane messageScroll;
+	@FXML
+	private VBox searchMenu;
 	@FXML
 	private VBox searchResults;
 	@FXML
@@ -69,25 +78,25 @@ public class MainSceneController {
 	    
 	    
 	    // Loading a FXML to an another one...
-	    try
-	    {
-	        for(int i = 0; i < 10; i++)
-	        {
-	            FXMLLoader loader = new FXMLLoader(
-	                getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
-	            );
-	            
-	            Parent block = loader.load();
-	            PeopleBlockController controller = loader.getController();
-	            controller.setName("test " + i);
-	            
-	            searchResults.getChildren().add(block);
-	        }
-	    }
-	    catch(Exception e)
-	    {
-	        e.printStackTrace();
-	    }
+//	    try
+//	    {
+//	        for(int i = 0; i < 10; i++)
+//	        {
+//	            FXMLLoader loader = new FXMLLoader(
+//	                getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
+//	            );
+//	            
+//	            Parent block = loader.load();
+//	            PeopleBlockController controller = loader.getController();
+//	            controller.setName("test " + i);
+//	            
+//	            searchResults.getChildren().add(block);
+//	        }
+//	    }
+//	    catch(Exception e)
+//	    {
+//	        e.printStackTrace();
+//	    }
 	}
 	
 	public void MinimizeWindow(ActionEvent event)
@@ -121,10 +130,49 @@ public class MainSceneController {
 	
 	@FXML
 	private void handleSearch(ActionEvent event) throws IOException, InterruptedException {
-	    System.out.println("Searching stuff");
+//	    System.out.println("Searching...");
+	    searchResults.getChildren().clear();
 	    
+	    messageScroll.setVisible(false);
+	    searchMenu.setVisible(true);
 	    
-	    SearchManager.searchPeople(searchField.getText());
+	    //I may add if conditions once I add searching for communities or added friends
+	    //---------------------SEARCHS FOR PEOPLE-----------------------------
+	    List<User> users = SearchManager.searchPeople(searchField.getText());
+	    for(User user : users)
+	    {
+            FXMLLoader loader = new FXMLLoader(
+            getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
+	        );
+	         
+	        Parent block = loader.load();
+	        block.getStylesheets().add(
+	        	    getClass()
+	        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
+	        	    .toExternalForm()
+	        	);
+	        PeopleBlockController controller = loader.getController();
+	        controller.setName(user.username);
+	        
+	        searchResults.getChildren().add(block);
+	    }
+	    //-------------------------------------------------------------------
 	}
+	//end of handleSearch()
 	
+    @FXML
+    private void sidebarButtons(ActionEvent event)
+    {
+        try
+        {
+            Desktop.getDesktop().browse(
+                new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            );
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    
+    }
 }

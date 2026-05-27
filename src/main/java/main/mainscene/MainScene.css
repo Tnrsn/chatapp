@@ -158,3 +158,23 @@
 	#friendScroll > .viewport {
 	    -fx-background-color: transparent;
 	}
+	
+/* SEARCH AREA */
+#searchScroll {
+    -fx-background: #353535;
+    -fx-background-color: #353535;
+}
+
+#searchScroll .viewport {
+    -fx-background-color: #353535;
+}
+
+/* MESSAGE AREA */
+#messageScroll {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+#messageScroll .viewport {
+    -fx-background-color: transparent;
+}
