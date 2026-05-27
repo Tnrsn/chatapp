@@ -153,6 +153,7 @@ public class MainSceneController {
 	        	);
 	        PeopleBlockController controller = loader.getController();
 	        controller.setName(user.username);
+	        controller.setUserId(user.id);
 	        
 	        searchResults.getChildren().add(block);
 	    }

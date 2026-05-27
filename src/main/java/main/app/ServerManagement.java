@@ -106,7 +106,7 @@ public class ServerManagement {
 	
 	
 //Session Management (/session/)
-	public void getToken() throws IOException, InterruptedException
+	public void generateToken() throws IOException, InterruptedException
 	{
 		HttpClient client = HttpClient.newHttpClient();
 		
@@ -146,6 +146,11 @@ public class ServerManagement {
 		}
 	    
 	    return Boolean.parseBoolean(response.body());
+	}
+	
+	public static String getToken()
+	{
+		return usertoken;
 	}
 	
 	public static String getUsername() throws IOException, InterruptedException
