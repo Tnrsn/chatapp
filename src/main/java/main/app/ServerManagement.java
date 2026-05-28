@@ -60,8 +60,15 @@ public class ServerManagement {
 			return;
 		}
 
-//	    System.out.println("Response: " + response.statusCode());
-//	    System.out.println(response.body());
+	    System.out.println(response.body());
+	    try {
+	    	ObjectMapper mapper = new ObjectMapper();
+	    	LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
+		    usertoken = data.token;
+	    	return; //login successful
+		} catch (Exception e) {
+			return; //login unsuccessful
+		}
 	}
 	
 	//This function is called from LoginController.java

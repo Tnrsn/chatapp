@@ -26,8 +26,7 @@ public class SearchManager {
 	            .GET()
 	            .build();
 
-	    HttpResponse<String> response =
-	            client.send(request, HttpResponse.BodyHandlers.ofString());
+	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
 	    ObjectMapper mapper = new ObjectMapper();
 	    List<User> users = mapper.readValue(
@@ -35,12 +34,65 @@ public class SearchManager {
 	    	    new TypeReference<List<User>>() {}
 	    	);
 	    
+//	    for(User user : users)
+//	    {
+//	        System.out.println(user.username);
+//	        System.out.println(user.id);
+//	    }
+	    
+	    return users;
+	}
+	
+	public static List<User> searchRequests() throws IOException, InterruptedException
+	{
+		HttpClient client = HttpClient.newHttpClient();
+		
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(adress + "/search/requests?token=" + ServerManagement.getToken()))
+	            .GET()
+	            .build();
+	    
+	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+	    
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<User> users = mapper.readValue(
+	    	    response.body(),
+	    	    new TypeReference<List<User>>() {}
+	    	);
+	    
+	    return users;
+	}
+	
+	public static List<User> getFriends() throws IOException, InterruptedException
+	{
+		HttpClient client = HttpClient.newHttpClient();
+		
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(adress + "/friends/getlist?token=" + ServerManagement.getToken()))
+	            .GET()
+	            .build();
+	    
+	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+	    
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<User> users = mapper.readValue(
+	    	    response.body(),
+	    	    new TypeReference<List<User>>() {}
+	    	);
+	    
+	    System.out.println("Get Friendlist");
 	    for(User user : users)
 	    {
-	        System.out.println(user.username);
-	        System.out.println(user.id);
+	    	System.out.println(user.username);
 	    }
 	    
 	    return users;
 	}
+	
+//	public static List<User> searchFriends()
+//	{
+//		
+//	}
+	
+	//public static .... searchCommunities()
 }

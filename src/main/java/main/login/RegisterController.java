@@ -51,10 +51,10 @@ public class RegisterController {
 		if(passwordTextField.getText().equals(repasswordTextField.getText()))
 		{
 			ServerManagement server = new ServerManagement();
-			SceneSwitcher ss = new SceneSwitcher();
+			SceneSwitcher sceneSwitcher = new SceneSwitcher();
 			
 			server.SignUp(usernameTextField, passwordTextField, emailTextField);
-			ss.SwitchToMainScene(event);
+			sceneSwitcher.SwitchToMainScene(event);
 		}
 		else
 			// errortext bura yazcan 

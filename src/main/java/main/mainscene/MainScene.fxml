@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -100,32 +101,46 @@
                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                  </content>
                </ScrollPane>
-               <VBox fx:id="searchMenu" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <VBox fx:id="searchMenu" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" visible="false" GridPane.rowIndex="1">
                   <children>
-                     <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="200.0" spacing="200.0">
-                        <children>
-                           <Button fx:id="searchCategory" mnemonicParsing="false" text="Communities">
+                     <BorderPane prefHeight="126.0" prefWidth="1537.0">
+                        <bottom>
+                           <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="200.0" spacing="200.0" BorderPane.alignment="CENTER">
+                              <children>
+                                 <Button fx:id="searchCategory" mnemonicParsing="false" onAction="#searchCommunities" text="Communities">
+                                    <font>
+                                       <Font size="20.0" />
+                                    </font>
+                                 </Button>
+                                 <Button fx:id="searchCategory" mnemonicParsing="false" onAction="#searchPeople" text="People">
+                                    <font>
+                                       <Font size="20.0" />
+                                    </font>
+                                 </Button>
+                                 <Button fx:id="searchCategory" mnemonicParsing="false" onAction="#searchFriends" text="Friends">
+                                    <font>
+                                       <Font size="20.0" />
+                                    </font>
+                                 </Button>
+                                 <Button fx:id="searchCategory" mnemonicParsing="false" onAction="#searchRequests" text="Requests">
+                                    <font>
+                                       <Font size="20.0" />
+                                    </font>
+                                 </Button>
+                              </children>
+                           </HBox>
+                        </bottom>
+                        <left>
+                           <Button fx:id="backButton" mnemonicParsing="false" onAction="#searchBackButton" text="←" BorderPane.alignment="CENTER">
                               <font>
-                                 <Font size="20.0" />
+                                 <Font name="System Bold" size="20.0" />
                               </font>
+                              <BorderPane.margin>
+                                 <Insets bottom="-75.0" left="25.0" />
+                              </BorderPane.margin>
                            </Button>
-                           <Button fx:id="searchCategory" mnemonicParsing="false" text="People">
-                              <font>
-                                 <Font size="20.0" />
-                              </font>
-                           </Button>
-                           <Button fx:id="searchCategory" mnemonicParsing="false" text="Friends">
-                              <font>
-                                 <Font size="20.0" />
-                              </font>
-                           </Button>
-                           <Button fx:id="searchCategory" mnemonicParsing="false" text="Requests">
-                              <font>
-                                 <Font size="20.0" />
-                              </font>
-                           </Button>
-                        </children>
-                     </HBox>
+                        </left>
+                     </BorderPane>
                      <VBox maxHeight="1.7976931348623157E308" prefHeight="679.0" prefWidth="1563.0" VBox.vgrow="ALWAYS">
                         <children>
                            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="642.0" prefWidth="1537.0" VBox.vgrow="ALWAYS">
