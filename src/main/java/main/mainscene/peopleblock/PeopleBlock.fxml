@@ -21,7 +21,10 @@
    <right>
       <Pane prefWidth="195.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="addFriendButton" alignment="CENTER" layoutX="60.0" layoutY="37.0" mnemonicParsing="false" onAction="#AddFriend" prefHeight="41.0" prefWidth="80.0" text="Add Friend" />
+            <Button fx:id="circleButtons" alignment="CENTER" layoutX="60.0" layoutY="37.0" mnemonicParsing="false" onAction="#AddFriend" prefHeight="41.0" prefWidth="80.0" text="+">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Button>
             <Text fx:id="reqSentText" layoutX="56.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request sent!" textAlignment="CENTER" visible="false" wrappingWidth="87.859375">
                <font>
                   <Font name="System Bold" size="16.0" />

@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import main.app.ServerManagement;
+import main.mainscene.MainSceneController;
 
 public class PeopleBlockController {
 	
@@ -41,11 +42,12 @@ public class PeopleBlockController {
 		this.searchUserId = userId;
 	}
 	
+	// Request
 	public void AddFriend(ActionEvent event)
 	{
 	    HttpClient client = HttpClient.newHttpClient();
 	    HttpRequest request = HttpRequest.newBuilder()
-	            .uri(URI.create(adress + "/friends/send?userToken=" + ServerManagement.getToken() + "&receiverId=" + searchUserId))
+	            .uri(URI.create(adress + "/friends/send?token=" + ServerManagement.getToken() + "&receiverId=" + searchUserId))
 	            .POST(HttpRequest.BodyPublishers.noBody())
 	            .build();
 
@@ -83,7 +85,7 @@ public class PeopleBlockController {
 		}
 	}
 	
-	public void DeclineFriendReq(ActionEvent event)
+	public void DeclineFriendReq(ActionEvent event) //This function also works for removing existing friends too
 	{
 	    HttpClient client = HttpClient.newHttpClient();
 	    HttpRequest request = HttpRequest.newBuilder()
@@ -91,11 +93,9 @@ public class PeopleBlockController {
 	            .POST(HttpRequest.BodyPublishers.noBody())
 	            .build();
 
-
 	    HttpResponse<String> response;
 	    try {
 	    	response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
-	    	
 	    	
 	    	((VBox) rootFR.getParent()).getChildren().remove(rootFR);
 			System.out.println("Request Declined");
@@ -104,4 +104,11 @@ public class PeopleBlockController {
 			return;
 		}
 	}
+	
+	//Friends
+	public void sendMessage(ActionEvent event)
+	{
+		MainSceneController.sendMessage(searchUserId);
+	}
+	
 }
