@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -40,9 +41,9 @@ public class MainSceneController {
 	private Label usernameLabel;
 	
 	@FXML
-	private ScrollPane messageScroll;
+	private static ScrollPane messageScroll;
 	@FXML
-	private VBox searchMenu;
+	private static VBox searchMenu;
 	@FXML
 	private VBox searchResults;
 	@FXML
@@ -193,24 +194,24 @@ public class MainSceneController {
 	    else if(currentSearchMode == SearchMode.FRIENDS) 
 	    {
 		    List<User> users = SearchManager.getFriends();
-//		    for(User user : users)
-//		    {
-//	            FXMLLoader loader = new FXMLLoader(
-//	            getClass().getResource("/main/mainscene/peopleblock/FriendRequest.fxml")
-//		        );
-//		         
-//		        Parent block = loader.load();
-//		        block.getStylesheets().add(
-//		        	    getClass()
-//		        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
-//		        	    .toExternalForm()
-//		        	);
-//		        PeopleBlockController controller = loader.getController();
-//		        controller.setName(user.username);
-//		        controller.setUserId(user.id);
-//		        
-//		        searchResults.getChildren().add(block);
-//		    }
+		    for(User user : users)
+		    {
+	            FXMLLoader loader = new FXMLLoader(
+	            getClass().getResource("/main/mainscene/peopleblock/FriendBlock.fxml")
+		        );
+		         
+		        Parent block = loader.load();
+		        block.getStylesheets().add(
+		        	    getClass()
+		        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
+		        	    .toExternalForm()
+		        	);
+		        PeopleBlockController controller = loader.getController();
+		        controller.setName(user.username);
+		        controller.setUserId(user.id);
+		        
+		        searchResults.getChildren().add(block);
+		    }
 	    }
 	}
 	
@@ -246,6 +247,7 @@ public class MainSceneController {
 	    messageScroll.setVisible(true);
 	    searchMenu.setVisible(false);
 	}
+	
 //-----------------SIDEBAR----------------------
     @FXML
     private void sidebarButtons(ActionEvent event)
@@ -260,6 +262,16 @@ public class MainSceneController {
         {
             e.printStackTrace();
         }
+    }
     
+    
+    
+//--------------------Send Message-------------
+    public static void sendMessage(UUID receiverId)
+    {
+    	messageScroll.setVisible(true);
+    	searchMenu.setVisible(false);
+    	
+    	
     }
 }
