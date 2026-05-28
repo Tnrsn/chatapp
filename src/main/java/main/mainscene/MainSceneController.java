@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import main.app.ServerManagement;
 import main.app.WindowController;
 import main.mainscene.peopleblock.PeopleBlockController;
+import main.mainscene.peopleblock.SearchMode;
 import main.mainscene.search.SearchManager;
 import main.mainscene.user.User;
 
@@ -128,6 +129,9 @@ public class MainSceneController {
 		}
 	}
 	
+// -------------------------SEARCH MENU---------------------------------------
+	private SearchMode currentSearchMode = SearchMode.PEOPLE;
+	
 	@FXML
 	private void handleSearch(ActionEvent event) throws IOException, InterruptedException {
 //	    System.out.println("Searching...");
@@ -136,31 +140,113 @@ public class MainSceneController {
 	    messageScroll.setVisible(false);
 	    searchMenu.setVisible(true);
 	    
-	    //I may add if conditions once I add searching for communities or added friends
-	    //---------------------SEARCHS FOR PEOPLE-----------------------------
-	    List<User> users = SearchManager.searchPeople(searchField.getText());
-	    for(User user : users)
+	    
+	    
+	    if(currentSearchMode == SearchMode.COMMUNITIES)
 	    {
-            FXMLLoader loader = new FXMLLoader(
-            getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
-	        );
-	         
-	        Parent block = loader.load();
-	        block.getStylesheets().add(
-	        	    getClass()
-	        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
-	        	    .toExternalForm()
-	        	);
-	        PeopleBlockController controller = loader.getController();
-	        controller.setName(user.username);
-	        controller.setUserId(user.id);
-	        
-	        searchResults.getChildren().add(block);
+	    	
 	    }
-	    //-------------------------------------------------------------------
+	    else if(currentSearchMode == SearchMode.PEOPLE)
+	    {
+		    List<User> users = SearchManager.searchPeople(searchField.getText());
+		    for(User user : users)
+		    {
+	            FXMLLoader loader = new FXMLLoader(
+	            getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
+		        );
+		         
+		        Parent block = loader.load();
+		        block.getStylesheets().add(
+		        	    getClass()
+		        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
+		        	    .toExternalForm()
+		        	);
+		        PeopleBlockController controller = loader.getController();
+		        controller.setName(user.username);
+		        controller.setUserId(user.id);
+		        
+		        searchResults.getChildren().add(block);
+		    }
+	    }
+	    else if(currentSearchMode == SearchMode.REQUEST)
+	    {
+		    List<User> users = SearchManager.searchRequests();
+		    for(User user : users)
+		    {
+	            FXMLLoader loader = new FXMLLoader(
+	            getClass().getResource("/main/mainscene/peopleblock/FriendRequest.fxml")
+		        );
+		         
+		        Parent block = loader.load();
+		        block.getStylesheets().add(
+		        	    getClass()
+		        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
+		        	    .toExternalForm()
+		        	);
+		        PeopleBlockController controller = loader.getController();
+		        controller.setName(user.username);
+		        controller.setUserId(user.id);
+		        
+		        searchResults.getChildren().add(block);
+		    }
+	    }
+	    else if(currentSearchMode == SearchMode.FRIENDS) 
+	    {
+		    List<User> users = SearchManager.getFriends();
+//		    for(User user : users)
+//		    {
+//	            FXMLLoader loader = new FXMLLoader(
+//	            getClass().getResource("/main/mainscene/peopleblock/FriendRequest.fxml")
+//		        );
+//		         
+//		        Parent block = loader.load();
+//		        block.getStylesheets().add(
+//		        	    getClass()
+//		        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
+//		        	    .toExternalForm()
+//		        	);
+//		        PeopleBlockController controller = loader.getController();
+//		        controller.setName(user.username);
+//		        controller.setUserId(user.id);
+//		        
+//		        searchResults.getChildren().add(block);
+//		    }
+	    }
 	}
-	//end of handleSearch()
 	
+	
+	@FXML
+	public void searchCommunities(ActionEvent event) throws IOException, InterruptedException
+	{
+		currentSearchMode = SearchMode.COMMUNITIES;
+		handleSearch(event);
+	}
+	@FXML
+	public void searchPeople(ActionEvent event) throws IOException, InterruptedException
+	{
+		currentSearchMode = SearchMode.PEOPLE;
+		handleSearch(event);
+	}
+	@FXML
+	public void searchRequests(ActionEvent event) throws IOException, InterruptedException
+	{
+		currentSearchMode = SearchMode.REQUEST;
+		handleSearch(event);
+	}
+	@FXML
+	public void searchFriends(ActionEvent event) throws IOException, InterruptedException
+	{
+		currentSearchMode = SearchMode.FRIENDS;
+		handleSearch(event);
+	}
+	
+	@FXML
+	public void searchBackButton(ActionEvent event)
+	{
+	    messageScroll.setVisible(true);
+	    searchMenu.setVisible(false);
+	}
+//-----------------SIDEBAR----------------------
     @FXML
     private void sidebarButtons(ActionEvent event)
     {

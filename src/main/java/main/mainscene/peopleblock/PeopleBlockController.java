@@ -9,6 +9,8 @@ import java.util.UUID;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import main.app.ServerManagement;
 
@@ -24,6 +26,10 @@ public class PeopleBlockController {
 	private Button addFriendButton;
 	@FXML
 	private Text reqSentText;
+	
+	//request
+	@FXML
+	private BorderPane rootFR;
 	
 	public void setName(String name)
 	{
@@ -50,6 +56,49 @@ public class PeopleBlockController {
 			addFriendButton.setVisible(false);
 			reqSentText.setVisible(true);
 			System.out.println("Request sent");
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return;
+		}
+	}
+	
+	public void AcceptFriendReq(ActionEvent event)
+	{
+	    HttpClient client = HttpClient.newHttpClient();
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(adress + "/friends/accept?token=" + ServerManagement.getToken() + "&requesterId=" + searchUserId))
+	            .POST(HttpRequest.BodyPublishers.noBody())
+	            .build();
+
+	    HttpResponse<String> response;
+	    try { //Refresh friend list here later
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
+	    	
+	    	
+	    	((VBox) rootFR.getParent()).getChildren().remove(rootFR);
+			System.out.println("RequestAccepted");
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return;
+		}
+	}
+	
+	public void DeclineFriendReq(ActionEvent event)
+	{
+	    HttpClient client = HttpClient.newHttpClient();
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(adress + "/friends/decline?token=" + ServerManagement.getToken() + "&requesterId=" + searchUserId))
+	            .POST(HttpRequest.BodyPublishers.noBody())
+	            .build();
+
+
+	    HttpResponse<String> response;
+	    try {
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
+	    	
+	    	
+	    	((VBox) rootFR.getParent()).getChildren().remove(rootFR);
+			System.out.println("Request Declined");
 	    }catch (Exception e) {
 			System.out.println("No connection to the server...");
 			return;
