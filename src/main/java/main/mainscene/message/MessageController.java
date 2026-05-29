@@ -7,9 +7,17 @@ public class MessageController {
 	
 	@FXML
 	private Text messageText;
+	@FXML
+	private Text usernameText;
 	
 	public void setMessage(Message message) //This function probably will change once I add other content types
 	{
 		messageText.setText(message.getContent());
+		usernameText.setText(MessageManager.getUsernameById(message.getSenderId()) + ": ");
+	}
+	
+	public void setUsernameText(String username)
+	{
+		usernameText.setText(username + ": ");
 	}
 }

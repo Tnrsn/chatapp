@@ -83,7 +83,6 @@ public class PeopleBlockController {
 	    try { //Refresh friend list here later
 	    	response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
 	    	
-	    	
 	    	((VBox) rootFR.getParent()).getChildren().remove(rootFR);
 			System.out.println("RequestAccepted");
 	    }catch (Exception e) {

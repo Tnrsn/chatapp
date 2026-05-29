@@ -12,7 +12,6 @@
          <children>
             <Region maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="27.0" HBox.hgrow="NEVER" />
             <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME" HBox.hgrow="ALWAYS" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
          </children>
          <opaqueInsets>
             <Insets />
