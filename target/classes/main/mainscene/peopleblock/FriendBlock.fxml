@@ -21,7 +21,7 @@
    <right>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="circleButtons" mnemonicParsing="false" onAction="#sendMessage" prefHeight="50.0" prefWidth="52.0" text="✉">
+            <Button fx:id="circleButtons" mnemonicParsing="false" onAction="#openChat" prefHeight="50.0" prefWidth="52.0" text="✉">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
