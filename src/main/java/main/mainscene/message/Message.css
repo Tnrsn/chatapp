@@ -1,0 +1,14 @@
+.root{
+	
+}
+
+#usernameText {
+	-fx-fill: #FFAA00;
+	-fx-font-size: 25px;
+	-fx-font-weight: bold;
+}
+
+#messageText {
+	-fx-fill: #FFFFFF;
+	-fx-font-size: 25px;
+}

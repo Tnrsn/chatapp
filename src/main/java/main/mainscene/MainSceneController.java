@@ -66,15 +66,16 @@ public class MainSceneController {
 	    });
 	    
 	    //Sets username label on main scene load
-	    try {
-			usernameLabel.setText(ServerManagement.getUsername());
-		} catch (IOException e) {
-			System.out.println("Something went wrong");
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			System.out.println("Something went wrong");
-			e.printStackTrace();
-		} 
+	    usernameLabel.setText(ServerManagement.getUsername());
+//	    try {
+//			usernameLabel.setText(ServerManagement.getUsernameFromServer());
+//		} catch (IOException e) {
+//			System.out.println("Something went wrong");
+//			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			System.out.println("Something went wrong");
+//			e.printStackTrace();
+//		} 
 	    
 	    //Unfocuses the search bar if clicked on anywhere else
 	    root.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
@@ -214,34 +215,55 @@ public class MainSceneController {
     @FXML
     private TextField messageField;
     private Conversation conversation;
+    @FXML
+    private Label channelNameText;
+    
+//    public void addMessage
     
     public void openChat(UUID receiverId) throws IOException, InterruptedException
     {
     	messageScroll.setVisible(true);
     	searchMenu.setVisible(false);
+    	channelNameText.setText(MessageManager.getUsernameById(receiverId));
     	
     	conversation = MessageManager.getConversation(receiverId, ServerManagement.getToken());
     	loadChat(conversation.getId(), ServerManagement.getToken());
-    	System.out.println("CONVERSATIONID:  " + conversation.getId().toString());
     }
     
 	public void SendMessage(ActionEvent event) throws IOException, InterruptedException
 	{
-		MessageManager.sendMessage(conversation.getId(), messageField.getText());
+		Message message = MessageManager.sendMessage(conversation.getId(), messageField.getText());
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/message/MessageBlock.fxml"));
+		
+		Parent node = loader.load();
+		node.getStylesheets().add(
+        	    getClass()
+        	    .getResource("/main/mainscene/message/Message.css")
+        	    .toExternalForm()
+        	);
+		
+		MessageController controller = loader.getController();
+		controller.setMessage(message);
+		controller.setUsernameText(ServerManagement.getUsername());
+		
+		messageVBox.getChildren().add(node);
 	}
     
+
+	
     public void loadChat(UUID conversationId, String token) throws IOException, InterruptedException
     {
     	List<Message> messages = MessageManager.getMessages(conversationId, token);
-    	
-    	MessageLL list = new MessageLL();
+    	MessageManager.messageLL = new MessageLL();
     	
     	for(Message m : messages)
     	{
-    		list.add(m);
+    		MessageManager.messageLL.add(m);
     	}
     	
-    	MessageNode current = list.getHead();
+    	MessageNode current = MessageManager.messageLL.getHead();
+    	messageVBox.getChildren().clear();
     	
     	while(current != null)
     	{
@@ -258,9 +280,7 @@ public class MainSceneController {
     		controller.setMessage(current.getMessage());
     		
     		messageVBox.getChildren().add(node);
-    		
     		current = current.getNext();
-    		
     	}
     }
 }

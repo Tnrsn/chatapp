@@ -17,6 +17,8 @@ import main.app.ServerManagement;
 
 public class MessageManager {
 
+	public static MessageLL messageLL;
+	
 	public static List<Message> getMessages(UUID conversationId, String userToken) throws IOException, InterruptedException
 	{
         HttpClient client = HttpClient.newHttpClient();
@@ -56,7 +58,7 @@ public class MessageManager {
         return mapper.readValue(response.body(), new TypeReference<Conversation>() {});
 	}
 	
-	public static void sendMessage(UUID conversationId, String text) throws IOException, InterruptedException
+	public static Message sendMessage(UUID conversationId, String text) throws IOException, InterruptedException
 	{
 	    HttpClient client = HttpClient.newHttpClient();
 	    String json = """
@@ -75,5 +77,34 @@ public class MessageManager {
 	            .build();
 
 	    client.send(request, HttpResponse.BodyHandlers.ofString());
+	    
+	    Message m = new Message();
+	    m.setConversationId(conversationId);
+	    m.setContent("TEXT");
+	    m.setContent(text);
+	    messageLL.add(m);
+	    
+	    return m;
+	}
+	
+	public static String getUsernameById(UUID id)
+	{
+		HttpClient client = HttpClient.newHttpClient();
+		
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(ServerManagement.getAdress() + "/messages/username?token=" + ServerManagement.getToken() + "&id=" + id))
+	            .GET()
+	            .build();
+	    
+	    HttpResponse<String> response;
+	    try {
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return null;
+		}
+	    
+	    String username = response.body();
+	    return username;
 	}
 }

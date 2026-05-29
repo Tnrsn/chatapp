@@ -8,6 +8,8 @@ import java.net.http.HttpResponse;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.UUID;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.scene.control.TextField;
@@ -21,6 +23,7 @@ public class ServerManagement {
 	private static String adress = "http://localhost:8080";
 	
 	private static String usertoken;
+	private static String username;
 	
 	
 	public static String getAdress()
@@ -65,6 +68,7 @@ public class ServerManagement {
 	    	ObjectMapper mapper = new ObjectMapper();
 	    	LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
 		    usertoken = data.token;
+		    this.username = data.username;
 	    	return; //login successful
 		} catch (Exception e) {
 			return; //login unsuccessful
@@ -100,11 +104,13 @@ public class ServerManagement {
 		}
 	    
 //	    System.out.println(response.body());
-	    try { //I'll fix here later, it returns username too and I'm not using it... but it works
+	    try {
 	    	ObjectMapper mapper = new ObjectMapper();
 	    	LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
 	    	
 		    usertoken = data.token;
+		    this.username = data.username;
+		    
 	    	return true; //login successful
 		} catch (Exception e) {
 			return false; //login unsuccessful
@@ -160,26 +166,30 @@ public class ServerManagement {
 		return usertoken;
 	}
 	
-	public static String getUsername() throws IOException, InterruptedException
+	public static String getUsername()
 	{
-		HttpClient client = HttpClient.newHttpClient();
-//		System.out.println("AAAAAA" + usertoken);
-	    HttpRequest request = HttpRequest.newBuilder()
-	            .uri(URI.create(adress + "/auth/username?token=" + usertoken))
-	            .GET()
-	            .build();
-	    
-	    HttpResponse<String> response;
-	    try {
-	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
-	    }catch (Exception e) {
-			System.out.println("No connection to the server...");
-			return null;
-		}
-	    
-	    String username = response.body();
-//	    System.out.println("Username " + username);
-	    return username;
+		return username;
 	}
+	
+//	public static String getUsernameFromServer() throws IOException, InterruptedException
+//	{
+//		HttpClient client = HttpClient.newHttpClient();
+////		System.out.println("AAAAAA" + usertoken);
+//	    HttpRequest request = HttpRequest.newBuilder()
+//	            .uri(URI.create(adress + "/auth/username?token=" + usertoken))
+//	            .GET()
+//	            .build();
+//	    
+//	    HttpResponse<String> response;
+//	    try {
+//	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+//	    }catch (Exception e) {
+//			System.out.println("No connection to the server...");
+//			return null;
+//		}
+//	    
+//	    String username = response.body();
+//	    return username;
+//	}
 //****
 }

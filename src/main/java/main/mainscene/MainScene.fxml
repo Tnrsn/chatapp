@@ -173,7 +173,7 @@
       		    </GridPane>
          		<HBox fx:id="toolBar" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="50.0" prefWidth="1800.0" GridPane.hgrow="ALWAYS">
                   <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="70.0" />
-         		         <Label maxHeight="-Infinity" prefHeight="25.0" prefWidth="174.0" text="Channel_Name">
+         		         <Label fx:id="channelNameText" maxHeight="-Infinity" prefHeight="25.0" prefWidth="174.0" text="Channel_Name">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
