@@ -6,6 +6,12 @@ C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\login\LoginResponse.
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\login\RegisterController.java
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\Main.java
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\MainSceneController.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\message\Conversation.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\message\Message.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\message\MessageController.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\message\MessageLL.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\message\MessageManager.java
+C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\message\MessageNode.java
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\peopleblock\PeopleBlockController.java
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\peopleblock\SearchMode.java
 C:\Users\tnrsn\eclipse-workspace\chatapp\src\main\java\main\mainscene\search\SearchManager.java

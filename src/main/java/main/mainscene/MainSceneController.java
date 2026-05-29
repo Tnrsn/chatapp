@@ -23,6 +23,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.app.ServerManagement;
 import main.app.WindowController;
+import main.mainscene.message.Conversation;
+import main.mainscene.message.Message;
+import main.mainscene.message.MessageController;
+import main.mainscene.message.MessageLL;
+import main.mainscene.message.MessageManager;
+import main.mainscene.message.MessageNode;
 import main.mainscene.peopleblock.PeopleBlockController;
 import main.mainscene.peopleblock.SearchMode;
 import main.mainscene.search.SearchManager;
@@ -41,9 +47,9 @@ public class MainSceneController {
 	private Label usernameLabel;
 	
 	@FXML
-	private static ScrollPane messageScroll;
+	private ScrollPane messageScroll;
 	@FXML
-	private static VBox searchMenu;
+	private VBox searchMenu;
 	@FXML
 	private VBox searchResults;
 	@FXML
@@ -77,28 +83,6 @@ public class MainSceneController {
 	            root.requestFocus();
 	        }
 	    });
-	    
-	    
-	    // Loading a FXML to an another one...
-//	    try
-//	    {
-//	        for(int i = 0; i < 10; i++)
-//	        {
-//	            FXMLLoader loader = new FXMLLoader(
-//	                getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
-//	            );
-//	            
-//	            Parent block = loader.load();
-//	            PeopleBlockController controller = loader.getController();
-//	            controller.setName("test " + i);
-//	            
-//	            searchResults.getChildren().add(block);
-//	        }
-//	    }
-//	    catch(Exception e)
-//	    {
-//	        e.printStackTrace();
-//	    }
 	}
 	
 	public void MinimizeWindow(ActionEvent event)
@@ -118,20 +102,32 @@ public class MainSceneController {
 		Platform.exit();
 	}
 	
-	public void SendMessage(ActionEvent event) throws IOException, InterruptedException
-	{
-		if(ServerManagement.isTokenValid())
-		{
-			System.out.println("Valid");
-		}
-		else
-		{
-			System.out.println("Not Valid");
-		}
-	}
-	
 // -------------------------SEARCH MENU---------------------------------------
 	private SearchMode currentSearchMode = SearchMode.PEOPLE;
+	
+	private void loadBlocks(String FXMLName, List<User> users) throws IOException
+	{
+	    for(User user : users)
+	    {
+            FXMLLoader loader = new FXMLLoader(
+            getClass().getResource("/main/mainscene/peopleblock/" + FXMLName)
+	        );
+	         
+	        Parent block = loader.load();
+	        block.getStylesheets().add(
+	        	    getClass()
+	        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
+	        	    .toExternalForm()
+	        	);
+	        PeopleBlockController controller = loader.getController();
+	        
+	        controller.setMainController(this);
+	        controller.setName(user.username);
+	        controller.setUserId(user.id);
+	        
+	        searchResults.getChildren().add(block);
+	    }
+	}
 	
 	@FXML
 	private void handleSearch(ActionEvent event) throws IOException, InterruptedException {
@@ -141,8 +137,6 @@ public class MainSceneController {
 	    messageScroll.setVisible(false);
 	    searchMenu.setVisible(true);
 	    
-	    
-	    
 	    if(currentSearchMode == SearchMode.COMMUNITIES)
 	    {
 	    	
@@ -150,71 +144,19 @@ public class MainSceneController {
 	    else if(currentSearchMode == SearchMode.PEOPLE)
 	    {
 		    List<User> users = SearchManager.searchPeople(searchField.getText());
-		    for(User user : users)
-		    {
-	            FXMLLoader loader = new FXMLLoader(
-	            getClass().getResource("/main/mainscene/peopleblock/PeopleBlock.fxml")
-		        );
-		         
-		        Parent block = loader.load();
-		        block.getStylesheets().add(
-		        	    getClass()
-		        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
-		        	    .toExternalForm()
-		        	);
-		        PeopleBlockController controller = loader.getController();
-		        controller.setName(user.username);
-		        controller.setUserId(user.id);
-		        
-		        searchResults.getChildren().add(block);
-		    }
+		    loadBlocks("PeopleBlock.fxml", users);
 	    }
 	    else if(currentSearchMode == SearchMode.REQUEST)
 	    {
 		    List<User> users = SearchManager.searchRequests();
-		    for(User user : users)
-		    {
-	            FXMLLoader loader = new FXMLLoader(
-	            getClass().getResource("/main/mainscene/peopleblock/FriendRequest.fxml")
-		        );
-		         
-		        Parent block = loader.load();
-		        block.getStylesheets().add(
-		        	    getClass()
-		        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
-		        	    .toExternalForm()
-		        	);
-		        PeopleBlockController controller = loader.getController();
-		        controller.setName(user.username);
-		        controller.setUserId(user.id);
-		        
-		        searchResults.getChildren().add(block);
-		    }
+		    loadBlocks("FriendRequest.fxml", users);
 	    }
 	    else if(currentSearchMode == SearchMode.FRIENDS) 
 	    {
 		    List<User> users = SearchManager.getFriends();
-		    for(User user : users)
-		    {
-	            FXMLLoader loader = new FXMLLoader(
-	            getClass().getResource("/main/mainscene/peopleblock/FriendBlock.fxml")
-		        );
-		         
-		        Parent block = loader.load();
-		        block.getStylesheets().add(
-		        	    getClass()
-		        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
-		        	    .toExternalForm()
-		        	);
-		        PeopleBlockController controller = loader.getController();
-		        controller.setName(user.username);
-		        controller.setUserId(user.id);
-		        
-		        searchResults.getChildren().add(block);
-		    }
+		    loadBlocks("FriendBlock.fxml", users);
 	    }
 	}
-	
 	
 	@FXML
 	public void searchCommunities(ActionEvent event) throws IOException, InterruptedException
@@ -266,12 +208,59 @@ public class MainSceneController {
     
     
     
-//--------------------Send Message-------------
-    public static void sendMessage(UUID receiverId)
+//--------------------MESSAGES-------------
+    @FXML
+    private VBox messageVBox;
+    @FXML
+    private TextField messageField;
+    private Conversation conversation;
+    
+    public void openChat(UUID receiverId) throws IOException, InterruptedException
     {
     	messageScroll.setVisible(true);
     	searchMenu.setVisible(false);
     	
+    	conversation = MessageManager.getConversation(receiverId, ServerManagement.getToken());
+    	loadChat(conversation.getId(), ServerManagement.getToken());
+    	System.out.println("CONVERSATIONID:  " + conversation.getId().toString());
+    }
+    
+	public void SendMessage(ActionEvent event) throws IOException, InterruptedException
+	{
+		MessageManager.sendMessage(conversation.getId(), messageField.getText());
+	}
+    
+    public void loadChat(UUID conversationId, String token) throws IOException, InterruptedException
+    {
+    	List<Message> messages = MessageManager.getMessages(conversationId, token);
     	
+    	MessageLL list = new MessageLL();
+    	
+    	for(Message m : messages)
+    	{
+    		list.add(m);
+    	}
+    	
+    	MessageNode current = list.getHead();
+    	
+    	while(current != null)
+    	{
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/message/MessageBlock.fxml"));
+    		
+    		Parent node = loader.load();
+    		node.getStylesheets().add(
+	        	    getClass()
+	        	    .getResource("/main/mainscene/message/Message.css")
+	        	    .toExternalForm()
+	        	);
+    		
+    		MessageController controller = loader.getController();
+    		controller.setMessage(current.getMessage());
+    		
+    		messageVBox.getChildren().add(node);
+    		
+    		current = current.getNext();
+    		
+    	}
     }
 }

@@ -1,5 +1,6 @@
 package main.mainscene.peopleblock;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -31,6 +32,12 @@ public class PeopleBlockController {
 	//request
 	@FXML
 	private BorderPane rootFR;
+	
+	private MainSceneController mainController;
+	public void setMainController(MainSceneController controller)
+	{
+	    this.mainController = controller;
+	}
 	
 	public void setName(String name)
 	{
@@ -106,9 +113,9 @@ public class PeopleBlockController {
 	}
 	
 	//Friends
-	public void sendMessage(ActionEvent event)
+	public void openChat(ActionEvent event) throws IOException, InterruptedException
 	{
-		MainSceneController.sendMessage(searchUserId);
+		mainController.openChat(searchUserId);
 	}
 	
 }
