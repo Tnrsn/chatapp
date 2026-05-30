@@ -13,7 +13,11 @@ public class MessageController {
 	public void setMessage(Message message) //This function probably will change once I add other content types
 	{
 		messageText.setText(message.getContent());
-		usernameText.setText(MessageManager.getUsernameById(message.getSenderId()) + ": ");
+		
+		if(message.getSenderId() != null)
+		{
+			usernameText.setText(MessageManager.getUsernameById(message.getSenderId()) + ": ");
+		}
 	}
 	
 	public void setUsernameText(String username)
