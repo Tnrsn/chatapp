@@ -89,10 +89,5 @@ public class SearchManager {
 	    return users;
 	}
 	
-//	public static List<User> searchFriends()
-//	{
-//		
-//	}
-	
 	//public static .... searchCommunities()
 }

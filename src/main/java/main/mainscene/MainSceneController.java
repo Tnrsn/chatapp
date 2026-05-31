@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -34,6 +35,7 @@ import main.mainscene.message.MessageRequest;
 import main.mainscene.peopleblock.PeopleBlockController;
 import main.mainscene.peopleblock.SearchMode;
 import main.mainscene.search.SearchManager;
+import main.mainscene.sidebar.SidebarController;
 import main.mainscene.user.User;
 
 public class MainSceneController {
@@ -81,6 +83,26 @@ public class MainSceneController {
 	        }
 	    });
 	    
+	    try {
+			loadSidebarBlocks("SBFriend.FXML", SearchManager.getFriends());
+		} catch (IOException e) {
+			System.out.println("Problem occured while loading friends");
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			System.out.println("Problem occured while loading friends");
+			e.printStackTrace();
+		}
+	    
+	    messageField.setOnKeyPressed(event -> {
+	        if (event.getCode() == KeyCode.ENTER) {
+	            try {
+	                SendMessage(null);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    });
+	    
 	}
 	
 	public void MinimizeWindow(ActionEvent event)
@@ -103,7 +125,7 @@ public class MainSceneController {
 // -------------------------SEARCH MENU---------------------------------------
 	private SearchMode currentSearchMode = SearchMode.PEOPLE;
 	
-	private void loadBlocks(String FXMLName, List<User> users) throws IOException
+	private void loadSearchBlocks(String FXMLName, List<User> users) throws IOException
 	{
 	    for(User user : users)
 	    {
@@ -142,17 +164,17 @@ public class MainSceneController {
 	    else if(currentSearchMode == SearchMode.PEOPLE)
 	    {
 		    List<User> users = SearchManager.searchPeople(searchField.getText());
-		    loadBlocks("PeopleBlock.fxml", users);
+		    loadSearchBlocks("PeopleBlock.fxml", users);
 	    }
 	    else if(currentSearchMode == SearchMode.REQUEST)
 	    {
 		    List<User> users = SearchManager.searchRequests();
-		    loadBlocks("FriendRequest.fxml", users);
+		    loadSearchBlocks("FriendRequest.fxml", users);
 	    }
 	    else if(currentSearchMode == SearchMode.FRIENDS) 
 	    {
 		    List<User> users = SearchManager.getFriends();
-		    loadBlocks("FriendBlock.fxml", users);
+		    loadSearchBlocks("FriendBlock.fxml", users);
 	    }
 	}
 	
@@ -189,22 +211,64 @@ public class MainSceneController {
 	}
 	
 //-----------------SIDEBAR----------------------
+	@FXML
+	private VBox friendsList;
+	@FXML
+	private VBox emptyFriendBox;
+	@FXML
+	private VBox emptyServerBox;
+	@FXML
+	private VBox communityList;
+	
     @FXML
-    private void sidebarButtons(ActionEvent event)
+    private void sidebarButtons(ActionEvent event) throws IOException, InterruptedException
     {
-        try
-        {
-            Desktop.getDesktop().browse(
-                new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-            );
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+    	searchFriends(event);
     }
     
+    public void addSidebarFriendBlock(User user, String FXMLName) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/main/mainscene/sidebar/" + FXMLName)
+        );
+         
+        Parent block = loader.load();
+        block.getStylesheets().add(
+        	    getClass()
+        	    .getResource("/main/mainscene/sidebar/SidebarButtons.css")
+        	    .toExternalForm());
+        SidebarController controller = loader.getController();
+        
+        controller.setUser(user);
+        controller.setUsername(user.username);
+        controller.setMainSceneController(this);
+        
+        friendsList.getChildren().add(block);
+    }
     
+	private void loadSidebarBlocks(String FXMLName, List<User> users) throws IOException
+	{
+		if(!users.isEmpty())
+		{
+			if(FXMLName == "SBFriend.FXML")
+			{
+				emptyFriendBox.getParent();
+				((VBox) emptyFriendBox.getParent()).getChildren().remove(emptyFriendBox);
+			}
+			else if(FXMLName == "SBCommunity.FXML")
+			{
+				emptyServerBox.getParent();
+				((VBox) emptyServerBox.getParent()).getChildren().remove(emptyServerBox);
+			}
+		}
+		
+	    for(User user : users)
+	    {
+	    	addSidebarFriendBlock(user, FXMLName);
+	    }
+	    
+	    //for(Server server : servers).... Don't delete above when adding servers
+	}
     
 //--------------------MESSAGES-------------
     @FXML
@@ -214,8 +278,6 @@ public class MainSceneController {
     private Conversation conversation;
     @FXML
     private Label channelNameText;
-    
-//    public void addMessage
     
     public void openChat(UUID receiverId) throws IOException, InterruptedException
     {
@@ -244,13 +306,17 @@ public class MainSceneController {
 		MessageController controller = loader.getController();
 		controller.setMessage(message);
 		controller.setUsernameText(ServerManagement.getUsername());
-		
 		messageVBox.getChildren().add(node);
     }
     
 	public void SendMessage(ActionEvent event) throws IOException, InterruptedException
 	{
-		Message message = MessageManager.sendMessageWebSocket(conversation.getId(), messageField.getText());
+		if(conversation == null) return;
+		
+		MessageManager.sendMessageWebSocket(conversation.getId(), messageField.getText());
+		Platform.runLater(() -> {
+		    messageField.setText("");
+		});
 	}
 	
 	public void addMessage(Message message) throws IOException
@@ -268,6 +334,10 @@ public class MainSceneController {
 		controller.setMessage(message);
 		
 		messageVBox.getChildren().add(node);
+		
+		Platform.runLater(() -> {
+		    messageScroll.setVvalue(1.0);
+		});
 	}
 	
     public void loadChat(UUID conversationId, String token) throws IOException, InterruptedException

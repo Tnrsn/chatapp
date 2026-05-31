@@ -7,6 +7,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.UUID;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import main.app.ServerManagement;
 import main.mainscene.MainSceneController;
+import main.mainscene.user.User;
 
 public class PeopleBlockController {
 	
@@ -71,7 +74,7 @@ public class PeopleBlockController {
 		}
 	}
 	
-	public void AcceptFriendReq(ActionEvent event)
+	public void AcceptFriendReq(ActionEvent event) //Switch this and DeclineFriendReq to WebSocket asap
 	{
 	    HttpClient client = HttpClient.newHttpClient();
 	    HttpRequest request = HttpRequest.newBuilder()
@@ -83,10 +86,13 @@ public class PeopleBlockController {
 	    try { //Refresh friend list here later
 	    	response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
 	    	
+//	    	mainController.addSidebarFriendBlock(user, "SBFriend.FXML");
+	    			
 	    	((VBox) rootFR.getParent()).getChildren().remove(rootFR);
 			System.out.println("RequestAccepted");
 	    }catch (Exception e) {
-			System.out.println("No connection to the server...");
+	        System.out.println(e.getMessage());
+	        e.printStackTrace();
 			return;
 		}
 	}
@@ -106,7 +112,7 @@ public class PeopleBlockController {
 	    	((VBox) rootFR.getParent()).getChildren().remove(rootFR);
 			System.out.println("Request Declined");
 	    }catch (Exception e) {
-			System.out.println("No connection to the server...");
+			System.out.println("Something went wrong");
 			return;
 		}
 	}
