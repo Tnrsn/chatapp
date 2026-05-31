@@ -7,17 +7,33 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.UUID;
+import java.lang.reflect.Type;
+
+import org.springframework.messaging.simp.stomp.StompCommand;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import javafx.application.Platform;
 import main.app.ServerManagement;
+import main.app.WebSocketClientManager;
+import main.mainscene.MainSceneController;
 
 public class MessageManager {
 
 	public static MessageLL messageLL;
+
+	private static MainSceneController mainController;
+	public static void setMainController(MainSceneController controller)
+	{
+	    mainController = controller;
+	}
 	
 	public static List<Message> getMessages(UUID conversationId, String userToken) throws IOException, InterruptedException
 	{
@@ -30,9 +46,12 @@ public class MessageManager {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+        
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+//        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.readValue(response.body(), new TypeReference<List<Message>>() {});
 	}
 	
@@ -55,36 +74,26 @@ public class MessageManager {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(response.body(), new TypeReference<Conversation>() {});
+
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        return mapper.readValue(response.body(), Conversation.class);
 	}
 	
-	public static Message sendMessage(UUID conversationId, String text) throws IOException, InterruptedException
+	public static Message sendMessageWebSocket(UUID conversationId, String text)
 	{
-	    HttpClient client = HttpClient.newHttpClient();
-	    String json = """
-	    {
-	        "conversationId": "%s",
-	        "token": "%s",
-	        "content": "%s",
-	        "type": "TEXT"
-	    }
-	    """.formatted(conversationId, ServerManagement.getToken(), text);
-
-	    HttpRequest request = HttpRequest.newBuilder()
-	            .uri(URI.create(ServerManagement.getAdress() + "/messages/send"))
-	            .header("Content-Type", "application/json")
-	            .POST(HttpRequest.BodyPublishers.ofString(json))
-	            .build();
-
-	    client.send(request, HttpResponse.BodyHandlers.ofString());
-	    
-	    Message m = new Message();
-	    m.setConversationId(conversationId);
-	    m.setContent("TEXT");
-	    m.setContent(text);
-	    messageLL.add(m);
-	    
-	    return m;
+		Message message = new Message();
+		message.setConversationId(conversationId);
+		message.setMessageType("TEXT");
+		message.setContent(text);
+		messageLL.add(message);
+		
+		WebSocketClientManager.getSession().send("/app/conversation.send", new MessageRequest(message.getConversationId(), ServerManagement.getToken(),
+				message.getContent(), message.getMessageType()));
+		
+		System.out.println("Message sent");
+	    return message;
 	}
 	
 	public static String getUsernameById(UUID id)
@@ -106,5 +115,35 @@ public class MessageManager {
 	    
 	    String username = response.body();
 	    return username;
+	}
+	
+	public static void subscribeToConversation(UUID conversationId)
+	{
+		System.out.println("SUB SESSION = " + WebSocketClientManager.getSession());
+		StompSession.Subscription sub = WebSocketClientManager.getSession().subscribe("/topic/conversation/" + conversationId,
+	        new StompFrameHandler() {
+	    	
+	            @Override
+	            public Type getPayloadType(StompHeaders headers) 
+	            {
+	                return Message.class;
+	            }
+
+	            @Override
+	            public void handleFrame(StompHeaders headers, Object payload) 
+	            {
+	            	Message msg = (Message) payload;
+	                Platform.runLater(() -> {
+	                    try {
+	                        mainController.addMessage(msg);
+	                    } catch (IOException e) {
+	                        System.out.println("Something went wrong while adding a message");
+	                        e.printStackTrace();
+	                    }
+	                });
+	            }
+	        }
+	    );
+	    System.out.println("Subscribed to = " + conversationId);
 	}
 }

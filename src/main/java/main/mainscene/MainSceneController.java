@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.app.ServerManagement;
+import main.app.WebSocketClientManager;
 import main.app.WindowController;
 import main.mainscene.message.Conversation;
 import main.mainscene.message.Message;
@@ -29,6 +30,7 @@ import main.mainscene.message.MessageController;
 import main.mainscene.message.MessageLL;
 import main.mainscene.message.MessageManager;
 import main.mainscene.message.MessageNode;
+import main.mainscene.message.MessageRequest;
 import main.mainscene.peopleblock.PeopleBlockController;
 import main.mainscene.peopleblock.SearchMode;
 import main.mainscene.search.SearchManager;
@@ -65,17 +67,11 @@ public class MainSceneController {
 	        WindowController.setDraggable(sideDragBar, stage);
 	    });
 	    
+	    MessageManager.setMainController(this);
+	    WebSocketClientManager.connect();
+
 	    //Sets username label on main scene load
 	    usernameLabel.setText(ServerManagement.getUsername());
-//	    try {
-//			usernameLabel.setText(ServerManagement.getUsernameFromServer());
-//		} catch (IOException e) {
-//			System.out.println("Something went wrong");
-//			e.printStackTrace();
-//		} catch (InterruptedException e) {
-//			System.out.println("Something went wrong");
-//			e.printStackTrace();
-//		} 
 	    
 	    //Unfocuses the search bar if clicked on anywhere else
 	    root.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
@@ -84,6 +80,7 @@ public class MainSceneController {
 	            root.requestFocus();
 	        }
 	    });
+	    
 	}
 	
 	public void MinimizeWindow(ActionEvent event)
@@ -224,16 +221,17 @@ public class MainSceneController {
     {
     	messageScroll.setVisible(true);
     	searchMenu.setVisible(false);
+    	
     	channelNameText.setText(MessageManager.getUsernameById(receiverId));
     	
     	conversation = MessageManager.getConversation(receiverId, ServerManagement.getToken());
     	loadChat(conversation.getId(), ServerManagement.getToken());
+    	MessageManager.subscribeToConversation(conversation.getId());
     }
     
-	public void SendMessage(ActionEvent event) throws IOException, InterruptedException
-	{
-		Message message = MessageManager.sendMessage(conversation.getId(), messageField.getText());
-		
+    //This is for WEBSOCKET realtime messaging.
+    public void receiveMessage(Message message) throws IOException
+    {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/message/MessageBlock.fxml"));
 		
 		Parent node = loader.load();
@@ -248,9 +246,29 @@ public class MainSceneController {
 		controller.setUsernameText(ServerManagement.getUsername());
 		
 		messageVBox.getChildren().add(node);
-	}
+    }
     
-
+	public void SendMessage(ActionEvent event) throws IOException, InterruptedException
+	{
+		Message message = MessageManager.sendMessageWebSocket(conversation.getId(), messageField.getText());
+	}
+	
+	public void addMessage(Message message) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/message/MessageBlock.fxml"));
+		
+		Parent node = loader.load();
+		node.getStylesheets().add(
+        	    getClass()
+        	    .getResource("/main/mainscene/message/Message.css")
+        	    .toExternalForm()
+        	);
+		
+		MessageController controller = loader.getController();
+		controller.setMessage(message);
+		
+		messageVBox.getChildren().add(node);
+	}
 	
     public void loadChat(UUID conversationId, String token) throws IOException, InterruptedException
     {

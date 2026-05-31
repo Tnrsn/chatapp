@@ -9,14 +9,18 @@ public class Message {
 
     private UUID conversationId;
     private UUID senderId;
+    private String username;
 
     private String content;
 
     private String messageType; // file, image etc
 
     private LocalDateTime createdAt;
+    
+    public Message() {}
 	
-    public void setId(UUID id) {
+    public void setId(UUID id) 
+    {
         this.id = id;
     }
     
@@ -25,7 +29,8 @@ public class Message {
     	return id;
     }
     
-    public void setConversationId(UUID conversationId) {
+    public void setConversationId(UUID conversationId) 
+    {
         this.conversationId = conversationId;
     }
     
@@ -34,7 +39,8 @@ public class Message {
     	return conversationId;
     }
     
-    public void setSenderId(UUID senderId) {
+    public void setSenderId(UUID senderId) 
+    {
         this.senderId = senderId;
     }
     
@@ -52,7 +58,8 @@ public class Message {
 		return content;
 	}
 	
-	public void setMessageType(String messageType) {
+	public void setMessageType(String messageType) 
+	{
 	    this.messageType = messageType;
 	}
 	
@@ -61,7 +68,18 @@ public class Message {
 		return messageType;
 	}
 	
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public String getUsername()
+	{
+		return username;
+	}
+	
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
+	
+	public void setCreatedAt(LocalDateTime createdAt) 
+	{
 	    this.createdAt = createdAt;
 	}
 	
