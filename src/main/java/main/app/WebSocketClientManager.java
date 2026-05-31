@@ -10,6 +10,9 @@ import org.springframework.web.socket.adapter.standard.StandardToWebSocketExtens
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 public class WebSocketClientManager {
 
 	private static StompSession session;
@@ -26,22 +29,42 @@ public class WebSocketClientManager {
 	    {
 	        StandardWebSocketClient client = new StandardWebSocketClient();
 
+	        ObjectMapper mapper = new ObjectMapper();
+	        mapper.registerModule(new JavaTimeModule());
+	        
+	        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+	        converter.setObjectMapper(mapper);
+	        
 	        WebSocketStompClient stompClient = new WebSocketStompClient(client);
-	        stompClient.setMessageConverter(new MappingJackson2MessageConverter());
-
+	        stompClient.setMessageConverter(converter);
 	        String url = "ws://localhost:8080/ws";
 
-	        session = stompClient.connectAsync(url,
-	            new StompSessionHandlerAdapter() 
-	        	{
-	                @Override
-	                public void afterConnected(StompSession session, StompHeaders headers)
-	                {
-	                	System.out.println("SESSION ID = " + session);
-	                    System.out.println("CONNECTED");
-	                }
-	            }
-	        ).get();
+	        session = stompClient.connectAsync(
+	        	    url,
+	        	    new StompSessionHandlerAdapter() {
+
+	        	        @Override
+	        	        public void handleException(StompSession session,StompCommand command, StompHeaders headers, byte[] payload,
+	        	        		Throwable exception)
+	        	        {
+	        	            System.out.println("STOMP EXCEPTION");
+	        	            exception.printStackTrace();
+	        	        }
+
+	        	        @Override
+	        	        public void handleTransportError(StompSession session, Throwable exception) 
+	        	        {
+	        	            System.out.println("TRANSPORT ERROR");
+	        	            exception.printStackTrace();
+	        	        }
+
+	        	        @Override
+	        	        public void afterConnected(StompSession session, StompHeaders connectedHeaders)
+	        	        {
+	        	            System.out.println("CONNECTED");
+	        	        }
+	        	    }
+	        	).get();
 	    } 
 	    catch (Exception e) 
 	    {

@@ -250,9 +250,11 @@ public class MainSceneController {
     
 	public void SendMessage(ActionEvent event) throws IOException, InterruptedException
 	{
-//		Message message = MessageManager.sendMessage(conversation.getId(), messageField.getText());
 		Message message = MessageManager.sendMessageWebSocket(conversation.getId(), messageField.getText());
-		
+	}
+	
+	public void addMessage(Message message) throws IOException
+	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/message/MessageBlock.fxml"));
 		
 		Parent node = loader.load();
@@ -264,7 +266,6 @@ public class MainSceneController {
 		
 		MessageController controller = loader.getController();
 		controller.setMessage(message);
-		controller.setUsernameText(ServerManagement.getUsername());
 		
 		messageVBox.getChildren().add(node);
 	}
