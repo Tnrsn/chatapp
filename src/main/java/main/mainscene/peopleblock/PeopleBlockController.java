@@ -83,7 +83,7 @@ public class PeopleBlockController {
 	            .build();
 
 	    HttpResponse<String> response;
-	    try { //Refresh friend list here later
+	    try {
 	    	response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
 	    	
 //	    	mainController.addSidebarFriendBlock(user, "SBFriend.FXML");

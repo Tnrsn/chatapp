@@ -2,9 +2,13 @@ package main.mainscene;
 
 import java.awt.Desktop;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -84,15 +88,7 @@ public class MainSceneController {
 	        }
 	    });
 	    
-	    try {
-			loadSidebarBlocks(SearchManager.getFriends());
-		} catch (IOException e) {
-			System.out.println("Problem occured while loading friends");
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			System.out.println("Problem occured while loading friends");
-			e.printStackTrace();
-		}
+	    loadSideBarOnInit();
 	    
 	    messageField.setOnKeyPressed(event -> {
 	        if (event.getCode() == KeyCode.ENTER) {
@@ -229,6 +225,43 @@ public class MainSceneController {
 	private VBox emptyServerBox;
 	@FXML
 	private VBox communityList;
+	
+	private void loadSideBarOnInit()
+	{
+	    try {
+			loadSidebarBlocks(SearchManager.getFriends());
+		} catch (IOException e) {
+			System.out.println("Problem occured while loading friends");
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			System.out.println("Problem occured while loading friends");
+			e.printStackTrace();
+		}
+	}
+	
+	private void subscribeFriendshipSocket()
+	{
+	    WebSocketClientManager.getSession().subscribe(
+	            "/user/queue/friends",
+	            new StompFrameHandler()
+	            {
+	                @Override
+	                public Type getPayloadType(StompHeaders headers)
+	                {
+	                    return String.class;
+	                }
+
+	                @Override
+	                public void handleFrame(StompHeaders headers, Object payload)
+	                {
+	                    Platform.runLater(() ->
+	                    {
+	                    	System.out.println("Sidebar should be refreshed");
+	                    });
+	                }
+	            }
+	        );
+	}
 	
     @FXML
     private void sidebarButtons(ActionEvent event) throws IOException, InterruptedException
