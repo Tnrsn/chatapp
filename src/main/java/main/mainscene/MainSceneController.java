@@ -64,6 +64,13 @@ public class MainSceneController {
 	@FXML
 	private TextField searchField;
 	
+	// --- New Tab Buttons ---
+	@FXML private Button btnCommunities;
+	@FXML private Button btnPeople;
+	@FXML private Button btnFriends;
+	@FXML private Button btnRequests;
+	// -----------------------
+	
 	public void initialize()
 	{
 		//Sets the window draggable
@@ -184,27 +191,51 @@ public class MainSceneController {
 	    }
 	}
 	
+	// --- Helper Method to clear inline styles ---
+	private void resetTabColors() {
+		if (btnCommunities != null) btnCommunities.setStyle("");
+		if (btnPeople != null) btnPeople.setStyle("");
+		if (btnFriends != null) btnFriends.setStyle("");
+		if (btnRequests != null) btnRequests.setStyle("");
+	}
+	// --------------------------------------------
+
 	@FXML
 	public void searchCommunities(ActionEvent event) throws IOException, InterruptedException
 	{
+		resetTabColors();
+		if (btnCommunities != null) btnCommunities.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
+		
 		currentSearchMode = SearchMode.COMMUNITIES;
 		handleSearch(event);
 	}
+	
 	@FXML
 	public void searchPeople(ActionEvent event) throws IOException, InterruptedException
 	{
+		resetTabColors();
+		if (btnPeople != null) btnPeople.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
+		
 		currentSearchMode = SearchMode.PEOPLE;
 		handleSearch(event);
 	}
+	
 	@FXML
 	public void searchRequests(ActionEvent event) throws IOException, InterruptedException
 	{
+		resetTabColors();
+		if (btnRequests != null) btnRequests.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
+		
 		currentSearchMode = SearchMode.REQUEST;
 		handleSearch(event);
 	}
+	
 	@FXML
 	public void searchFriends(ActionEvent event) throws IOException, InterruptedException
 	{
+		resetTabColors();
+		if (btnFriends != null) btnFriends.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
+		
 		currentSearchMode = SearchMode.FRIENDS;
 		handleSearch(event);
 	}
