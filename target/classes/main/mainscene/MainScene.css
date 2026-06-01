@@ -1,172 +1,193 @@
+/* ==========================================================================
+   1. Root & Window Foundations
+   ========================================================================== */
 .root {
-    -fx-background-color: #1E1C1D;
-    -fx-font-family: "Segoe UI";
+    -fx-background-color: #201E1F; /* Main chat area deep dark */
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 .label.title {
-    -fx-text-fill: #F5F5F5;
-    -fx-font-size: 28px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
 .label {
-    -fx-text-fill: #C2BFC0;
+    -fx-text-fill: #ADABAB;
 }
 
-/* Text fields */
-.text-field{
-    -fx-background-color: #2A2829;
-    -fx-text-fill: #E4E1E2;
-
-    -fx-prompt-text-fill: #6F6B6C;
-
-    -fx-border-color: transparent;
-
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
+/* ==========================================================================
+   2. Input Fields (Sharp Edges, Green Focus)
+   ========================================================================== */
+.text-field {
+    -fx-background-color: #2D2C2C; /* Surface dark variant */
+    -fx-text-fill: #F5F5F5;
+    -fx-prompt-text-fill: #8A8886;
+    
+    /* Completely sharp borders for inputs */
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    
+    -fx-border-color: #484646; 
+    -fx-border-width: 1px;
+    -fx-padding: 8px 12px;
 }
 
 .text-field:focused {
-    -fx-background-color: #322F31;
-    -fx-border-color: #6F6F6F;
-    -fx-border-width: 1;
+    -fx-background-color: #2D2C2C;
+    -fx-border-color: #548C2F; /* *** Primary Green Accent *** */
+    
+    /* Green Glow */
+    -fx-effect: dropshadow(gaussian, rgba(84, 140, 47, 0.4), 4, 0.0, 0, 1);
 }
 
-/* Buttons */
+/* ==========================================================================
+   3. Buttons
+   ========================================================================== */
+/* Standard Ghost/Secondary Buttons */
 .button {
-    -fx-background-color: #2E2C2D;
-    -fx-background-radius: 4;
-    -fx-text-fill: #DADADA;
+    -fx-background-color: #2D2C2C;
+    -fx-background-radius: 2px; /* Super subtle clean rounding */
+    -fx-border-radius: 2px;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #484646;
+    -fx-border-width: 1px;
+    -fx-cursor: hand;
 }
 
 .button:hover {
     -fx-background-color: #3A3839;
+    -fx-border-color: #548C2F; /* Green edge highlight */
 }
 
 .button:pressed {
-    -fx-background-color: #242223;
+    -fx-background-color: #1F1E1E;
 }
 
-/* Toolbar */
-#toolBar {
-    -fx-background-color: #333333;
-    -fx-background-insets: 0;
-
+/* --- The "Join a Server!" Button (Primary Green) --- */
+/* --- Primary Green Buttons (Join Server & Send Message) --- */
+#emptyListButton, 
+#sendButton {
+    -fx-background-color: #548C2F; /* Green Fill */
     -fx-border-color: transparent;
-
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(0, 0, 0, 0.15),
-        14,
-        0.15,
-        0,
-        2
-    );
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
 }
 
+#emptyListButton:hover, 
+#sendButton:hover {
+    -fx-background-color: #4A7A29; /* Darker Green Hover */
+}
+
+#emptyListButton:pressed, 
+#sendButton:pressed {
+    -fx-background-color: #3E6622; /* Deep Green Press */
+}
+
+/* ==========================================================================
+   4. Window Controls & Toolbar
+   ========================================================================== */
+#toolBar {
+    -fx-background-color: #242424; /* Flat header */
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+}
+
+/* Match the exact close button from login screen */
 #closeAppButton {
-	-fx-background-color: #333333;
-	-fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ADABAB;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
 }
 
 #closeAppButton:hover {
-	-fx-background-color: #D10000;
-	-fx-border-color: transparent;
+    -fx-background-color: #C43C25; /* Red standard close */
+    -fx-text-fill: #FFFFFF;
 }
 
 #closeAppButton:pressed {
-	-fx-background-color: #FF5C5C;
-	-fx-border-color: transparent;
+    -fx-background-color: #A0311E;
 }
 
 #windowControlButtons {
-	-fx-background-color: #333333;
-	-fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ADABAB;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
 }
 
 #windowControlButtons:hover {
-	-fx-background-color: #474747;
-	-fx-border-color: transparent;
+    -fx-background-color: #3A3839;
+    -fx-text-fill: #FFFFFF;
 }
 
 #windowControlButtons:pressed {
-	-fx-background-color: #666666;
-	-fx-border-color: transparent;
+    -fx-background-color: #242424;
 }
 
-/* ------- */
-
-/* -----------------Sidebarr */
+/* ==========================================================================
+   5. Sidebar & Accordion (TitledPanes)
+   ========================================================================== */
 #sideBar {
-    -fx-background-color: #333333;
+    -fx-background-color: #242424; /* Match toolbar for unified side panel */
 }
 
-	.titled-pane {
-	    -fx-border-color: transparent;
-	    -fx-background-color: transparent;
-	
-	    -fx-focus-color: transparent;
-	    -fx-faint-focus-color: transparent;
-	}
-	
-	.titled-pane > .title {
-	    -fx-background-color: #252525;
-	    -fx-border-color: transparent;
-	}
-	
-	.titled-pane > .title > .text {
-	    -fx-fill: #FFFFFF;
-	    -fx-font-weight: bold;
-	    -fx-font-size: 16px;
-	}
-	
-	.titled-pane > .title > .arrow-button {
-	    -fx-background-color: transparent;
-	    -fx-border-color: transparent;
-	}
-	
-	.titled-pane > .title > .arrow-button > .arrow {
-	    -fx-background-color: #434343;
-	}
-	
-	.titled-pane > .content {
-	    -fx-background-color: transparent;
-	    -fx-border-color: transparent;
-	}
-	
-	#emptyListText {
-	    -fx-fill: #FFFFFF;
-	    -fx-font-weight: bold;
-	    -fx-font-size: 14;
-	    -fx-font-style: italic;
-	}
-	
-	#emptyListButton {
-	    -fx-background-color: #0000FF;
-	    -fx-background-radius: 4;
-	    -fx-text-fill: #DADADA;
-	}
-	
-	#emptyListButton:hover {
-	    -fx-background-color: #3333FF;
-	}
-	
-	#emptyListButton:pressed {
-	    -fx-background-color: #5555FF;
-	}
-	
-	#friendScroll > .viewport {
-	    -fx-background-color: transparent;
-	}
-	
+.titled-pane {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.titled-pane > .title {
+    -fx-background-color: #242424; /* Flat header */
+    -fx-border-color: transparent;
+}
+
+.titled-pane > .title > .text {
+    -fx-fill: #F5F5F5;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px; 
+}
+
+.titled-pane > .title > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.titled-pane > .title > .arrow-button > .arrow {
+    -fx-background-color: #ADABAB; /* Subtle arrow color */
+}
+
+.titled-pane > .content {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#emptyListText {
+    -fx-fill: #ADABAB;
+    -fx-font-weight: normal;
+    -fx-font-size: 14px;
+}
+
+/* ==========================================================================
+   6. ScrollPanes & Messaging Area
+   ========================================================================== */
+#friendScroll > .viewport {
+    -fx-background-color: transparent;
+}
+
 /* SEARCH AREA */
 #searchScroll {
-    -fx-background: #353535;
-    -fx-background-color: #353535;
+    -fx-background: #242424; /* Match sidebar */
+    -fx-background-color: #242424;
 }
 
 #searchScroll .viewport {
-    -fx-background-color: #353535;
+    -fx-background-color: #242424;
 }
 
 /* MESSAGE AREA */
@@ -179,18 +200,19 @@
     -fx-background-color: transparent;
 }
 
+/* Back button */
 #backButton {
-    -fx-background-radius: 100em;
-    -fx-min-width: 50px;
-    -fx-min-height: 50px;
-    -fx-max-width: 50px;
-    -fx-max-height: 50px;
+    -fx-background-radius: 50%;
+    -fx-min-width: 40px; 
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    -fx-background-color: #2D2C2C;
+    -fx-border-radius: 50%;
+    -fx-padding: 0;             /* <--- Forces the padding to 0 */
+    -fx-text-fill: #FFFFFF;     /* <--- Makes the X white */
+    -fx-alignment: center;      /* <--- Locks the X dead center */
 }
-
-#createCommunityButton {
-    -fx-background-radius: 100em;
-    -fx-min-width: 50px;
-    -fx-min-height: 50px;
-    -fx-max-width: 50px;
-    -fx-max-height: 50px;
+#backButton:hover {
+    -fx-background-color: #3A3839;
 }

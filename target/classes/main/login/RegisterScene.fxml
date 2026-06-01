@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -8,47 +9,67 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.login.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
+            prefHeight="600.0" prefWidth="400.0" styleClass="main-bg" 
+            xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="main.login.RegisterController">
+   
+   <stylesheets>
+      <URL value="@login.css" />
+   </stylesheets>
+
    <children>
-      <TextField fx:id="usernameTextField" layoutX="50.0" layoutY="91.0" promptText="Username" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <PasswordField fx:id="passwordTextField" layoutX="50.0" layoutY="173.0" promptText="Password" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </PasswordField>
-      <PasswordField fx:id="repasswordTextField" layoutX="50.0" layoutY="245.0" promptText="Re-Enter Password" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </PasswordField>
-      <TextField fx:id="emailTextField" layoutX="50.0" layoutY="321.0" promptText="E-Mail" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <Button layoutX="50.0" layoutY="419.0" mnemonicParsing="false" onAction="#ConfirmRegister" prefHeight="52.0" prefWidth="300.0" text="Confirm" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <Button layoutX="50.0" layoutY="494.0" mnemonicParsing="false" onAction="#SwitchToLoginScene" prefHeight="52.0" prefWidth="300.0" text="Back">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <Label fx:id="errorText" layoutX="187.0" layoutY="382.0" text="error" visible="false" />
-      <BorderPane fx:id="toolBar" prefHeight="39.0" prefWidth="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="toolBar" styleClass="teams-toolbar" prefHeight="39.0" prefWidth="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <right>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeWindow" text="X" BorderPane.alignment="CENTER">
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeWindow" styleClass="close-button" text="✕" BorderPane.alignment="CENTER">
                <font>
-                  <Font size="16.0" />
+                  <Font name="Segoe UI" size="14.0" />
                </font>
             </Button>
          </right>
       </BorderPane>
+
+      <TextField fx:id="usernameTextField" layoutX="50.0" layoutY="91.0" promptText="Username" styleClass="teams-input" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="Segoe UI" size="16.0" />
+         </font>
+      </TextField>
+      
+      <PasswordField fx:id="passwordTextField" layoutX="50.0" layoutY="173.0" promptText="Password" styleClass="teams-input" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="Segoe UI" size="16.0" />
+         </font>
+      </PasswordField>
+      
+      <PasswordField fx:id="repasswordTextField" layoutX="50.0" layoutY="245.0" promptText="Re-Enter Password" styleClass="teams-input" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="Segoe UI" size="16.0" />
+         </font>
+      </PasswordField>
+      
+      <TextField fx:id="emailTextField" layoutX="50.0" layoutY="321.0" promptText="E-Mail" styleClass="teams-input" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="Segoe UI" size="16.0" />
+         </font>
+      </TextField>
+      
+      <Label fx:id="errorText" layoutX="187.0" layoutY="382.0" styleClass="teams-error-label" text="error" visible="false">
+          <font>
+            <Font name="Segoe UI" size="13.0" />
+         </font>
+      </Label>
+      
+      <Button layoutX="50.0" layoutY="419.0" mnemonicParsing="false" onAction="#ConfirmRegister" prefHeight="52.0" prefWidth="300.0" styleClass="button-primary" text="Confirm" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="Segoe UI Bold" size="15.0" />
+         </font>
+      </Button>
+      
+      <Button layoutX="50.0" layoutY="494.0" mnemonicParsing="false" onAction="#SwitchToLoginScene" prefHeight="52.0" prefWidth="300.0" styleClass="button-secondary" text="Back" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="Segoe UI Bold" size="15.0" />
+         </font>
+      </Button>
+      
    </children>
 </AnchorPane>

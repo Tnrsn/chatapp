@@ -1,25 +1,61 @@
+/* ==========================================================================
+   People Block / Search Result Card
+   ========================================================================== */
 .root {
-
+    -fx-background-color: #2D2C2C; /* Slightly lighter than the master background to look like a card */
+    -fx-background-radius: 4px;    /* Slight rounding for the outer card */
+    -fx-padding: 10px 15px;        /* Clean breathing room inside the block */
 }
 
+/* Hover effect so the user knows the block is interactive */
+.root:hover {
+    -fx-background-color: #353435; 
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
 #nameLabel {
-    -fx-fill: #FFFFFF;
-    -fx-font-size: 25px;
+    -fx-fill: #F5F5F5;
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+    -fx-font-size: 22px; 
     -fx-font-weight: bold;
 }
 
 #reqSentText {
-	-fx-fill: #FFFFFF;
-	-fx-font-weight: bold;
+    -fx-fill: #548C2F; /* Green success accent! */
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
 
+/* ==========================================================================
+   Action Buttons (Add Friend / Message)
+   ========================================================================== */
 #circleButtons {
-    -fx-background-radius: 100em;
-    -fx-min-width: 50px;
-    -fx-min-height: 50px;
-    -fx-max-width: 50px;
-    -fx-max-height: 50px;
+    -fx-background-color: #548C2F; /* Primary Green */
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
     
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
+    /* Perfect 40x40 Circles */
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-cursor: hand;
+    
+    /* THE FIX: Remove hidden padding and lock alignment */
+    -fx-padding: 0;
+    -fx-alignment: center;
+}
+
+#circleButtons:hover {
+    -fx-background-color: #4A7A29; /* Darker Green Hover */
+}
+
+#circleButtons:pressed {
+    -fx-background-color: #3E6622; /* Deep Green Press */
 }

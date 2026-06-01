@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -8,10 +9,15 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="rootFR" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainscene.peopleblock.PeopleBlockController">
+   
+   <stylesheets>
+      <URL value="@friendblock.css" />
+   </stylesheets>
+
    <center>
       <Text fx:id="nameLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Username_Text" BorderPane.alignment="CENTER_LEFT">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Segoe UI Bold" size="22.0" />
          </font>
       </Text>
    </center>
@@ -19,19 +25,20 @@
       <Region prefHeight="110.0" prefWidth="109.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="circleButtons" mnemonicParsing="false" onAction="#AcceptFriendReq" prefHeight="50.0" prefWidth="52.0" text="✓">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="circleButtons" mnemonicParsing="false" onAction="#DeclineFriendReq" prefHeight="50.0" prefWidth="52.0" text="×">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+   <children>
+      <Button fx:id="circleButtons" alignment="CENTER" mnemonicParsing="false" onAction="#AcceptFriendReq" text="✓">
+         <font>
+            <Font name="Segoe UI Bold" size="16.0" />
+         </font>
+      </Button>
+
+      <Button fx:id="circleButtons" alignment="CENTER" styleClass="danger-button" mnemonicParsing="false" onAction="#DeclineFriendReq" text="✕">
+         <font>
+            <Font name="Segoe UI Bold" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</HBox>
    </right>
 </BorderPane>
