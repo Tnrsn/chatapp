@@ -11,6 +11,7 @@ public class WindowController {
 
     private static double xOffset;
     private static double yOffset;
+    private static boolean isResizing = false;
 
     public static void setResizable(Scene scene, Stage stage, double min_x, double min_y) {
 
@@ -40,13 +41,16 @@ public class WindowController {
             else if (right) scene.setCursor(Cursor.E_RESIZE);
             else if (top) scene.setCursor(Cursor.N_RESIZE);
             else if (bottom) scene.setCursor(Cursor.S_RESIZE);
-            else scene.setCursor(Cursor.DEFAULT);
+            else 
+        	{
+            	isResizing = false;
+            	scene.setCursor(Cursor.DEFAULT);
+        	}
         });
 
         scene.setOnMouseDragged(e -> {
-
             Cursor c = scene.getCursor();
-
+            
             double mx = e.getScreenX();
             double my = e.getScreenY();
 
@@ -54,11 +58,13 @@ public class WindowController {
             if (c == Cursor.E_RESIZE || c == Cursor.SE_RESIZE || c == Cursor.NE_RESIZE) {
                 double newW = mx - stage.getX();
                 stage.setWidth(Math.max(newW, min_y));
+                isResizing = true;
             }
 
             if (c == Cursor.S_RESIZE || c == Cursor.SE_RESIZE || c == Cursor.SW_RESIZE) {
                 double newH = my - stage.getY();
                 stage.setHeight(Math.max(newH, min_x));
+                isResizing = true;
             }
 
             // ---------------- LEFT ----------------
@@ -69,6 +75,7 @@ public class WindowController {
 
                 stage.setX(mx);
                 stage.setWidth(newW);
+                isResizing = true;
             }
 
             // ---------------- TOP ----------------
@@ -79,6 +86,7 @@ public class WindowController {
 
                 stage.setY(my);
                 stage.setHeight(newH);
+                isResizing = true;
             }
         });
     }
@@ -86,14 +94,20 @@ public class WindowController {
     public static void setDraggable(Node node, Stage stage)
     {
         node.setOnMousePressed(e -> {
-            xOffset = e.getScreenX() - stage.getX();
-            yOffset = e.getScreenY() - stage.getY();
+        	if(!isResizing)
+        	{
+        		xOffset = e.getScreenX() - stage.getX();
+        		yOffset = e.getScreenY() - stage.getY();        		
+        	}
         });
 
         node.setOnMouseDragged(e -> {
             if (e.isPrimaryButtonDown()) {
-                stage.setX(e.getScreenX() - xOffset);
-                stage.setY(e.getScreenY() - yOffset);
+            	if(!isResizing)
+            	{
+            		stage.setX(e.getScreenX() - xOffset);
+            		stage.setY(e.getScreenY() - yOffset);            		
+            	}
             }
         });
         

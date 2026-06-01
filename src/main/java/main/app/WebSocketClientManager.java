@@ -13,18 +13,29 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import main.mainscene.MainSceneController;
+
 public class WebSocketClientManager {
 
 	private static StompSession session;
+	private static Runnable onConnected;
+	private static MainSceneController mainSceneController;
 	
 	public static StompSession getSession()
 	{
 		return session;
 	}
 	
-	public static void connect() {
+	private static void setSession(StompSession s)
+	{
+		session = s;
+	}
+	
+	public static void connect(MainSceneController controller) 
+	{
 	    System.out.println("Connecting to the server...");
-
+	    mainSceneController = controller;
+	    
 	    try 
 	    {
 	        StandardWebSocketClient client = new StandardWebSocketClient();
@@ -62,6 +73,10 @@ public class WebSocketClientManager {
 	        	        public void afterConnected(StompSession session, StompHeaders connectedHeaders)
 	        	        {
 	        	            System.out.println("CONNECTED");
+	        	            
+	        	            WebSocketClientManager.setSession(session);
+	        	            
+	        	            mainSceneController.subscribeUserEvents();
 	        	        }
 	        	    }
 	        	).get();
@@ -71,5 +86,10 @@ public class WebSocketClientManager {
 	        System.out.println("Connection Failed");
 	        e.printStackTrace();
 	    }
+	}
+	
+	public static void setOnConnected(Runnable r)
+	{
+		onConnected = r;
 	}
 }
