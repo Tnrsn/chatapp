@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.UUID;
 import java.lang.reflect.Type;
 
-import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -119,7 +117,7 @@ public class MessageManager {
 	
 	public static void subscribeToConversation(UUID conversationId)
 	{
-		System.out.println("SUB SESSION = " + WebSocketClientManager.getSession());
+//		System.out.println("SUB SESSION = " + WebSocketClientManager.getSession());
 		StompSession.Subscription sub = WebSocketClientManager.getSession().subscribe("/topic/conversation/" + conversationId,
 	        new StompFrameHandler() {
 	    	
@@ -133,9 +131,15 @@ public class MessageManager {
 	            public void handleFrame(StompHeaders headers, Object payload) 
 	            {
 	            	Message msg = (Message) payload;
+	            	
 	                Platform.runLater(() -> {
 	                    try {
-	                        mainController.addMessage(msg);
+	                    	boolean isMessageAdded = false;
+	                    	if(!isMessageAdded)
+	                    	{
+	                    		mainController.addMessage(msg);
+                    			isMessageAdded = true;
+	                    	}
 	                    } catch (IOException e) {
 	                        System.out.println("Something went wrong while adding a message");
 	                        e.printStackTrace();
@@ -144,6 +148,6 @@ public class MessageManager {
 	            }
 	        }
 	    );
-	    System.out.println("Subscribed to = " + conversationId);
+//	    System.out.println("Subscribed to = " + conversationId);
 	}
 }
