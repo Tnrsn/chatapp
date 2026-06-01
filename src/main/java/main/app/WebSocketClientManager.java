@@ -76,7 +76,7 @@ public class WebSocketClientManager {
 	        	            
 	        	            WebSocketClientManager.setSession(session);
 	        	            
-	        	            mainSceneController.subscribeUserEvents();
+	        	            mainSceneController.subscribeFriendsEvents();
 	        	        }
 	        	    }
 	        	).get();

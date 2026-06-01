@@ -1,7 +1,11 @@
 package main.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WebSocketPing {
-	boolean Status = true;
+	private boolean Status = true;
+	private String type;
 	
 	public boolean getStatus()
 	{
@@ -10,5 +14,14 @@ public class WebSocketPing {
 	public void setStatus(boolean status)
 	{
 		this.Status = status;
+	}
+	
+	public String getType()
+	{
+		return type;
+	}
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 }

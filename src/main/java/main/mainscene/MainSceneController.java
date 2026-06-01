@@ -114,7 +114,7 @@ public class MainSceneController {
 	    
 	}
 	
-	public void subscribeUserEvents()
+	public void subscribeFriendsEvents()
 	{
 		HttpClient client = HttpClient.newHttpClient();
 		
@@ -131,30 +131,36 @@ public class MainSceneController {
 			System.out.println("No connection to the server...");
 			return;
 		}
-
+//	    "f754fab2-3043-43e6-9223-051d8f203f51"
 	    String userId = response.body().replace("\"", "");
+		System.out.println("/topic/friends/refresh/" + userId);
 	    
-	    System.out.println("/topic/user/" + userId);
-	    WebSocketClientManager.getSession().subscribe("/topic/user/" + userId,
-	        new StompFrameHandler()
-	        {
-	            @Override
-	            public Type getPayloadType(StompHeaders headers)
+	    WebSocketClientManager.getSession().subscribe(
+	            "/topic/friends/refresh/" + userId,
+	            new StompFrameHandler()
 	            {
-	                return String.class;
-	            }
+	                @Override
+	                public Type getPayloadType(StompHeaders headers)
+	                {
+	                    return WebSocketPing.class;
+	                }
 
-	            @Override
-	            public void handleFrame(StompHeaders headers, Object payload)
-	            {
-	            	System.out.println("Test");
-//	                Platform.runLater(() ->
-//	                {
-//	                    System.out.println("WS EVENT: " + payload);
-//	                });
+	                @Override
+	                public void handleFrame(StompHeaders headers, Object payload)
+	                {
+	                    Platform.runLater(() ->
+	                    {
+	                    	try {
+	                    		System.out.println("Test");
+	                    		friendsList.getChildren().clear();
+								loadSidebarBlocks(SearchManager.getFriends());
+							} catch (IOException | InterruptedException e) {
+								e.printStackTrace();
+							}
+	                    });
+	                }
 	            }
-	        }
-	    );
+	        );
 	}
 	
 	public void MinimizeWindow(ActionEvent event)
@@ -320,29 +326,7 @@ public class MainSceneController {
 	
 	private void subscribeFriendshipSocket()
 	{
-	    WebSocketClientManager.getSession().subscribe(
-	            "/user/queue/friends",
-	            new StompFrameHandler()
-	            {
-	                @Override
-	                public Type getPayloadType(StompHeaders headers)
-	                {
-	                    return byte[].class;
-	                }
 
-	                @Override
-	                public void handleFrame(StompHeaders headers, Object payload)
-	                {
-//	                	WebSocketPing event = (WebSocketPing) payload;
-
-	                    Platform.runLater(() ->
-	                    {
-	                        System.out.println("Sidebar should be refreshed");
-//                        	refreshFriendsSidebar();
-	                    });
-	                }
-	            }
-	        );
 	}
 	
     @FXML
@@ -378,8 +362,11 @@ public class MainSceneController {
 	{
 	    if(!users.isEmpty())
 	    {
-	        ((VBox) emptyFriendBox.getParent()).getChildren().remove(emptyFriendBox);
-
+	    	if (emptyFriendBox.getParent() != null) 
+	        {
+	            ((VBox) emptyFriendBox.getParent()).getChildren().remove(emptyFriendBox);
+	        }
+	    	
 	        for(User user : users)
 	        {
 	            addSidebarFriendBlock(user);

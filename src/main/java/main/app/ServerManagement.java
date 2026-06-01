@@ -170,26 +170,4 @@ public class ServerManagement {
 	{
 		return username;
 	}
-	
-//	public static String getUsernameFromServer() throws IOException, InterruptedException
-//	{
-//		HttpClient client = HttpClient.newHttpClient();
-//		System.out.println("AAAAAA" + usertoken);
-//	    HttpRequest request = HttpRequest.newBuilder()
-//	            .uri(URI.create(adress + "/auth/username?token=" + usertoken))
-//	            .GET()
-//	            .build();
-//	    
-//	    HttpResponse<String> response;
-//	    try {
-//	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
-//	    }catch (Exception e) {
-//			System.out.println("No connection to the server...");
-//			return null;
-//		}
-//	    
-//	    String username = response.body();
-//	    return username;
-//	}
-//****
 }
