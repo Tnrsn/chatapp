@@ -174,7 +174,7 @@ public class ServerManagement {
 //	public static String getUsernameFromServer() throws IOException, InterruptedException
 //	{
 //		HttpClient client = HttpClient.newHttpClient();
-////		System.out.println("AAAAAA" + usertoken);
+//		System.out.println("AAAAAA" + usertoken);
 //	    HttpRequest request = HttpRequest.newBuilder()
 //	            .uri(URI.create(adress + "/auth/username?token=" + usertoken))
 //	            .GET()

@@ -4,6 +4,9 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.app.ServerManagement;
 import main.app.WebSocketClientManager;
+import main.app.WebSocketPing;
 import main.app.WindowController;
 import main.mainscene.message.Conversation;
 import main.mainscene.message.Message;
@@ -82,7 +86,7 @@ public class MainSceneController {
 	    });
 	    
 	    MessageManager.setMainController(this);
-	    WebSocketClientManager.connect();
+	    WebSocketClientManager.connect(this);
 
 	    //Sets username label on main scene load
 	    usernameLabel.setText(ServerManagement.getUsername());
@@ -107,6 +111,50 @@ public class MainSceneController {
 	        }
 	    });
 	    
+	    
+	}
+	
+	public void subscribeUserEvents()
+	{
+		HttpClient client = HttpClient.newHttpClient();
+		
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(ServerManagement.getAdress() + "/session/getid?token=" + ServerManagement.getToken()))
+	            .header("Content-Type", "application/json")
+	            .GET()
+	            .build();
+	    
+	    HttpResponse<String> response;
+	    try {
+	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return;
+		}
+
+	    String userId = response.body().replace("\"", "");
+	    
+	    System.out.println("/topic/user/" + userId);
+	    WebSocketClientManager.getSession().subscribe("/topic/user/" + userId,
+	        new StompFrameHandler()
+	        {
+	            @Override
+	            public Type getPayloadType(StompHeaders headers)
+	            {
+	                return String.class;
+	            }
+
+	            @Override
+	            public void handleFrame(StompHeaders headers, Object payload)
+	            {
+	            	System.out.println("Test");
+//	                Platform.runLater(() ->
+//	                {
+//	                    System.out.println("WS EVENT: " + payload);
+//	                });
+	            }
+	        }
+	    );
 	}
 	
 	public void MinimizeWindow(ActionEvent event)
@@ -279,15 +327,18 @@ public class MainSceneController {
 	                @Override
 	                public Type getPayloadType(StompHeaders headers)
 	                {
-	                    return String.class;
+	                    return byte[].class;
 	                }
 
 	                @Override
 	                public void handleFrame(StompHeaders headers, Object payload)
 	                {
+//	                	WebSocketPing event = (WebSocketPing) payload;
+
 	                    Platform.runLater(() ->
 	                    {
-	                    	System.out.println("Sidebar should be refreshed");
+	                        System.out.println("Sidebar should be refreshed");
+//                        	refreshFriendsSidebar();
 	                    });
 	                }
 	            }
