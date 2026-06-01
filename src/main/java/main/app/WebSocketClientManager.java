@@ -37,7 +37,7 @@ public class WebSocketClientManager {
 	        
 	        WebSocketStompClient stompClient = new WebSocketStompClient(client);
 	        stompClient.setMessageConverter(converter);
-	        String url = "ws://localhost:8080/ws";
+	        String url = "ws://26.94.2.223:8080/ws";
 
 	        session = stompClient.connectAsync(
 	        	    url,

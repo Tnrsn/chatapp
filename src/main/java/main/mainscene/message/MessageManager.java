@@ -119,7 +119,7 @@ public class MessageManager {
 	
 	public static void subscribeToConversation(UUID conversationId)
 	{
-		System.out.println("SUB SESSION = " + WebSocketClientManager.getSession());
+//		System.out.println("SUB SESSION = " + WebSocketClientManager.getSession());
 		StompSession.Subscription sub = WebSocketClientManager.getSession().subscribe("/topic/conversation/" + conversationId,
 	        new StompFrameHandler() {
 	    	
@@ -133,9 +133,15 @@ public class MessageManager {
 	            public void handleFrame(StompHeaders headers, Object payload) 
 	            {
 	            	Message msg = (Message) payload;
+	            	
 	                Platform.runLater(() -> {
 	                    try {
-	                        mainController.addMessage(msg);
+	                    	boolean isMessageAdded = false;
+	                    	if(!isMessageAdded)
+	                    	{
+	                    		mainController.addMessage(msg);
+                    			isMessageAdded = true;
+	                    	}
 	                    } catch (IOException e) {
 	                        System.out.println("Something went wrong while adding a message");
 	                        e.printStackTrace();
@@ -144,6 +150,6 @@ public class MessageManager {
 	            }
 	        }
 	    );
-	    System.out.println("Subscribed to = " + conversationId);
+//	    System.out.println("Subscribed to = " + conversationId);
 	}
 }

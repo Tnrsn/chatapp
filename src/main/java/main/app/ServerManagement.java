@@ -20,7 +20,7 @@ public class ServerManagement {
 	//"http://x.x.x.x:8080"
 	//"http://26.94.2.223:8080" for radminvpn
 	//"http://localhost:8080"
-	private static String adress = "http://localhost:8080"; //DO NOT FORGET TO CHANGE WEBSOCKET ADRESS TOO IF YOU CHANGE THIS
+	private static String adress = "http://26.94.2.223:8080"; //DO NOT FORGET TO CHANGE WEBSOCKET ADRESS TOO IF YOU CHANGE THIS
 	
 	private static String usertoken;
 	private static String username;
