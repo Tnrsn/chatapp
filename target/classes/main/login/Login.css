@@ -1,26 +1,18 @@
-/* ==========================================================================
-   1. Root & Window Foundations
-   ========================================================================== */
 .root {
-    -fx-background-color: #201E1F; /* Teams deep dark window background */
+    -fx-background-color: #201E1F;
     -fx-font-family: "Segoe UI", system-ui, sans-serif;
 }
 
-/* Custom layout hook for the master container if needed */
 .main-bg {
     -fx-background-color: #201E1F;
 }
 
-/* Flat Window Toolbar header */
 .teams-toolbar {
-    -fx-background-color: #242424; /* Slightly lighter flat header than the root */
+    -fx-background-color: #242424;
     -fx-background-insets: 0;
     -fx-border-color: transparent;
 }
 
-/* ==========================================================================
-   2. Typography & Labels
-   ========================================================================== */
 .label {
     -fx-text-fill: #ADABAB;
     -fx-font-size: 14px;
@@ -32,42 +24,34 @@
     -fx-font-weight: bold;
 }
 
-/* System error label styling */
 .teams-error-label {
-    -fx-text-fill: #F3565D; /* Soft accent red for input errors */
+    -fx-text-fill: #F3565D;
 }
 
-/* ==========================================================================
-   3. Input Fields (Sharp Edges, No High Rounding)
-   ========================================================================== */
 .teams-input,
 .text-field,
 .password-field {
-    -fx-background-color: #2D2C2C; /* Surface dark variant */
+    -fx-background-color: #2D2C2C;
     -fx-text-fill: #F5F5F5;
-    -fx-prompt-text-fill: #8A8886; /* Clear placeholder visibility */
+    -fx-prompt-text-fill: #8A8886;
     
-    /* Teams Uses completely sharp borders for inputs */
-    /* Sir, no rounded corners */
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-background-radius: 1;
+    -fx-border-radius: 1;
     
-    -fx-border-color: #484646; /* Subtle edge definition */
+    -fx-border-color: #484646;
     -fx-border-width: 1px;
     -fx-padding: 8px 12px;
 }
 
-/* Active input text field glow - Updated to Green Palette */
 .teams-input:focused,
 .text-field:focused,
 .password-field:focused {
     -fx-background-color: #2D2C2C;
-    -fx-border-color: #548C2F; /* *** SWAPPED: Signature Green Accent *** */
+    -fx-border-color: #548C2F;
     
-    /* Clean Fluent UI thin underline ring simulation - Updated to Green */
     -fx-effect: dropshadow(
         gaussian,
-        rgba(84, 140, 47, 0.4), /* *** SWAPPED: Green Shadow *** */
+        rgba(84, 140, 47, 0.4),
         4,
         0.0,
         0,
@@ -75,36 +59,28 @@
     );
 }
 
-/* ==========================================================================
-   4. Buttons (Flat Styling & Interactive States)
-   ========================================================================== */
-
-/* Universal structural rules for all standard buttons */
 .button {
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-background-radius: 2px; /* Super subtle clean rounding used by modern Fluent UI */
+    -fx-background-radius: 2px;
     -fx-border-radius: 2px;
-    -fx-cursor: hand;
 }
 
-/* --- PRIMARY BUTTON: Login (Vibrant Green Fill) - Updated --- */
 .button-primary {
-    -fx-background-color: #548C2F; /* *** SWAPPED: Green Fill *** */
+    -fx-background-color: #548C2F;
     -fx-text-fill: #FFFFFF;
     -fx-border-color: transparent;
 }
 
 .button-primary:hover {
-    -fx-background-color: #4A7A29; /* *** SWAPPED: Darker Green Hover *** */
+    -fx-background-color: #4A7A29;
 }
 
 .button-primary:pressed {
-    -fx-background-color: #3E6622; /* *** SWAPPED: Deep Green Press *** */
+    -fx-background-color: #3E6622;
 }
 
-/* --- SECONDARY BUTTON: Register (Ghost/Outline Style) - Updated Hover --- */
 .button-secondary {
     -fx-background-color: transparent;
     -fx-text-fill: #FFFFFF;
@@ -113,17 +89,14 @@
 }
 
 .button-secondary:hover {
-    -fx-background-color: #2D2C2C; /* Fills slightly on hover */
-    -fx-border-color: #548C2F;     /* *** SWAPPED: Green edge highlight *** */
+    -fx-background-color: #2D2C2C;
+    -fx-border-color: #548C2F;
 }
 
 .button-secondary:pressed {
     -fx-background-color: #1F1E1E;
 }
 
-/* ==========================================================================
-   5. Window Controls
-   ========================================================================== */
 #closeButton,
 .close-button {       
     -fx-background-color: transparent;
@@ -135,6 +108,6 @@
 
 #closeButton:hover,
 .close-button:hover {
-    -fx-background-color: #C43C25; /* Standard Windows flat close-red */
+    -fx-background-color: #C43C25;
     -fx-text-fill: #FFFFFF;
 }
