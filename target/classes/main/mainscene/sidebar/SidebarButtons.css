@@ -1,33 +1,26 @@
-/* ==========================================================================
-   Sidebar List Item Styles
-   ========================================================================== */
-
 .root {
-    /* Set to transparent so the component blends perfectly into your #242424 sidebar */
     -fx-background-color: transparent; 
 }
 
 #friendButton {
     -fx-background-color: transparent;
-    -fx-background-radius: 4px; /* A slight radius looks best for sidebar list items in modern UI */
+    -fx-background-radius: 4px;
     -fx-border-color: transparent;
-    -fx-cursor: hand;
     
-    /* Optional: Add a little padding so the text doesn't touch the edges */
     -fx-padding: 8px 12px; 
 }
 
 #friendButton:hover {
-    -fx-background-color: #2D2C2C; /* A soft, subtle highlight when hovered */
+    -fx-background-color: #2D2C2C;
 }
 
 #friendButton:pressed {
-    -fx-background-color: #1F1E1E; /* Drops into the background on click */
+    -fx-background-color: #1F1E1E;
 }
 
 #usernameText {
-    -fx-fill: #F5F5F5; /* Crisp off-white */
-    -fx-font-family: "Segoe UI", system-ui, sans-serif; /* Locked into the Teams font */
+    -fx-fill: #F5F5F5;
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }

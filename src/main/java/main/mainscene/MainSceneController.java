@@ -68,12 +68,14 @@ public class MainSceneController {
 	@FXML
 	private TextField searchField;
 	
-	// --- New Tab Buttons ---
-	@FXML private Button btnCommunities;
-	@FXML private Button btnPeople;
-	@FXML private Button btnFriends;
-	@FXML private Button btnRequests;
-	// -----------------------
+	@FXML 
+	private Button btnCommunities;
+	@FXML 
+	private Button btnPeople;
+	@FXML 
+	private Button btnFriends;
+	@FXML 
+	private Button btnRequests;
 	
 	public void initialize()
 	{
@@ -212,7 +214,7 @@ public class MainSceneController {
 	
 	@FXML
 	private void handleSearch(ActionEvent event) throws IOException, InterruptedException {
-//	    System.out.println("Searching...");
+	    System.out.println("Searching...");
 	    searchResults.getChildren().clear();
 	    
 	    messageScroll.setVisible(false);
@@ -324,11 +326,6 @@ public class MainSceneController {
 		}
 	}
 	
-	private void subscribeFriendshipSocket()
-	{
-
-	}
-	
     @FXML
     private void sidebarButtons(ActionEvent event) throws IOException, InterruptedException
     {
@@ -381,6 +378,12 @@ public class MainSceneController {
 //		}
 	}
     
+	@FXML
+	private void openFriendsMenu(ActionEvent event) throws IOException, InterruptedException
+	{
+		currentSearchMode = SearchMode.FRIENDS;
+		handleSearch(event);
+	}
 //--------------------MESSAGES-------------
     @FXML
     private VBox messageVBox;
