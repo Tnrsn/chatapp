@@ -14,9 +14,9 @@
     <padding>
         <Insets bottom="20" left="20" right="20" top="30" />
     </padding>
-    <TextField maxWidth="300.0" promptText="Server Name" />
+    <TextField fx:id="serverName" maxWidth="300.0" promptText="Server Name" />
     <TextField fx:id="serverTagsField" maxWidth="300.0" promptText="Server Tags (Art. Tech. Gaming, etc.)" />
-   <TextArea maxWidth="300.0" prefHeight="79.0" prefWidth="300.0" promptText="Server Description" wrapText="true" />
+   <TextArea fx:id="serverDescription" maxWidth="300.0" prefHeight="79.0" prefWidth="300.0" promptText="Server Description" wrapText="true" />
     <HBox alignment="TOP_CENTER" maxWidth="300.0" spacing="20">
         <ScrollPane fx:id="tagsScroll" fitToWidth="true" prefViewportHeight="180" prefViewportWidth="180" prefWidth="175.0">
             <content>
@@ -27,7 +27,7 @@
          </HBox.margin>
         </ScrollPane>
         <VBox alignment="CENTER" spacing="20">
-         <CheckBox mnemonicParsing="false" selected="true" text="Public" />
+         <CheckBox fx:id="isPublic" mnemonicParsing="false" selected="true" text="Public" />
             <Button fx:id="addTagButton" onAction="#AddTag" text="Add Tag" />
             <Button fx:id="createServerButton" onAction="#CreateServer" text="Create Server" textAlignment="CENTER" />
         </VBox>

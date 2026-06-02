@@ -9,11 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import main.mainscene.community.tags.CommunityTagsController;
-import main.mainscene.peopleblock.PeopleBlockController;
 
 public class CreateCommunityController {
 
@@ -23,6 +24,13 @@ public class CreateCommunityController {
 	private VBox tagContainer;
 	@FXML
 	private TextField serverTagsField;
+	
+	@FXML
+	private TextField serverName;
+	@FXML
+	private CheckBox isPublic;
+	@FXML
+	private TextArea serverDescription;
 	
 	private final List<String> tags = new ArrayList<>();
 	
@@ -60,12 +68,9 @@ public class CreateCommunityController {
 	        tags.add(tag);
 
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/community/tags/CommunityTags.fxml"));
+	        
 	        Parent block = loader.load();
-
-	        block.getStylesheets().add(
-	            getClass()
-	                .getResource("/main/mainscene/community/tags/CommunityTags.css")
-	                .toExternalForm());
+	        block.getStylesheets().add(getClass().getResource("/main/mainscene/community/tags/CommunityTags.css").toExternalForm());
 
 	        CommunityTagsController controller = loader.getController();
 	        controller.getTagName().setText(tag);
@@ -82,7 +87,8 @@ public class CreateCommunityController {
 	@FXML
 	public void CreateServer(ActionEvent event)
 	{
-		System.out.println("Create Server");
+	    CommunityAPIClient.createCommunity(serverName.getText(), serverDescription.getText(), isPublic.isSelected(), 
+	    		new ArrayList<>(tags));
 	}
 	
 	public VBox getTagContainer()
