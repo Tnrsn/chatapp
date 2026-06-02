@@ -120,7 +120,7 @@ public class PeopleBlockController {
 	//Friends
 	public void openChat(ActionEvent event) throws IOException, InterruptedException
 	{
-		mainController.openChat(searchUserId);
+		mainController.openDMChat(searchUserId);
 	}
 	
 }

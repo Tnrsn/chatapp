@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -39,6 +40,8 @@ import main.app.ServerManagement;
 import main.app.WebSocketClientManager;
 import main.app.WebSocketPing;
 import main.app.WindowController;
+import main.mainscene.community.Community;
+import main.mainscene.community.CommunityCreatedEvent;
 import main.mainscene.message.Conversation;
 import main.mainscene.message.Message;
 import main.mainscene.message.MessageController;
@@ -49,7 +52,8 @@ import main.mainscene.message.MessageRequest;
 import main.mainscene.peopleblock.PeopleBlockController;
 import main.mainscene.peopleblock.SearchMode;
 import main.mainscene.search.SearchManager;
-import main.mainscene.sidebar.SidebarController;
+import main.mainscene.sidebar.SBCommunityBlocksController;
+import main.mainscene.sidebar.SBFriendBlocksController;
 import main.mainscene.user.User;
 
 public class MainSceneController {
@@ -121,7 +125,7 @@ public class MainSceneController {
 	    
 	}
 	
-	public void subscribeFriendsEvents()
+	public String getUserId()
 	{
 		HttpClient client = HttpClient.newHttpClient();
 		
@@ -136,10 +140,48 @@ public class MainSceneController {
 	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
 	    }catch (Exception e) {
 			System.out.println("No connection to the server...");
-			return;
+			return null;
 		}
 //	    "f754fab2-3043-43e6-9223-051d8f203f51"
 	    String userId = response.body().replace("\"", "");
+	    return userId;
+	}
+	
+	public void subscribeSocketQueueUpdates(String userId)
+	{
+		WebSocketClientManager.getSession().subscribe("/topic/community/created/" + userId, new StompFrameHandler() {
+
+		    @Override
+		    public Type getPayloadType(StompHeaders headers) {
+		        return WebSocketPing.class;
+		    }
+
+		    @Override
+		    public void handleFrame(StompHeaders headers, Object payload) {
+		    	System.out.println("test");
+		    }
+		});
+	}
+	
+	public void subscribeFriendsEvents(String userId)
+	{
+//		HttpClient client = HttpClient.newHttpClient();
+//		
+//	    HttpRequest request = HttpRequest.newBuilder()
+//	            .uri(URI.create(ServerManagement.getAdress() + "/session/getid?token=" + ServerManagement.getToken()))
+//	            .header("Content-Type", "application/json")
+//	            .GET()
+//	            .build();
+//	    
+//	    HttpResponse<String> response;
+//	    try {
+//	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+//	    }catch (Exception e) {
+//			System.out.println("No connection to the server...");
+//			return;
+//		}
+////	    "f754fab2-3043-43e6-9223-051d8f203f51"
+//	    String userId = response.body().replace("\"", "");
 		System.out.println("/topic/friends/refresh/" + userId);
 	    
 	    WebSocketClientManager.getSession().subscribe(
@@ -160,7 +202,7 @@ public class MainSceneController {
 	                    	try {
 	                    		System.out.println("Test");
 	                    		friendsList.getChildren().clear();
-								loadSidebarBlocks(SearchManager.getFriends());
+								loadSidebarFriendBlocks();
 							} catch (IOException | InterruptedException e) {
 								e.printStackTrace();
 							}
@@ -362,13 +404,12 @@ public class MainSceneController {
 	
 	private void loadSideBarOnInit()
 	{
-	    try {
-			loadSidebarBlocks(SearchManager.getFriends());
+		try {
+			loadSidebarFriendBlocks();
+			loadSidebarCommunityBlocks();
 		} catch (IOException e) {
-			System.out.println("Problem occured while loading friends");
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			System.out.println("Problem occured while loading friends");
 			e.printStackTrace();
 		}
 	}
@@ -381,29 +422,29 @@ public class MainSceneController {
     
     public void addSidebarFriendBlock(User user) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/main/mainscene/sidebar/SBFriend.fxml")
-            );
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/sidebar/SBFriend.fxml"));
 
-            Parent block = loader.load();
+        Parent block = loader.load();
 
-            block.getStylesheets().add(
-                getClass()
-                .getResource("/main/mainscene/sidebar/SidebarButtons.css")
-                .toExternalForm()
-            );
+        block.getStylesheets().add(
+            getClass()
+            .getResource("/main/mainscene/sidebar/SidebarButtons.css")
+            .toExternalForm()
+        );
 
-            SidebarController controller = loader.getController();
+        SBFriendBlocksController controller = loader.getController();
 
-            controller.setUser(user);
-            controller.setUsername(user.username);
-            controller.setMainSceneController(this);
+        controller.setUser(user);
+        controller.setUsername(user.username);
+        controller.setMainSceneController(this);
 
-            friendsList.getChildren().add(block);
+        friendsList.getChildren().add(block);
     }
     
-	private void loadSidebarBlocks(List<User> users) throws IOException
+	private void loadSidebarFriendBlocks() throws IOException, InterruptedException
 	{
+		List<User> users = SearchManager.getFriends();
+		
 	    if(!users.isEmpty())
 	    {
 	    	if (emptyFriendBox.getParent() != null) 
@@ -416,21 +457,51 @@ public class MainSceneController {
 	            addSidebarFriendBlock(user);
 	        }
 	    }
-//		else if(!servers.isEmpty)
-//		{
-//			emptyServerBox.getParent();
-//			((VBox) emptyServerBox.getParent()).getChildren().remove(emptyServerBox);
-//			
-//			for(Server server : servers).... Don't delete above when adding servers			
-//		}
 	}
     
-	@FXML
+	private void loadSidebarCommunityBlocks() throws IOException, InterruptedException
+	{
+		List<Community> communities = SearchManager.getCommunities();
+		
+	    if(!communities.isEmpty())
+	    {
+	    	if (emptyServerBox.getParent() != null) 
+	        {
+	            ((VBox) emptyServerBox.getParent()).getChildren().remove(emptyServerBox);
+	        }
+	    	
+	        for(Community community : communities)
+	        {
+	        	System.out.println("Community name; " + community.getName());
+	            addSidebarCommunityBlock(community);
+	        }
+	    }
+	}
+	
+	private void addSidebarCommunityBlock(Community community) throws IOException
+	{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/sidebar/SBCommunity.fxml"));
+
+        Parent block = loader.load();
+
+        block.getStylesheets().add(
+            getClass()
+            .getResource("/main/mainscene/sidebar/SidebarButtons.css")
+            .toExternalForm()
+        );
+
+        SBCommunityBlocksController controller = loader.getController();
+
+        controller.setCommunity(community);
+        controller.setCommunityName(community.getName());
+        controller.setMainSceneController(this);
+
+        communityList.getChildren().add(block);
+	}
+	
+	@FXML //I'll delete this function later, and connect Friend button to searchFriends() directly
 	private void openFriendsMenu(ActionEvent event) throws IOException, InterruptedException
 	{
-//		currentSearchMode = SearchMode.FRIENDS;
-//		handleSearch(event);
-		
 		searchFriends(event);
 	}
 //--------------------MESSAGES-------------
@@ -442,13 +513,13 @@ public class MainSceneController {
     @FXML
     private Label channelNameText;
     
-    public void openChat(UUID receiverId) throws IOException, InterruptedException
+    public void openDMChat(UUID receiverId) throws IOException, InterruptedException
     {
     	messageScroll.setVisible(true);
     	searchMenu.setVisible(false);
-    	
-    	channelNameText.setText(MessageManager.getUsernameById(receiverId));
-    	
+
+		channelNameText.setText(MessageManager.getUsernameById(receiverId));    		
+
     	conversation = MessageManager.getConversation(receiverId, ServerManagement.getToken());
     	loadChat(conversation.getId(), ServerManagement.getToken());
     	MessageManager.subscribeToConversation(conversation.getId());
@@ -470,6 +541,19 @@ public class MainSceneController {
 		controller.setMessage(message);
 		controller.setUsernameText(ServerManagement.getUsername());
 		messageVBox.getChildren().add(node);
+    }
+    
+    public void openCommunityChat(Community community) throws IOException, InterruptedException
+    {
+    	messageScroll.setVisible(true);
+    	searchMenu.setVisible(false);
+    	
+    	channelNameText.setText(community.getName());
+    	System.out.println("2222222");
+    	conversation = MessageManager.getCommunityConversation(community.getId(), ServerManagement.getToken());
+    	System.out.println("conv id= " + conversation.getId());
+    	loadChat(conversation.getId(), ServerManagement.getToken());
+    	MessageManager.subscribeToConversation(conversation.getId());
     }
     
 	public void SendMessage(ActionEvent event) throws IOException, InterruptedException

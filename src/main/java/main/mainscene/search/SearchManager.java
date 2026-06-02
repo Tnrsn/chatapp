@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import main.app.ServerManagement;
+import main.mainscene.community.Community;
 import main.mainscene.user.User;
 
 public class SearchManager {
@@ -29,10 +30,7 @@ public class SearchManager {
 	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
 	    ObjectMapper mapper = new ObjectMapper();
-	    List<User> users = mapper.readValue(
-	    	    response.body(),
-	    	    new TypeReference<List<User>>() {}
-	    	);
+	    List<User> users = mapper.readValue(response.body(), new TypeReference<List<User>>() {});
 	    
 //	    for(User user : users)
 //	    {
@@ -55,10 +53,7 @@ public class SearchManager {
 	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
 	    ObjectMapper mapper = new ObjectMapper();
-	    List<User> users = mapper.readValue(
-	    	    response.body(),
-	    	    new TypeReference<List<User>>() {}
-	    	);
+	    List<User> users = mapper.readValue(response.body(), new TypeReference<List<User>>() {});
 	    
 	    return users;
 	}
@@ -75,18 +70,38 @@ public class SearchManager {
 	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
 	    ObjectMapper mapper = new ObjectMapper();
-	    List<User> users = mapper.readValue(
-	    	    response.body(),
-	    	    new TypeReference<List<User>>() {}
-	    	);
+	    List<User> users = mapper.readValue(response.body(), new TypeReference<List<User>>() {});
 	    
 	    System.out.println("Get Friendlist");
-	    for(User user : users)
-	    {
-	    	System.out.println(user.username);
-	    }
+//	    for(User user : users)
+//	    {
+//	    	System.out.println(user.username);
+//	    }
 	    
 	    return users;
+	}
+	
+	public static List<Community> getCommunities() throws IOException, InterruptedException
+	{
+		HttpClient client = HttpClient.newHttpClient();
+		
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(adress + "/community/getlist?token=" + ServerManagement.getToken()))
+	            .GET()
+	            .build();
+	    
+	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+	    
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<Community> communities = mapper.readValue(response.body(), new TypeReference<List<Community>>() {});
+	    
+	    System.out.println("Get Community");
+	    for(Community community : communities)
+	    {
+	    	System.out.println(community.getName());
+	    }
+	    
+	    return communities;
 	}
 	
 	//public static .... searchCommunities()

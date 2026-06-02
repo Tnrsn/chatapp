@@ -79,6 +79,32 @@ public class MessageManager {
         return mapper.readValue(response.body(), Conversation.class);
 	}
 	
+	public static Conversation getCommunityConversation(UUID communityId, String userToken) throws IOException, InterruptedException
+	{
+        HttpClient client = HttpClient.newHttpClient();
+
+        String json = """
+        	    {
+        	        "token": "%s",
+        	        "communityId": "%s"
+        	    }
+        	    """.formatted(userToken, communityId);
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ServerManagement.getAdress() + "/conversations/community?token=" + userToken + "&communityId=" + communityId))
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        System.out.println(response.body());
+        return mapper.readValue(response.body(), Conversation.class);
+	}
+	
 	public static Message sendMessageWebSocket(UUID conversationId, String text)
 	{
 		Message message = new Message();

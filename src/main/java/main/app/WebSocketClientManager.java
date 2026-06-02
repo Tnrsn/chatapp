@@ -76,7 +76,9 @@ public class WebSocketClientManager {
 	        	            
 	        	            WebSocketClientManager.setSession(session);
 	        	            
-	        	            mainSceneController.subscribeFriendsEvents();
+	        	            String userId = mainSceneController.getUserId();
+	        	            mainSceneController.subscribeSocketQueueUpdates(userId);
+	        	            mainSceneController.subscribeFriendsEvents(userId);
 	        	        }
 	        	    }
 	        	).get();

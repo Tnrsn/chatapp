@@ -73,7 +73,7 @@
       							    <content>
       							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
       									    <content>
-      									        <VBox fx:id="friendList">
+      									        <VBox fx:id="communityList">
                                              <children>
                                                 <VBox fx:id="emptyServerBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="235.0" spacing="8.0">
                                                    <children>

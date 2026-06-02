@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Button fx:id="friendButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openChat" prefHeight="42.0" prefWidth="193.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainscene.sidebar.SidebarController">
+<Button fx:id="friendButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openChat" prefHeight="42.0" prefWidth="193.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainscene.sidebar.SBFriendBlocksController">
    
    <!-- Link the custom list-item CSS -->
    <stylesheets>
