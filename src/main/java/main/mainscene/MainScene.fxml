@@ -2,7 +2,6 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -15,6 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -26,219 +26,228 @@
    </stylesheets>
 
    <children>
-      <HBox layoutX="74.0" layoutY="155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane fx:id="mainStack" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-			<BorderPane fx:id="sideBar" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="900.0" prefWidth="263.0" HBox.hgrow="NEVER">
-			    <top>
-			        <HBox fx:id="sideDragBar" alignment="CENTER_LEFT" maxHeight="62.0" minHeight="62.0" prefHeight="62.0" prefWidth="260.0">
-                     <children>
-                        <Region prefHeight="200.0" prefWidth="200.0" />
-                        <Button mnemonicParsing="false" onAction="#openFriendsMenu" text="F" />
-                     </children></HBox>
-			    </top>
-			    <center>
-					<VBox fillWidth="true" prefWidth="260.0" VBox.vgrow="ALWAYS">
-			            <children>
-							<TitledPane text="Friends">
-							    <content>
-							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
-									    <content>
-									        <VBox fx:id="friendsList">
-                                       <children>
-                                          <VBox fx:id="emptyFriendBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="235.0" spacing="8.0">
+            <HBox>
+               <children>
+      			<BorderPane fx:id="sideBar" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="900.0" prefWidth="263.0" HBox.hgrow="NEVER">
+      			    <top>
+      			        <HBox fx:id="sideDragBar" alignment="CENTER_LEFT" maxHeight="62.0" minHeight="62.0" prefHeight="62.0" prefWidth="260.0">
+                           <children>
+                              <Region prefHeight="200.0" prefWidth="200.0" />
+                              <Button mnemonicParsing="false" onAction="#openFriendsMenu" text="F" />
+                           </children>
+                        </HBox>
+      			    </top>
+      			    <center>
+      					<VBox fillWidth="true" prefWidth="260.0" VBox.vgrow="ALWAYS">
+      			            <children>
+      							<TitledPane text="Friends">
+      							    <content>
+      							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
+      									    <content>
+      									        <VBox fx:id="friendsList">
                                              <children>
-                                                <Text fx:id="emptyListText" strokeType="OUTSIDE" strokeWidth="0.0" text="Looks like you don't have any friends" textAlignment="CENTER" wrappingWidth="172.3525390625">
-                                                   <font>
-                                                      <Font name="Segoe UI" size="18.0" />
-                                                   </font>
-                                                </Text>
-                                                <Button fx:id="emptyListButton" mnemonicParsing="false" onAction="#sidebarButtons" prefHeight="40.0" prefWidth="94.0" text="Add Friends!">
-                                                    <font>
-                                                        <Font name="Segoe UI Bold" size="12.0" />
-                                                    </font>
-                                                </Button>
+                                                <VBox fx:id="emptyFriendBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="235.0" spacing="8.0">
+                                                   <children>
+                                                      <Text fx:id="emptyListText" strokeType="OUTSIDE" strokeWidth="0.0" text="Looks like you don't have any friends" textAlignment="CENTER" wrappingWidth="172.3525390625">
+                                                         <font>
+                                                            <Font name="Segoe UI" size="18.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Button fx:id="emptyListButton" mnemonicParsing="false" onAction="#searchFriends" prefHeight="40.0" prefWidth="94.0" text="Add Friends!">
+                                                          <font>
+                                                              <Font name="Segoe UI Bold" size="12.0" />
+                                                          </font>
+                                                      </Button>
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </VBox>
-                                       </children></VBox>
-									    </content>
-									</ScrollPane>
-							    </content>
-							</TitledPane>
-							
-							<TitledPane text="Servers">
-							    <content>
-							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
-									    <content>
-									        <VBox fx:id="friendList">
-                                       <children>
-                                          <VBox fx:id="emptyServerBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="235.0" spacing="8.0">
+      									    </content>
+      									</ScrollPane>
+      							    </content>
+      							</TitledPane>
+      							
+      							<TitledPane text="Servers">
+      							    <content>
+      							        <ScrollPane fx:id="friendScroll" fitToWidth="true" hbarPolicy="NEVER">
+      									    <content>
+      									        <VBox fx:id="friendList">
                                              <children>
-                                                <Text fx:id="emptyListText" strokeType="OUTSIDE" strokeWidth="0.0" text="Looks like you are not in a server yet" textAlignment="CENTER" wrappingWidth="172.3525390625">
-                                                   <font>
-                                                      <Font name="Segoe UI" size="18.0" />
-                                                   </font>
-                                                </Text>
-                                                <Button fx:id="emptyListButton" mnemonicParsing="false" onAction="#sidebarButtons" prefHeight="40.0" prefWidth="140.0" text="Join a Server!">
-                                                    <font>
-                                                        <Font name="Segoe UI Bold" size="12.0" />
-                                                    </font>
-                                                </Button>
+                                                <VBox fx:id="emptyServerBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="235.0" spacing="8.0">
+                                                   <children>
+                                                      <Text fx:id="emptyListText" strokeType="OUTSIDE" strokeWidth="0.0" text="Looks like you are not in a server yet" textAlignment="CENTER" wrappingWidth="172.3525390625">
+                                                         <font>
+                                                            <Font name="Segoe UI" size="18.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Button fx:id="emptyListButton" mnemonicParsing="false" onAction="#searchCommunities" prefHeight="40.0" prefWidth="140.0" text="Join a Server!">
+                                                          <font>
+                                                              <Font name="Segoe UI Bold" size="12.0" />
+                                                          </font>
+                                                      </Button>
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </VBox>
-                                       </children></VBox>
-									    </content>
-									</ScrollPane>
-							    </content>
-							</TitledPane>
-			            </children>
-			        </VBox>
-			    </center>
-			    <bottom>
-			        <HBox alignment="CENTER_LEFT" maxHeight="64.0" minHeight="64.0" prefHeight="64.0" prefWidth="260.0">
-			            <children>
-			                <Region prefHeight="60.0" prefWidth="60.0" />
-			                <Label fx:id="usernameLabel" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="130.0" text="Username">
-			                    <font>
-			                        <Font name="Segoe UI Bold" size="22.0" />
-			                    </font>
-			                </Label>
-			            </children>
-			        </HBox>
-			    </bottom>
-			</BorderPane>
-      		<GridPane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-      		    <columnConstraints>
-      		        <ColumnConstraints hgrow="ALWAYS" />
-      		    </columnConstraints>
-      		    <rowConstraints>
-      		        <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
-      		        <RowConstraints vgrow="ALWAYS" />
-      		        <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="NEVER" />
-      		    </rowConstraints>
-               <ScrollPane fx:id="messageScroll" focusTraversable="false" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                  <content>
-                     <VBox fx:id="messageVBox" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" />
-                  </content>
-               </ScrollPane>
-               <VBox fx:id="searchMenu" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" visible="false" GridPane.rowIndex="1">
-                  <children>
-                     <BorderPane prefHeight="126.0" prefWidth="1537.0">
-                        <bottom>
-                           <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="200.0" spacing="200.0" BorderPane.alignment="CENTER">
-   <children>
-      <Button fx:id="btnCommunities" mnemonicParsing="false" onAction="#searchCommunities" text="Communities">
-         <font>
-            <Font name="Segoe UI" size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnPeople" mnemonicParsing="false" onAction="#searchPeople" text="People">
-         <font>
-            <Font name="Segoe UI" size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnFriends" mnemonicParsing="false" onAction="#searchFriends" text="Friends">
-         <font>
-            <Font name="Segoe UI" size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnRequests" mnemonicParsing="false" onAction="#searchRequests" text="Requests">
-         <font>
-            <Font name="Segoe UI" size="20.0" />
-         </font>
-      </Button>
-   </children>
-</HBox>
-                        </bottom>
-                        <left>
-   <Button fx:id="backButton" alignment="CENTER" mnemonicParsing="false" onAction="#searchBackButton" text="X" BorderPane.alignment="CENTER">
-      <font>
-         <Font name="Segoe UI Bold" size="16.0" />
-      </font>
-      <BorderPane.margin>
-         <Insets bottom="-75.0" left="25.0" />
-      </BorderPane.margin>
-   </Button>
-</left>
-                     </BorderPane>
-                     <VBox maxHeight="1.7976931348623157E308" prefHeight="679.0" prefWidth="1563.0" VBox.vgrow="ALWAYS">
+      									    </content>
+      									</ScrollPane>
+      							    </content>
+      							</TitledPane>
+      			            </children>
+      			        </VBox>
+      			    </center>
+      			    <bottom>
+      			        <HBox alignment="CENTER_LEFT" maxHeight="64.0" minHeight="64.0" prefHeight="64.0" prefWidth="260.0">
+      			            <children>
+      			                <Region prefHeight="60.0" prefWidth="60.0" />
+      			                <Label fx:id="usernameLabel" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="130.0" text="Username">
+      			                    <font>
+      			                        <Font name="Segoe UI Bold" size="22.0" />
+      			                    </font>
+      			                </Label>
+      			            </children>
+      			        </HBox>
+      			    </bottom>
+      			</BorderPane>
+            		<GridPane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            		    <columnConstraints>
+            		        <ColumnConstraints hgrow="ALWAYS" />
+            		    </columnConstraints>
+            		    <rowConstraints>
+            		        <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            		        <RowConstraints vgrow="ALWAYS" />
+            		        <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="NEVER" />
+            		    </rowConstraints>
+                     <ScrollPane fx:id="messageScroll" focusTraversable="false" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                        <content>
+                           <VBox fx:id="messageVBox" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" />
+                        </content>
+                     </ScrollPane>
+                     <VBox fx:id="searchMenu" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" visible="false" GridPane.rowIndex="1">
                         <children>
-                           <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="642.0" prefWidth="1537.0" VBox.vgrow="ALWAYS">
-                              <children>
-                                 <ScrollPane fx:id="searchScroll" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="679.0" prefWidth="1129.0">
-                                    <content>
-                                       <VBox fx:id="searchResults" fillWidth="true" maxWidth="1.7976931348623157E308" />
-                                    </content>
-                                 </ScrollPane>
-                                 <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
-                                    <children>
-                                       <Button fx:id="createCommunityButton" mnemonicParsing="false" text="+">
-                                          <VBox.margin>
-                                             <Insets top="25.0" />
-                                          </VBox.margin>
-                                          <font>
-                                             <Font name="System Bold" size="20.0" />
-                                          </font>
-                                       </Button>
-                                    </children>
-                                    <HBox.margin>
-                                       <Insets />
-                                    </HBox.margin></VBox>
-                              </children>
-                           </HBox>
-                        </children></VBox>
-                  </children>
-               </VBox>
-      		    <GridPane alignment="CENTER" GridPane.rowIndex="2">
-      		        <columnConstraints>
-      		            <ColumnConstraints hgrow="ALWAYS" />
-      		            <ColumnConstraints hgrow="NEVER" />
-      		        </columnConstraints>
-      		        <TextField fx:id="messageField" maxWidth="Infinity" prefHeight="40.0" prefWidth="1520.0" promptText="Type message..." GridPane.columnIndex="0">
-                     <font>
-                        <Font name="Segoe UI" size="18.0" />
-                     </font>
-                  </TextField>
-      		        <Button fx:id="sendButton" minWidth="80" onAction="#SendMessage" prefHeight="38.0" prefWidth="80.0" text="Send" GridPane.columnIndex="1">
-                        <font>
-                            <Font name="Segoe UI Bold" size="14.0" />
-                        </font>
-                    </Button>
-      		            <rowConstraints>
-      		               <RowConstraints />
-      		            </rowConstraints>
-      		    </GridPane>
-         		<HBox fx:id="toolBar" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="50.0" prefWidth="1800.0" GridPane.hgrow="ALWAYS">
-                  <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="70.0" />
-         		         <Label fx:id="channelNameText" maxHeight="-Infinity" prefHeight="25.0" prefWidth="174.0" text="Channel_Name">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0" />
-                     </font>
-                  </Label>
-         		         <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="120.0" />
-         		    <TextField fx:id="searchField" maxHeight="-Infinity" onAction="#handleSearch" prefHeight="30.0" prefWidth="645.0" promptText="Search..." HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </TextField>
-         		    <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="340.0" />
-                  <Button fx:id="windowControlButtons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#MinimizeWindow" prefHeight="42.0" prefWidth="40.0" text="_" HBox.hgrow="NEVER">
-                      <font>
-                          <Font name="Segoe UI" size="14.0" />
-                      </font>
-                  </Button>
-         		    <Button fx:id="windowControlButtons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#FullscreenWindow" prefHeight="40.0" prefWidth="40.0" text="◻" HBox.hgrow="NEVER">
-                      <font>
-                          <Font name="Segoe UI" size="14.0" />
-                      </font>
-                  </Button>
-         		    <Button fx:id="closeAppButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#CloseApp" prefHeight="40.0" prefWidth="40.0" text="✕" HBox.hgrow="NEVER">
-                      <font>
-                          <Font name="Segoe UI" size="14.0" />
-                      </font>
-                  </Button>
-         		</HBox>
-      		</GridPane>
+                           <BorderPane prefHeight="126.0" prefWidth="1537.0">
+                              <bottom>
+                                 <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="200.0" spacing="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnCommunities" mnemonicParsing="false" onAction="#searchCommunities" text="Communities">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnPeople" mnemonicParsing="false" onAction="#searchPeople" text="People">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnFriends" mnemonicParsing="false" onAction="#searchFriends" text="Friends">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRequests" mnemonicParsing="false" onAction="#searchRequests" text="Requests">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Button>
          </children>
       </HBox>
+                              </bottom>
+                              <left>
+         <Button fx:id="backButton" alignment="CENTER" mnemonicParsing="false" onAction="#searchBackButton" text="X" BorderPane.alignment="CENTER">
+            <font>
+               <Font name="Segoe UI Bold" size="16.0" />
+            </font>
+            <BorderPane.margin>
+               <Insets bottom="-75.0" left="25.0" />
+            </BorderPane.margin>
+         </Button>
+      </left>
+                           </BorderPane>
+                           <VBox maxHeight="1.7976931348623157E308" prefHeight="679.0" prefWidth="1563.0" VBox.vgrow="ALWAYS">
+                              <children>
+                                 <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="642.0" prefWidth="1537.0" VBox.vgrow="ALWAYS">
+                                    <children>
+                                       <ScrollPane fx:id="searchScroll" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="679.0" prefWidth="1129.0">
+                                          <content>
+                                             <VBox fx:id="searchResults" fillWidth="true" maxWidth="1.7976931348623157E308" />
+                                          </content>
+                                       </ScrollPane>
+                                       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+                                          <children>
+                                             <Button fx:id="createCommunityButton" mnemonicParsing="false" onAction="#openCreateServer" text="+">
+                                                <VBox.margin>
+                                                   <Insets top="25.0" />
+                                                </VBox.margin>
+                                                <font>
+                                                   <Font name="System Bold" size="20.0" />
+                                                </font>
+                                             </Button>
+                                          </children>
+                                          <HBox.margin>
+                                             <Insets />
+                                          </HBox.margin>
+                                       </VBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                        </children>
+                     </VBox>
+            		    <GridPane alignment="CENTER" GridPane.rowIndex="2">
+            		        <columnConstraints>
+            		            <ColumnConstraints hgrow="ALWAYS" />
+            		            <ColumnConstraints hgrow="NEVER" />
+            		        </columnConstraints>
+            		        <TextField fx:id="messageField" maxWidth="Infinity" prefHeight="40.0" prefWidth="1520.0" promptText="Type message..." GridPane.columnIndex="0">
+                           <font>
+                              <Font name="Segoe UI" size="18.0" />
+                           </font>
+                        </TextField>
+            		        <Button fx:id="sendButton" minWidth="80" onAction="#SendMessage" prefHeight="38.0" prefWidth="80.0" text="Send" GridPane.columnIndex="1">
+                              <font>
+                                  <Font name="Segoe UI Bold" size="14.0" />
+                              </font>
+                          </Button>
+            		            <rowConstraints>
+            		               <RowConstraints />
+            		            </rowConstraints>
+            		    </GridPane>
+               		<HBox fx:id="toolBar" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="50.0" prefWidth="1800.0" GridPane.hgrow="ALWAYS">
+                        <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="70.0" />
+               		         <Label fx:id="channelNameText" maxHeight="-Infinity" prefHeight="25.0" prefWidth="174.0" text="Channel_Name">
+                           <font>
+                              <Font name="Segoe UI Bold" size="16.0" />
+                           </font>
+                        </Label>
+               		         <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="120.0" />
+               		    <TextField fx:id="searchField" maxHeight="-Infinity" onAction="#handleSearch" prefHeight="30.0" prefWidth="645.0" promptText="Search..." HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Segoe UI" size="14.0" />
+                           </font>
+                        </TextField>
+               		    <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="340.0" />
+                        <Button fx:id="windowControlButtons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#MinimizeWindow" prefHeight="42.0" prefWidth="40.0" text="_" HBox.hgrow="NEVER">
+                            <font>
+                                <Font name="Segoe UI" size="14.0" />
+                            </font>
+                        </Button>
+               		    <Button fx:id="windowControlButtons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#FullscreenWindow" prefHeight="40.0" prefWidth="40.0" text="◻" HBox.hgrow="NEVER">
+                            <font>
+                                <Font name="Segoe UI" size="14.0" />
+                            </font>
+                        </Button>
+               		    <Button fx:id="closeAppButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#CloseApp" prefHeight="40.0" prefWidth="40.0" text="✕" HBox.hgrow="NEVER">
+                            <font>
+                                <Font name="Segoe UI" size="14.0" />
+                            </font>
+                        </Button>
+               		</HBox>
+            		</GridPane>
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

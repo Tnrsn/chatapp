@@ -15,8 +15,10 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -24,10 +26,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.app.ServerManagement;
@@ -182,11 +187,62 @@ public class MainSceneController {
 		Platform.exit();
 	}
 	
+// --------------------------Stack Pane (Pop ups)------------------------------------
+	
+	@FXML
+	private StackPane mainStack;
+	private EventHandler<KeyEvent> escHandler;
+	
+	@FXML
+	public void openCreateServer() throws IOException
+	{
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/community/CreateCommunity.fxml"));
+
+	        Parent popup = loader.load();
+	        popup.getStylesheets().add(getClass().getResource("/main/mainscene/community/CreateCommunity.css").toExternalForm());
+	        
+	        Region overlay = new Region();
+	        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.6);");
+	        overlay.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+	        mainStack.getChildren().addAll(overlay, popup);
+
+	        StackPane.setAlignment(popup, Pos.CENTER);
+	        StackPane.setAlignment(popup, Pos.CENTER);
+	        
+	        escHandler = event -> 
+	        {
+	            if (event.getCode() == KeyCode.ESCAPE) {
+	                closePopup(overlay, popup);
+	            }
+	        };
+
+	        mainStack.getScene().addEventFilter(KeyEvent.KEY_PRESSED, escHandler);
+	}
+
+	private void closePopup(Node overlay, Node popup) {
+
+	    mainStack.getChildren().removeAll(overlay, popup);
+
+	    if (escHandler != null) {
+	        mainStack.getScene().removeEventFilter(KeyEvent.KEY_PRESSED, escHandler);
+	        escHandler = null;
+	    }
+	}
+	
 // -------------------------SEARCH MENU---------------------------------------
 	private SearchMode currentSearchMode = SearchMode.PEOPLE;
 	
 	@FXML
 	private Button createCommunityButton;
+	
+	private void resetTabColors() 
+	{
+		if (SearchMode.COMMUNITIES != currentSearchMode) btnCommunities.setStyle("");
+		if (SearchMode.PEOPLE != currentSearchMode) btnPeople.setStyle("");
+		if (SearchMode.FRIENDS != currentSearchMode) btnFriends.setStyle("");
+		if (SearchMode.REQUEST != currentSearchMode) btnRequests.setStyle("");
+	}
 	
 	private void loadSearchBlocks(String FXMLName, List<User> users) throws IOException
 	{
@@ -246,54 +302,45 @@ public class MainSceneController {
 		    loadSearchBlocks("FriendBlock.fxml", users);
 	    }
 	}
-	
-	// --- Helper Method to clear inline styles ---
-	private void resetTabColors() {
-		if (btnCommunities != null) btnCommunities.setStyle("");
-		if (btnPeople != null) btnPeople.setStyle("");
-		if (btnFriends != null) btnFriends.setStyle("");
-		if (btnRequests != null) btnRequests.setStyle("");
-	}
-	// --------------------------------------------
 
 	@FXML
 	public void searchCommunities(ActionEvent event) throws IOException, InterruptedException
 	{
-		resetTabColors();
 		if (btnCommunities != null) btnCommunities.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
 		
 		currentSearchMode = SearchMode.COMMUNITIES;
 		handleSearch(event);
+		resetTabColors();
 	}
 	
 	@FXML
 	public void searchPeople(ActionEvent event) throws IOException, InterruptedException
 	{
-		resetTabColors();
 		if (btnPeople != null) btnPeople.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
 		
 		currentSearchMode = SearchMode.PEOPLE;
 		handleSearch(event);
+		resetTabColors();
 	}
 	
 	@FXML
 	public void searchRequests(ActionEvent event) throws IOException, InterruptedException
 	{
-		resetTabColors();
 		if (btnRequests != null) btnRequests.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
 		
 		currentSearchMode = SearchMode.REQUEST;
 		handleSearch(event);
+		resetTabColors();
 	}
 	
 	@FXML
 	public void searchFriends(ActionEvent event) throws IOException, InterruptedException
 	{
-		resetTabColors();
 		if (btnFriends != null) btnFriends.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
 		
 		currentSearchMode = SearchMode.FRIENDS;
 		handleSearch(event);
+		resetTabColors();
 	}
 	
 	@FXML
@@ -381,8 +428,10 @@ public class MainSceneController {
 	@FXML
 	private void openFriendsMenu(ActionEvent event) throws IOException, InterruptedException
 	{
-		currentSearchMode = SearchMode.FRIENDS;
-		handleSearch(event);
+//		currentSearchMode = SearchMode.FRIENDS;
+//		handleSearch(event);
+		
+		searchFriends(event);
 	}
 //--------------------MESSAGES-------------
     @FXML
@@ -485,5 +534,5 @@ public class MainSceneController {
     		messageVBox.getChildren().add(node);
     		current = current.getNext();
     	}
-    }
+    }    
 }

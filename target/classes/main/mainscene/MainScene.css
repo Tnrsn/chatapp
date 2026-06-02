@@ -196,3 +196,26 @@
 #backButton:hover {
     -fx-background-color: #3A3839;
 }
+
+#createCommunityButton {
+    -fx-background-color: #548C2F;
+    -fx-border-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 50%;
+    -fx-min-width: 40px; 
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    -fx-border-radius: 50%;
+    -fx-padding: 0;
+    -fx-alignment: center;
+}
+
+#createCommunityButton:hover {
+    -fx-background-color: #4A7A29;
+}
+
+#createCommunityButton:pressed {
+    -fx-background-color: #3E6622;
+}
