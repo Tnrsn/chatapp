@@ -322,6 +322,8 @@ public class MainSceneController {
 	        controller.setMainController(this);
 	        controller.setCommunity(community);
 	        controller.setCommunityNameLabel(community.getName());
+//	        controller.setCommunityTags()
+	        controller.setCommunityDescriptionLabel(community.getDescription());
 	        
 	        searchResults.getChildren().add(block);
 	    }
