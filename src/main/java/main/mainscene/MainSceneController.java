@@ -42,6 +42,7 @@ import main.app.WebSocketPing;
 import main.app.WindowController;
 import main.mainscene.community.Community;
 import main.mainscene.community.CommunityCreatedEvent;
+import main.mainscene.community.CommunitySearchResults;
 import main.mainscene.communityblock.CommunityBlockController;
 import main.mainscene.message.Conversation;
 import main.mainscene.message.Message;
@@ -308,9 +309,9 @@ public class MainSceneController {
 	    }
 	}
 	
-	private void loadSearchCommunityBlocks(List<Community> communities) throws IOException
+	private void loadSearchCommunityBlocks(List<CommunitySearchResults> communities) throws IOException
 	{
-	    for(Community community : communities)
+	    for(CommunitySearchResults result : communities)
 	    {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/communityblock/CommunityBlock.fxml"));
 	         
@@ -320,10 +321,10 @@ public class MainSceneController {
 	        CommunityBlockController controller = loader.getController();
 	        
 	        controller.setMainController(this);
-	        controller.setCommunity(community);
-	        controller.setCommunityNameLabel(community.getName());
-//	        controller.setCommunityTags()
-	        controller.setCommunityDescriptionLabel(community.getDescription());
+	        controller.setCommunity(result.getCommunity());
+	        controller.setCommunityNameLabel(result.getCommunity().getName());
+	        controller.setCommunityTagButtons(result.getTags());
+	        controller.setCommunityDescriptionLabel(result.getCommunity().getDescription());
 	        
 	        searchResults.getChildren().add(block);
 	    }
@@ -339,7 +340,7 @@ public class MainSceneController {
 	    
 	    if(currentSearchMode == SearchMode.COMMUNITIES)
 	    {
-	    	List<Community> communities = SearchManager.searchCommunities(searchField.getText());
+	    	List<CommunitySearchResults> communities = SearchManager.searchCommunities(searchField.getText());
 	    	loadSearchCommunityBlocks(communities);
 	    	createCommunityButton.setVisible(true);
 	    }

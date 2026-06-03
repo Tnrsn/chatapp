@@ -29,7 +29,7 @@
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox />
+            <HBox fx:id="tagList" />
             <Label fx:id="communityDescription" wrapText="true" />
          </children>
          <BorderPane.margin>
