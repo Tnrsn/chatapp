@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import main.mainscene.MainSceneController;
 import main.mainscene.community.Community;
+import main.mainscene.community.CommunityAPIClient;
 import main.mainscene.community.CommunitySearchResults;
 import main.mainscene.community.tags.CommunityTagsController;
 
@@ -56,8 +57,10 @@ public class CommunityBlockController {
 	}
 	
 	@FXML
-	public void joinCommunity(ActionEvent event)
+	public void joinCommunity(ActionEvent event) throws IOException, InterruptedException
 	{
+		CommunityAPIClient.joinCommunity(community.getId());
+		
 		System.out.println("You have joined to the community!");
 	}
 

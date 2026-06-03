@@ -149,9 +149,9 @@ public class MainSceneController {
 	    return userId;
 	}
 	
-	public void subscribeSocketQueueUpdates(String userId)
+	public void subscribeCommunityCreateEvent(String userId)
 	{
-		WebSocketClientManager.getSession().subscribe("/topic/community/created/" + userId, new StompFrameHandler() {
+		WebSocketClientManager.getSession().subscribe("/topic/community/refresh/" + userId, new StompFrameHandler() {
 
 		    @Override
 		    public Type getPayloadType(StompHeaders headers) {
@@ -160,30 +160,22 @@ public class MainSceneController {
 
 		    @Override
 		    public void handleFrame(StompHeaders headers, Object payload) {
-		    	System.out.println("test");
+		    	Platform.runLater(() ->
+		    	{
+		    		System.out.println("AAAAAAAAAA");
+					try {
+						refreshCommunitySideBar();
+					} catch (IOException | InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		    	});
 		    }
 		});
 	}
 	
 	public void subscribeFriendsEvents(String userId)
 	{
-//		HttpClient client = HttpClient.newHttpClient();
-//		
-//	    HttpRequest request = HttpRequest.newBuilder()
-//	            .uri(URI.create(ServerManagement.getAdress() + "/session/getid?token=" + ServerManagement.getToken()))
-//	            .header("Content-Type", "application/json")
-//	            .GET()
-//	            .build();
-//	    
-//	    HttpResponse<String> response;
-//	    try {
-//	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
-//	    }catch (Exception e) {
-//			System.out.println("No connection to the server...");
-//			return;
-//		}
-////	    "f754fab2-3043-43e6-9223-051d8f203f51"
-//	    String userId = response.body().replace("\"", "");
 		System.out.println("/topic/friends/refresh/" + userId);
 	    
 	    WebSocketClientManager.getSession().subscribe(
@@ -525,6 +517,12 @@ public class MainSceneController {
 	private void openFriendsMenu(ActionEvent event) throws IOException, InterruptedException
 	{
 		searchFriends(event);
+	}
+	
+	private void refreshCommunitySideBar() throws IOException, InterruptedException
+	{
+		communityList.getChildren().clear();
+		loadSidebarCommunityBlocks();
 	}
 //--------------------MESSAGES-------------
     @FXML

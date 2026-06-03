@@ -1,10 +1,12 @@
 package main.mainscene.community;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,16 +36,48 @@ public class CommunityAPIClient {
 
             HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() != 200) {
+            if (response.statusCode() != 200) 
+            {
                 System.out.println("Failed to create community: " + response.body());
             }
             else
             {
-            	//WebSocket here (probably) or not
+            	//open the community conversation from here
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public static void joinCommunity(UUID communityId) throws IOException, InterruptedException
+    {
+        HttpClient client = HttpClient.newHttpClient();
+	    
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(communityId);
+
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(ServerManagement.getAdress() + "/community/join?token=" + ServerManagement.getToken()))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response;
+	    try {
+	    	response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+	    }catch (Exception e) {
+			System.out.println("No connection to the server...");
+			return;
+		}
+
+        if (response.statusCode() != 200) 
+        {
+            System.out.println("Failed to join community: " + response.body());
+        }
+        else
+        {
+        	
         }
     }
 }
