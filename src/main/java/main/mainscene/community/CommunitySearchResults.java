@@ -1,6 +1,8 @@
 package main.mainscene.community;
 
+import java.util.List;
 import java.util.UUID;
+import main.mainscene.community.Community;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -8,11 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class CommunitySearchResults {
 	private UUID id;
 	
-	private String name;
-	private String description;
-	private UUID ownerUserId;
-	private UUID conversationId;
-	private boolean isPublic;
+	private Community community;
+	private List<String> tags;
 	
 	public UUID getId() {
 		return id;
@@ -20,34 +19,16 @@ public class CommunitySearchResults {
 	public void setId(UUID id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public Community getCommunity() {
+		return community;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setCommunity(Community community) {
+		this.community = community;
 	}
-	public String getDescription() {
-		return description;
+	public List<String> getTags() {
+		return tags;
 	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public UUID getOwnerUserId() {
-		return ownerUserId;
-	}
-	public void setOwnerUserId(UUID ownerUserId) {
-		this.ownerUserId = ownerUserId;
-	}
-	public UUID getConversationId() {
-		return conversationId;
-	}
-	public void setConversationId(UUID conversationId) {
-		this.conversationId = conversationId;
-	}
-	public boolean isPublic() {
-		return isPublic;
-	}
-	public void setPublic(boolean isPublic) {
-		this.isPublic = isPublic;
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 }

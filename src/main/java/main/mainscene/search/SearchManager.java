@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import main.app.ServerManagement;
 import main.mainscene.community.Community;
+import main.mainscene.community.CommunitySearchResults;
 import main.mainscene.user.User;
 
 public class SearchManager {
@@ -104,7 +105,7 @@ public class SearchManager {
 	    return communities;
 	}
 	
-	public static List<Community> searchCommunities(String search) throws IOException, InterruptedException
+	public static List<CommunitySearchResults> searchCommunities(String search) throws IOException, InterruptedException
 	{
 		HttpClient client = HttpClient.newHttpClient();
 		
@@ -116,15 +117,15 @@ public class SearchManager {
 	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
 	    ObjectMapper mapper = new ObjectMapper();
-	    List<Community> communities = mapper.readValue(response.body(), new TypeReference<List<Community>>() {});
+	    List<CommunitySearchResults> searchResults = mapper.readValue(response.body(), new TypeReference<List<CommunitySearchResults>>() {});
 	    
 	    
 	    System.out.println("Get Community");
-	    for(Community community : communities)
+	    for(CommunitySearchResults result : searchResults)
 	    {
-	    	System.out.println(community.getName());
+	    	System.out.println(result.getCommunity().getName());
 	    }
 	    
-	    return communities;
+	    return searchResults;
 	}
 }
