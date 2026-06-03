@@ -42,6 +42,7 @@ import main.app.WebSocketPing;
 import main.app.WindowController;
 import main.mainscene.community.Community;
 import main.mainscene.community.CommunityCreatedEvent;
+import main.mainscene.communityblock.CommunityBlockController;
 import main.mainscene.message.Conversation;
 import main.mainscene.message.Message;
 import main.mainscene.message.MessageController;
@@ -290,21 +291,37 @@ public class MainSceneController {
 	{
 	    for(User user : users)
 	    {
-            FXMLLoader loader = new FXMLLoader(
-            getClass().getResource("/main/mainscene/peopleblock/" + FXMLName)
-	        );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/peopleblock/" + FXMLName));
 	         
 	        Parent block = loader.load();
 	        block.getStylesheets().add(
 	        	    getClass()
 	        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
-	        	    .toExternalForm()
-	        	);
+	        	    .toExternalForm());
 	        PeopleBlockController controller = loader.getController();
 	        
 	        controller.setMainController(this);
 	        controller.setName(user.username);
 	        controller.setUserId(user.id);
+	        
+	        searchResults.getChildren().add(block);
+	    }
+	}
+	
+	private void loadSearchCommunityBlocks(List<Community> communities) throws IOException
+	{
+	    for(Community community : communities)
+	    {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/communityblock/CommunityBlock.fxml"));
+	         
+	        Parent block = loader.load();
+	        block.getStylesheets().add(getClass().getResource("/main/mainscene/communityblock/CommunityBlock.css").toExternalForm());
+	        
+	        CommunityBlockController controller = loader.getController();
+	        
+	        controller.setMainController(this);
+	        controller.setCommunity(community);
+	        controller.setCommunityNameLabel(community.getName());
 	        
 	        searchResults.getChildren().add(block);
 	    }
@@ -320,6 +337,8 @@ public class MainSceneController {
 	    
 	    if(currentSearchMode == SearchMode.COMMUNITIES)
 	    {
+	    	List<Community> communities = SearchManager.searchCommunities(searchField.getText());
+	    	loadSearchCommunityBlocks(communities);
 	    	createCommunityButton.setVisible(true);
 	    }
 	    else if(currentSearchMode == SearchMode.PEOPLE)

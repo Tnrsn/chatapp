@@ -96,6 +96,30 @@ public class SearchManager {
 	    List<Community> communities = mapper.readValue(response.body(), new TypeReference<List<Community>>() {});
 	    
 	    System.out.println("Get Community");
+//	    for(Community community : communities)
+//	    {
+//	    	System.out.println(community.getName());
+//	    }
+	    
+	    return communities;
+	}
+	
+	public static List<Community> searchCommunities(String search) throws IOException, InterruptedException
+	{
+		HttpClient client = HttpClient.newHttpClient();
+		
+	    HttpRequest request = HttpRequest.newBuilder()
+	            .uri(URI.create(adress + "/search/community?search=" + search))
+	            .GET()
+	            .build();
+	    
+	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+	    
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<Community> communities = mapper.readValue(response.body(), new TypeReference<List<Community>>() {});
+	    
+	    
+	    System.out.println("Get Community");
 	    for(Community community : communities)
 	    {
 	    	System.out.println(community.getName());
@@ -103,6 +127,4 @@ public class SearchManager {
 	    
 	    return communities;
 	}
-	
-	//public static .... searchCommunities()
 }
