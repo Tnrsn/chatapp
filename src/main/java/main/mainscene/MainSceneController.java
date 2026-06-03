@@ -523,6 +523,10 @@ public class MainSceneController {
     	conversation = MessageManager.getConversation(receiverId, ServerManagement.getToken());
     	loadChat(conversation.getId(), ServerManagement.getToken());
     	MessageManager.subscribeToConversation(conversation.getId());
+    	
+		Platform.runLater(() -> {
+		    messageScroll.setVvalue(1.0);
+		});
     }
     
     //This is for WEBSOCKET realtime messaging.
@@ -554,6 +558,10 @@ public class MainSceneController {
     	System.out.println("conv id= " + conversation.getId());
     	loadChat(conversation.getId(), ServerManagement.getToken());
     	MessageManager.subscribeToConversation(conversation.getId());
+    	
+		Platform.runLater(() -> {
+		    messageScroll.setVvalue(1.0);
+		});
     }
     
 	public void SendMessage(ActionEvent event) throws IOException, InterruptedException

@@ -101,7 +101,7 @@ public class MessageManager {
 
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        System.out.println(response.body());
+//        System.out.println(response.body());
         return mapper.readValue(response.body(), Conversation.class);
 	}
 	
@@ -141,7 +141,8 @@ public class MessageManager {
 	    return username;
 	}
 	
-	public static void subscribeToConversation(UUID conversationId)
+	//Rather than subscribing to conversations separately, subscribing a channel like /user/queue/updates/userid could be a better idea
+	public static void subscribeToConversation(UUID conversationId) 
 	{
 //		System.out.println("SUB SESSION = " + WebSocketClientManager.getSession());
 		StompSession.Subscription sub = WebSocketClientManager.getSession().subscribe("/topic/conversation/" + conversationId,
@@ -157,7 +158,7 @@ public class MessageManager {
 	            public void handleFrame(StompHeaders headers, Object payload) 
 	            {
 	            	Message msg = (Message) payload;
-	            	
+	            	System.out.println("11111111");
 	                Platform.runLater(() -> {
 	                    try {
 	                    	boolean isMessageAdded = false;

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainscene.message.MessageController">
+<BorderPane maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainscene.message.MessageController">
    <left>
-      <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="93.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
          <children>
             <Region maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="27.0" HBox.hgrow="NEVER" />
             <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME" HBox.hgrow="ALWAYS" />
@@ -20,6 +20,6 @@
       </HBox>
    </left>
    <center>
-      <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" text="TExt" BorderPane.alignment="CENTER_LEFT" />
+          <Label fx:id="messageText" MaxWidth="Infinity" text="text" wrapText="true" BorderPane.alignment="CENTER_LEFT" />
    </center>
 </BorderPane>

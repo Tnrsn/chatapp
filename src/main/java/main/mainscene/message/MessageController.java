@@ -1,12 +1,13 @@
 package main.mainscene.message;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
 public class MessageController {
 	
 	@FXML
-	private Text messageText;
+	private Label messageText;
 	@FXML
 	private Text usernameText;
 	

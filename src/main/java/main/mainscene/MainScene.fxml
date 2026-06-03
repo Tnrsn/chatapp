@@ -120,9 +120,9 @@
             		        <RowConstraints vgrow="ALWAYS" />
             		        <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="NEVER" />
             		    </rowConstraints>
-                     <ScrollPane fx:id="messageScroll" focusTraversable="false" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <ScrollPane fx:id="messageScroll" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" GridPane.rowIndex="1">
                         <content>
-                           <VBox fx:id="messageVBox" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" />
+                           <VBox fx:id="messageVBox" alignment="BOTTOM_LEFT" />
                         </content>
                      </ScrollPane>
                      <VBox fx:id="searchMenu" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" visible="false" GridPane.rowIndex="1">

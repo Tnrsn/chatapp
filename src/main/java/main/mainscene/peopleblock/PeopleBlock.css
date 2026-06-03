@@ -46,3 +46,28 @@
 #circleButtons:pressed {
     -fx-background-color: #3E6622;
 }
+
+#addFriendButton {
+    -fx-background-color: #548C2F;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    
+    -fx-font-family: "Segoe UI", sans-serif;
+    
+    -fx-padding: 0;
+    -fx-alignment: center;
+}
+
+#addFriendButton:hover {
+    -fx-background-color: #4A7A29;
+}
+
+#addFriendButton:pressed {
+    -fx-background-color: #3E6622;
+}

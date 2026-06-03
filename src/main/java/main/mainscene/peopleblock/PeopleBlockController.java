@@ -69,7 +69,7 @@ public class PeopleBlockController {
 			reqSentText.setVisible(true);
 			System.out.println("Request sent");
 	    }catch (Exception e) {
-			System.out.println("No connection to the server...");
+			System.out.println("Something went wrong...");
 			return;
 		}
 	}
