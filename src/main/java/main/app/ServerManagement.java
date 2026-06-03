@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.login.LoginResponse;
 
@@ -59,7 +60,7 @@ public class ServerManagement {
 	    try {
 	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
 	    }catch (Exception e) {
-			System.out.println("No connection to the server...");
+			System.out.println("No connection to the server1111...");
 			return;
 		}
 
@@ -76,11 +77,13 @@ public class ServerManagement {
 	}
 	
 	//This function is called from LoginController.java
-	public boolean SignIn(TextField emailField, TextField passwordField) throws IOException, InterruptedException {
+	public boolean SignIn(TextField emailField, TextField passwordField, Label errorText) throws IOException, InterruptedException {
 		String username = emailField.getText();
 		String password = passwordField.getText();
 		
 		HttpClient client = HttpClient.newHttpClient();
+//		client.newBuilder().connectTimeout(500); YUSUF BURASI (ᵕ • ᴗ •)
+		//Duration bu üstteki fonksiyona nasıl ekleniyor çöz. Özetle zaman aşımı ekle 
 
 	    String json = """
 	    {
@@ -99,7 +102,10 @@ public class ServerManagement {
 	    try {
 	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
 	    }catch (Exception e) {
-			System.out.println("No connection to the server...");
+	    	errorText.setVisible(true);
+	    	errorText.setText("No connection to the server");
+			System.out.println("No connection to the server22222...");
+			
 			return false;
 		}
 	    
@@ -113,6 +119,8 @@ public class ServerManagement {
 		    
 	    	return true; //login successful
 		} catch (Exception e) {
+			errorText.setVisible(true);
+			errorText.setText("E-mail or password is incorrect.");
 			return false; //login unsuccessful
 		}
 	}

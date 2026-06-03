@@ -67,19 +67,13 @@ public class LoginController {
 	{
 		ServerManagement server = new ServerManagement();
 
-		if(server.SignIn(emailTextField, passwordTextField))
+		if(server.SignIn(emailTextField, passwordTextField, errorText))
 		{
 			//Login Successful
 			SceneSwitcher sceneSwitcher = new SceneSwitcher();
 			sceneSwitcher.SwitchToMainScene(event);
 			System.out.println("Login Successful");
 
-		}
-		else 
-		{
-			System.out.println("Login Unsuccessful");
-			errorText.setVisible(true);
-			errorText.setText("E-mail or password is incorrect.");
 		}
 	}
 	@FXML

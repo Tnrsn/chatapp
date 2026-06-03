@@ -234,26 +234,26 @@ public class MainSceneController {
 	{
 	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/community/CreateCommunity.fxml"));
 
-	        Parent popup = loader.load();
-	        popup.getStylesheets().add(getClass().getResource("/main/mainscene/community/CreateCommunity.css").toExternalForm());
-	        
-	        Region overlay = new Region();
-	        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.6);");
-	        overlay.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        Parent popup = loader.load();
+        popup.getStylesheets().add(getClass().getResource("/main/mainscene/community/CreateCommunity.css").toExternalForm());
+        
+        Region overlay = new Region();
+        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.6);");
+        overlay.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-	        mainStack.getChildren().addAll(overlay, popup);
+        mainStack.getChildren().addAll(overlay, popup);
 
-	        StackPane.setAlignment(popup, Pos.CENTER);
-	        StackPane.setAlignment(popup, Pos.CENTER);
-	        
-	        escHandler = event -> 
-	        {
-	            if (event.getCode() == KeyCode.ESCAPE) {
-	                closePopup(overlay, popup);
-	            }
-	        };
+        StackPane.setAlignment(popup, Pos.CENTER);
+        StackPane.setAlignment(popup, Pos.CENTER);
+        
+        escHandler = event -> 
+        {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                closePopup(overlay, popup);
+            }
+        };
 
-	        mainStack.getScene().addEventFilter(KeyEvent.KEY_PRESSED, escHandler);
+        mainStack.getScene().addEventFilter(KeyEvent.KEY_PRESSED, escHandler);
 	}
 
 	private void closePopup(Node overlay, Node popup) {
@@ -267,7 +267,7 @@ public class MainSceneController {
 	}
 	
 // -------------------------SEARCH MENU---------------------------------------
-	private SearchMode currentSearchMode = SearchMode.PEOPLE;
+	private SearchMode currentSearchMode = SearchMode.COMMUNITIES;
 	
 	@FXML
 	private Button createCommunityButton;
