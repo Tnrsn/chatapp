@@ -276,8 +276,7 @@ public class MainSceneController {
 // -------------------------SEARCH MENU---------------------------------------
 	private SearchMode currentSearchMode = SearchMode.PEOPLE;
 	
-	@FXML
-	private Button createCommunityButton;
+	
 	
 	private void resetTabColors() 
 	{
@@ -345,22 +344,16 @@ public class MainSceneController {
 	    }
 	    else if(currentSearchMode == SearchMode.PEOPLE)
 	    {
-	    	createCommunityButton.setVisible(false);
-	    	
 		    List<User> users = SearchManager.searchPeople(searchField.getText());
 		    loadSearchBlocks("PeopleBlock.fxml", users);
 	    }
 	    else if(currentSearchMode == SearchMode.REQUEST)
 	    {
-	    	createCommunityButton.setVisible(false);
-	    	
 		    List<User> users = SearchManager.searchRequests();
 		    loadSearchBlocks("FriendRequest.fxml", users);
 	    }
 	    else if(currentSearchMode == SearchMode.FRIENDS) 
 	    {
-	    	createCommunityButton.setVisible(false);
-	    	
 		    List<User> users = SearchManager.getFriends();
 		    loadSearchBlocks("FriendBlock.fxml", users);
 	    }
