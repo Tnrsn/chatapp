@@ -38,7 +38,7 @@ public class SceneSwitcher {
 		Stage stage = SwitchScene("/main/mainscene/MainScene.fxml", "/main/mainscene/MainScene.css", event);
 		
 		//---Set properties---
-		WindowController.setResizable(scene, stage, 600, 800);
+		WindowController.setResizable(scene, stage, 500, 1100);
 		
 		stage.show();
 	}
