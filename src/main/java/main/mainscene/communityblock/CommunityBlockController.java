@@ -13,6 +13,8 @@ public class CommunityBlockController {
 	
 	@FXML
 	private Label communityName;
+	@FXML
+	private Label communityDescription;
 
 	public MainSceneController getMainController() 
 	{
@@ -35,6 +37,11 @@ public class CommunityBlockController {
 
 	public void setCommunity(Community community) {
 		this.community = community;
+	}
+	
+	public void setCommunityDescriptionLabel(String communityDescription)
+	{
+		this.communityDescription.setText(communityDescription);
 	}
 	
 	@FXML
