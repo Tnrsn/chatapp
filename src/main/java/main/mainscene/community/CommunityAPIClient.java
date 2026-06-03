@@ -1,0 +1,49 @@
+package main.mainscene.community;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import main.app.ServerManagement;
+
+public class CommunityAPIClient {
+	
+    private static final HttpClient client = HttpClient.newHttpClient();
+
+    public static void createCommunity(String name, String description, boolean isPublic, List<String> tags) 
+    {
+        try {
+            CommunityRequest request = new CommunityRequest();
+            request.setName(name);
+            request.setDescription(description);
+            request.setPublic(isPublic);
+            request.setTags(tags);
+
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(request);
+
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .uri(URI.create(ServerManagement.getAdress() + "/community/create?token=" + ServerManagement.getToken()))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+
+            HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                System.out.println("Failed to create community: " + response.body());
+            }
+            else
+            {
+            	//WebSocket here (probably) or not
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

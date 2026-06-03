@@ -8,11 +8,15 @@
     -fx-background-color: #353435; 
 }
 
-#nameLabel {
-    -fx-fill: #F5F5F5;
+#communityName {
+    -fx-text-fill: #F5F5F5;
     -fx-font-family: "Segoe UI", system-ui, sans-serif;
     -fx-font-size: 22px; 
     -fx-font-weight: bold;
+}
+
+#communityName .text {
+    -fx-fill: #F5F5F5;
 }
 
 #reqSentText {
@@ -22,7 +26,7 @@
     -fx-font-weight: bold;
 }
 
-#circleButtons {
+#joinCommunityButton {
     -fx-background-color: #548C2F;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 50%;
@@ -39,11 +43,11 @@
     -fx-alignment: center;
 }
 
-#circleButtons:hover {
+#joinCommunityButton:hover {
     -fx-background-color: #4A7A29;
 }
 
-#circleButtons:pressed {
+#joinCommunityButton:pressed {
     -fx-background-color: #3E6622;
 }
 
@@ -70,4 +74,26 @@
 
 #addFriendButton:pressed {
     -fx-background-color: #3E6622;
+}
+
+#tag {
+    -fx-background-radius: 999px;
+    -fx-border-radius: 999px;
+
+    -fx-background-color: rgba(45, 44, 44, 0.55);
+    -fx-border-color: #1A1A1A;
+    -fx-border-width: 1.5px;
+
+    -fx-text-fill: white;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 6, 0.2, 0, 2);
+}
+
+#tag:hover {
+    -fx-background-color: rgba(60, 58, 58, 0.65);
+    -fx-border-color: #548C2F;
+}
+
+#tag:pressed {
+    -fx-background-color: rgba(25, 24, 24, 0.75);
 }

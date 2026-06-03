@@ -24,3 +24,26 @@
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }
+
+#communityButton {
+    -fx-background-color: transparent;
+    -fx-background-radius: 4px;
+    -fx-border-color: transparent;
+    
+    -fx-padding: 8px 12px; 
+}
+
+#communityButton:hover {
+    -fx-background-color: #2D2C2C;
+}
+
+#communityButton:pressed {
+    -fx-background-color: #1F1E1E;
+}
+
+#communityName {
+    -fx-fill: #F5F5F5;
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}

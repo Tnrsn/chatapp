@@ -12,11 +12,14 @@ import java.util.UUID;
 
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -24,16 +27,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.app.ServerManagement;
 import main.app.WebSocketClientManager;
 import main.app.WebSocketPing;
 import main.app.WindowController;
+import main.mainscene.community.Community;
+import main.mainscene.community.CommunityCreatedEvent;
+import main.mainscene.communityblock.CommunityBlockController;
 import main.mainscene.message.Conversation;
 import main.mainscene.message.Message;
 import main.mainscene.message.MessageController;
@@ -44,7 +53,8 @@ import main.mainscene.message.MessageRequest;
 import main.mainscene.peopleblock.PeopleBlockController;
 import main.mainscene.peopleblock.SearchMode;
 import main.mainscene.search.SearchManager;
-import main.mainscene.sidebar.SidebarController;
+import main.mainscene.sidebar.SBCommunityBlocksController;
+import main.mainscene.sidebar.SBFriendBlocksController;
 import main.mainscene.user.User;
 
 public class MainSceneController {
@@ -116,7 +126,7 @@ public class MainSceneController {
 	    
 	}
 	
-	public void subscribeFriendsEvents()
+	public String getUserId()
 	{
 		HttpClient client = HttpClient.newHttpClient();
 		
@@ -131,10 +141,48 @@ public class MainSceneController {
 	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
 	    }catch (Exception e) {
 			System.out.println("No connection to the server...");
-			return;
+			return null;
 		}
 //	    "f754fab2-3043-43e6-9223-051d8f203f51"
 	    String userId = response.body().replace("\"", "");
+	    return userId;
+	}
+	
+	public void subscribeSocketQueueUpdates(String userId)
+	{
+		WebSocketClientManager.getSession().subscribe("/topic/community/created/" + userId, new StompFrameHandler() {
+
+		    @Override
+		    public Type getPayloadType(StompHeaders headers) {
+		        return WebSocketPing.class;
+		    }
+
+		    @Override
+		    public void handleFrame(StompHeaders headers, Object payload) {
+		    	System.out.println("test");
+		    }
+		});
+	}
+	
+	public void subscribeFriendsEvents(String userId)
+	{
+//		HttpClient client = HttpClient.newHttpClient();
+//		
+//	    HttpRequest request = HttpRequest.newBuilder()
+//	            .uri(URI.create(ServerManagement.getAdress() + "/session/getid?token=" + ServerManagement.getToken()))
+//	            .header("Content-Type", "application/json")
+//	            .GET()
+//	            .build();
+//	    
+//	    HttpResponse<String> response;
+//	    try {
+//	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
+//	    }catch (Exception e) {
+//			System.out.println("No connection to the server...");
+//			return;
+//		}
+////	    "f754fab2-3043-43e6-9223-051d8f203f51"
+//	    String userId = response.body().replace("\"", "");
 		System.out.println("/topic/friends/refresh/" + userId);
 	    
 	    WebSocketClientManager.getSession().subscribe(
@@ -155,7 +203,7 @@ public class MainSceneController {
 	                    	try {
 	                    		System.out.println("Test");
 	                    		friendsList.getChildren().clear();
-								loadSidebarBlocks(SearchManager.getFriends());
+								loadSidebarFriendBlocks();
 							} catch (IOException | InterruptedException e) {
 								e.printStackTrace();
 							}
@@ -182,31 +230,98 @@ public class MainSceneController {
 		Platform.exit();
 	}
 	
+// --------------------------Stack Pane (Pop ups)------------------------------------
+	
+	@FXML
+	private StackPane mainStack;
+	private EventHandler<KeyEvent> escHandler;
+	
+	@FXML
+	public void openCreateServer() throws IOException
+	{
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/community/CreateCommunity.fxml"));
+
+	        Parent popup = loader.load();
+	        popup.getStylesheets().add(getClass().getResource("/main/mainscene/community/CreateCommunity.css").toExternalForm());
+	        
+	        Region overlay = new Region();
+	        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.6);");
+	        overlay.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+	        mainStack.getChildren().addAll(overlay, popup);
+
+	        StackPane.setAlignment(popup, Pos.CENTER);
+	        StackPane.setAlignment(popup, Pos.CENTER);
+	        
+	        escHandler = event -> 
+	        {
+	            if (event.getCode() == KeyCode.ESCAPE) {
+	                closePopup(overlay, popup);
+	            }
+	        };
+
+	        mainStack.getScene().addEventFilter(KeyEvent.KEY_PRESSED, escHandler);
+	}
+
+	private void closePopup(Node overlay, Node popup) {
+
+	    mainStack.getChildren().removeAll(overlay, popup);
+
+	    if (escHandler != null) {
+	        mainStack.getScene().removeEventFilter(KeyEvent.KEY_PRESSED, escHandler);
+	        escHandler = null;
+	    }
+	}
+	
 // -------------------------SEARCH MENU---------------------------------------
 	private SearchMode currentSearchMode = SearchMode.PEOPLE;
 	
 	@FXML
 	private Button createCommunityButton;
 	
+	private void resetTabColors() 
+	{
+		if (SearchMode.COMMUNITIES != currentSearchMode) btnCommunities.setStyle("");
+		if (SearchMode.PEOPLE != currentSearchMode) btnPeople.setStyle("");
+		if (SearchMode.FRIENDS != currentSearchMode) btnFriends.setStyle("");
+		if (SearchMode.REQUEST != currentSearchMode) btnRequests.setStyle("");
+	}
+	
 	private void loadSearchBlocks(String FXMLName, List<User> users) throws IOException
 	{
 	    for(User user : users)
 	    {
-            FXMLLoader loader = new FXMLLoader(
-            getClass().getResource("/main/mainscene/peopleblock/" + FXMLName)
-	        );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/peopleblock/" + FXMLName));
 	         
 	        Parent block = loader.load();
 	        block.getStylesheets().add(
 	        	    getClass()
 	        	    .getResource("/main/mainscene/peopleblock/PeopleBlock.css")
-	        	    .toExternalForm()
-	        	);
+	        	    .toExternalForm());
 	        PeopleBlockController controller = loader.getController();
 	        
 	        controller.setMainController(this);
 	        controller.setName(user.username);
 	        controller.setUserId(user.id);
+	        
+	        searchResults.getChildren().add(block);
+	    }
+	}
+	
+	private void loadSearchCommunityBlocks(List<Community> communities) throws IOException
+	{
+	    for(Community community : communities)
+	    {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/communityblock/CommunityBlock.fxml"));
+	         
+	        Parent block = loader.load();
+	        block.getStylesheets().add(getClass().getResource("/main/mainscene/communityblock/CommunityBlock.css").toExternalForm());
+	        
+	        CommunityBlockController controller = loader.getController();
+	        
+	        controller.setMainController(this);
+	        controller.setCommunity(community);
+	        controller.setCommunityNameLabel(community.getName());
 	        
 	        searchResults.getChildren().add(block);
 	    }
@@ -222,6 +337,8 @@ public class MainSceneController {
 	    
 	    if(currentSearchMode == SearchMode.COMMUNITIES)
 	    {
+	    	List<Community> communities = SearchManager.searchCommunities(searchField.getText());
+	    	loadSearchCommunityBlocks(communities);
 	    	createCommunityButton.setVisible(true);
 	    }
 	    else if(currentSearchMode == SearchMode.PEOPLE)
@@ -246,54 +363,45 @@ public class MainSceneController {
 		    loadSearchBlocks("FriendBlock.fxml", users);
 	    }
 	}
-	
-	// --- Helper Method to clear inline styles ---
-	private void resetTabColors() {
-		if (btnCommunities != null) btnCommunities.setStyle("");
-		if (btnPeople != null) btnPeople.setStyle("");
-		if (btnFriends != null) btnFriends.setStyle("");
-		if (btnRequests != null) btnRequests.setStyle("");
-	}
-	// --------------------------------------------
 
 	@FXML
 	public void searchCommunities(ActionEvent event) throws IOException, InterruptedException
 	{
-		resetTabColors();
 		if (btnCommunities != null) btnCommunities.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
 		
 		currentSearchMode = SearchMode.COMMUNITIES;
 		handleSearch(event);
+		resetTabColors();
 	}
 	
 	@FXML
 	public void searchPeople(ActionEvent event) throws IOException, InterruptedException
 	{
-		resetTabColors();
 		if (btnPeople != null) btnPeople.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
 		
 		currentSearchMode = SearchMode.PEOPLE;
 		handleSearch(event);
+		resetTabColors();
 	}
 	
 	@FXML
 	public void searchRequests(ActionEvent event) throws IOException, InterruptedException
 	{
-		resetTabColors();
 		if (btnRequests != null) btnRequests.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
 		
 		currentSearchMode = SearchMode.REQUEST;
 		handleSearch(event);
+		resetTabColors();
 	}
 	
 	@FXML
 	public void searchFriends(ActionEvent event) throws IOException, InterruptedException
 	{
-		resetTabColors();
 		if (btnFriends != null) btnFriends.setStyle("-fx-background-color: #548C2F; -fx-text-fill: #FFFFFF; -fx-border-color: transparent;");
 		
 		currentSearchMode = SearchMode.FRIENDS;
 		handleSearch(event);
+		resetTabColors();
 	}
 	
 	@FXML
@@ -315,13 +423,12 @@ public class MainSceneController {
 	
 	private void loadSideBarOnInit()
 	{
-	    try {
-			loadSidebarBlocks(SearchManager.getFriends());
+		try {
+			loadSidebarFriendBlocks();
+			loadSidebarCommunityBlocks();
 		} catch (IOException e) {
-			System.out.println("Problem occured while loading friends");
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			System.out.println("Problem occured while loading friends");
 			e.printStackTrace();
 		}
 	}
@@ -334,29 +441,29 @@ public class MainSceneController {
     
     public void addSidebarFriendBlock(User user) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/main/mainscene/sidebar/SBFriend.fxml")
-            );
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/sidebar/SBFriend.fxml"));
 
-            Parent block = loader.load();
+        Parent block = loader.load();
 
-            block.getStylesheets().add(
-                getClass()
-                .getResource("/main/mainscene/sidebar/SidebarButtons.css")
-                .toExternalForm()
-            );
+        block.getStylesheets().add(
+            getClass()
+            .getResource("/main/mainscene/sidebar/SidebarButtons.css")
+            .toExternalForm()
+        );
 
-            SidebarController controller = loader.getController();
+        SBFriendBlocksController controller = loader.getController();
 
-            controller.setUser(user);
-            controller.setUsername(user.username);
-            controller.setMainSceneController(this);
+        controller.setUser(user);
+        controller.setUsername(user.username);
+        controller.setMainSceneController(this);
 
-            friendsList.getChildren().add(block);
+        friendsList.getChildren().add(block);
     }
     
-	private void loadSidebarBlocks(List<User> users) throws IOException
+	private void loadSidebarFriendBlocks() throws IOException, InterruptedException
 	{
+		List<User> users = SearchManager.getFriends();
+		
 	    if(!users.isEmpty())
 	    {
 	    	if (emptyFriendBox.getParent() != null) 
@@ -369,20 +476,52 @@ public class MainSceneController {
 	            addSidebarFriendBlock(user);
 	        }
 	    }
-//		else if(!servers.isEmpty)
-//		{
-//			emptyServerBox.getParent();
-//			((VBox) emptyServerBox.getParent()).getChildren().remove(emptyServerBox);
-//			
-//			for(Server server : servers).... Don't delete above when adding servers			
-//		}
 	}
     
-	@FXML
+	private void loadSidebarCommunityBlocks() throws IOException, InterruptedException
+	{
+		List<Community> communities = SearchManager.getCommunities();
+		
+	    if(!communities.isEmpty())
+	    {
+	    	if (emptyServerBox.getParent() != null) 
+	        {
+	            ((VBox) emptyServerBox.getParent()).getChildren().remove(emptyServerBox);
+	        }
+	    	
+	        for(Community community : communities)
+	        {
+	        	System.out.println("Community name; " + community.getName());
+	            addSidebarCommunityBlock(community);
+	        }
+	    }
+	}
+	
+	private void addSidebarCommunityBlock(Community community) throws IOException
+	{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/sidebar/SBCommunity.fxml"));
+
+        Parent block = loader.load();
+
+        block.getStylesheets().add(
+            getClass()
+            .getResource("/main/mainscene/sidebar/SidebarButtons.css")
+            .toExternalForm()
+        );
+
+        SBCommunityBlocksController controller = loader.getController();
+
+        controller.setCommunity(community);
+        controller.setCommunityName(community.getName());
+        controller.setMainSceneController(this);
+
+        communityList.getChildren().add(block);
+	}
+	
+	@FXML //I'll delete this function later, and connect Friend button to searchFriends() directly
 	private void openFriendsMenu(ActionEvent event) throws IOException, InterruptedException
 	{
-		currentSearchMode = SearchMode.FRIENDS;
-		handleSearch(event);
+		searchFriends(event);
 	}
 //--------------------MESSAGES-------------
     @FXML
@@ -393,16 +532,20 @@ public class MainSceneController {
     @FXML
     private Label channelNameText;
     
-    public void openChat(UUID receiverId) throws IOException, InterruptedException
+    public void openDMChat(UUID receiverId) throws IOException, InterruptedException
     {
     	messageScroll.setVisible(true);
     	searchMenu.setVisible(false);
-    	
-    	channelNameText.setText(MessageManager.getUsernameById(receiverId));
-    	
+
+		channelNameText.setText(MessageManager.getUsernameById(receiverId));    		
+
     	conversation = MessageManager.getConversation(receiverId, ServerManagement.getToken());
     	loadChat(conversation.getId(), ServerManagement.getToken());
     	MessageManager.subscribeToConversation(conversation.getId());
+    	
+		Platform.runLater(() -> {
+		    messageScroll.setVvalue(1.0);
+		});
     }
     
     //This is for WEBSOCKET realtime messaging.
@@ -421,6 +564,23 @@ public class MainSceneController {
 		controller.setMessage(message);
 		controller.setUsernameText(ServerManagement.getUsername());
 		messageVBox.getChildren().add(node);
+    }
+    
+    public void openCommunityChat(Community community) throws IOException, InterruptedException
+    {
+    	messageScroll.setVisible(true);
+    	searchMenu.setVisible(false);
+    	
+    	channelNameText.setText(community.getName());
+    	System.out.println("2222222");
+    	conversation = MessageManager.getCommunityConversation(community.getId(), ServerManagement.getToken());
+    	System.out.println("conv id= " + conversation.getId());
+    	loadChat(conversation.getId(), ServerManagement.getToken());
+    	MessageManager.subscribeToConversation(conversation.getId());
+    	
+		Platform.runLater(() -> {
+		    messageScroll.setVvalue(1.0);
+		});
     }
     
 	public void SendMessage(ActionEvent event) throws IOException, InterruptedException
@@ -485,5 +645,5 @@ public class MainSceneController {
     		messageVBox.getChildren().add(node);
     		current = current.getNext();
     	}
-    }
+    }    
 }

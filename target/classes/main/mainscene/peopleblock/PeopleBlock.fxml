@@ -27,10 +27,10 @@
    <right>
       <Pane prefWidth="195.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="circleButtons" alignment="CENTER" layoutX="80.0" layoutY="35.0" mnemonicParsing="false" onAction="#AddFriend" text="+">
-   <font>
-      <Font name="Segoe UI Bold" size="18.0" /> </font>
-</Button>
+            <Button fx:id="addFriendButton" alignment="CENTER" layoutX="80.0" layoutY="35.0" mnemonicParsing="false" onAction="#AddFriend" text="+">
+  				<font>
+     			<Font name="Segoe UI Bold" size="18.0" /> </font>
+			</Button>
             <Text fx:id="reqSentText" layoutX="56.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request sent!" textAlignment="CENTER" visible="false" wrappingWidth="87.859375">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />

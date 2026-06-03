@@ -13,6 +13,48 @@
     -fx-text-fill: #ADABAB;
 }
 
+/* -----------------Scroll Panes----------------- */
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #2D2C2C;
+    -fx-background-radius: 8px;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #548C2F;
+    -fx-background-radius: 8px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #4A7A29;
+}
+
+.scroll-bar .thumb:pressed {
+    -fx-background-color: #3E6622;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: transparent;
+}
 
 /*---------------Input Fields----------------*/
 .text-field {
@@ -125,7 +167,7 @@
 }
 
 .titled-pane > .title {
-    -fx-background-color: #242424;
+    -fx-background-color: #1F1F1F;
     -fx-border-color: transparent;
 }
 
@@ -195,4 +237,27 @@
 }
 #backButton:hover {
     -fx-background-color: #3A3839;
+}
+
+#createCommunityButton {
+    -fx-background-color: #548C2F;
+    -fx-border-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 50%;
+    -fx-min-width: 40px; 
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    -fx-border-radius: 50%;
+    -fx-padding: 0;
+    -fx-alignment: center;
+}
+
+#createCommunityButton:hover {
+    -fx-background-color: #4A7A29;
+}
+
+#createCommunityButton:pressed {
+    -fx-background-color: #3E6622;
 }

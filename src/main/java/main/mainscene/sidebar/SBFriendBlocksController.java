@@ -7,10 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import main.app.ServerManagement;
 import main.mainscene.MainSceneController;
+import main.mainscene.community.Community;
 import main.mainscene.message.MessageManager;
 import main.mainscene.user.User;
 
-public class SidebarController {
+public class SBFriendBlocksController {
 
 	private MainSceneController mainSceneController;
 	@FXML 
@@ -42,7 +43,6 @@ public class SidebarController {
 	@FXML
 	public void openChat() throws IOException, InterruptedException
 	{
-		mainSceneController.openChat(user.id);
-	}
-	
+		mainSceneController.openDMChat(user.id);
+	}	
 }
