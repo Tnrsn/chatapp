@@ -1,0 +1,30 @@
+/* The dark background for the whole page */
+.server-root-pane {
+    -fx-background-color: #2b2b2b;
+}
+
+/* The dark gray box that holds the member list */
+.member-list-box {
+    -fx-background-color: #363636;
+    -fx-background-radius: 5;
+}
+
+/* The dark gray description text area */
+.server-description-box {
+    -fx-control-inner-background: #363636;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+/* The green Join Server button */
+.join-server-button {
+    -fx-background-color: #548C2F;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 5;
+}
+
+/* Makes the button light up when you hover your mouse over it */
+.join-server-button:hover {
+    -fx-background-color: #65a839;
+    -fx-cursor: hand;
+}
