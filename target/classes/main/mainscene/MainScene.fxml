@@ -111,7 +111,7 @@
       			        </HBox>
       			    </bottom>
       			</BorderPane>
-            		<GridPane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            		<GridPane maxWidth="1.7976931348623157E308" minWidth="0.0" HBox.hgrow="ALWAYS">
             		    <columnConstraints>
             		        <ColumnConstraints hgrow="ALWAYS" />
             		    </columnConstraints>
@@ -200,12 +200,12 @@
             		            <ColumnConstraints hgrow="ALWAYS" />
             		            <ColumnConstraints hgrow="NEVER" />
             		        </columnConstraints>
-            		        <TextField fx:id="messageField" maxWidth="Infinity" prefHeight="40.0" prefWidth="1520.0" promptText="Type message..." GridPane.columnIndex="0">
+            		        <TextField fx:id="messageField" maxWidth="Infinity" prefHeight="40.0" promptText="Type message..." GridPane.columnIndex="0">
                            <font>
                               <Font name="Segoe UI" size="18.0" />
                            </font>
                         </TextField>
-            		        <Button fx:id="sendButton" minWidth="80" onAction="#SendMessage" prefHeight="38.0" prefWidth="80.0" text="Send" GridPane.columnIndex="1">
+            		        <Button fx:id="sendButton" maxWidth="-Infinity" minWidth="80" onAction="#SendMessage" prefHeight="38.0" prefWidth="80.0" text="Send" GridPane.columnIndex="1">
                               <font>
                                   <Font name="Segoe UI Bold" size="14.0" />
                               </font>
@@ -215,19 +215,22 @@
             		            </rowConstraints>
             		    </GridPane>
                		<HBox fx:id="toolBar" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="50.0" prefWidth="1800.0" GridPane.hgrow="ALWAYS">
-                        <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="70.0" />
                		         <Label fx:id="channelNameText" maxHeight="-Infinity" prefHeight="25.0" prefWidth="174.0" text="Channel_Name">
                            <font>
                               <Font name="Segoe UI Bold" size="16.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
                         </Label>
-               		         <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="120.0" />
-               		    <TextField fx:id="searchField" maxHeight="-Infinity" onAction="#handleSearch" prefHeight="30.0" prefWidth="645.0" promptText="Search..." HBox.hgrow="ALWAYS">
+               		    <TextField fx:id="searchField" maxHeight="-Infinity" minWidth="5.0" onAction="#handleSearch" prefHeight="36.0" promptText="Search..." HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="50.0" right="150.0" />
+                           </HBox.margin>
                         </TextField>
-               		    <Region maxHeight="-Infinity" prefHeight="37.0" prefWidth="340.0" />
                         <Button fx:id="windowControlButtons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#MinimizeWindow" prefHeight="42.0" prefWidth="40.0" text="_" HBox.hgrow="NEVER">
                             <font>
                                 <Font name="Segoe UI" size="14.0" />
