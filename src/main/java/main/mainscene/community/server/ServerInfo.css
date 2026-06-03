@@ -1,0 +1,25 @@
+.server-root-pane {
+    -fx-background-color: #2b2b2b;
+}
+
+.member-list-box {
+    -fx-background-color: #363636;
+    -fx-background-radius: 5;
+}
+
+.server-description-box {
+    -fx-control-inner-background: #363636;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.join-server-button {
+    -fx-background-color: #548C2F;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 5;
+}
+
+.join-server-button:hover {
+    -fx-background-color: #65a839;
+    -fx-cursor: hand;
+}
