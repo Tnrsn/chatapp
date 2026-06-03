@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.lang.reflect.Type;
@@ -26,8 +27,9 @@ import main.mainscene.MainSceneController;
 public class MessageManager {
 
 	public static MessageLL messageLL;
-
 	private static MainSceneController mainController;
+	private static List<StompSession.Subscription> subscriptions = new ArrayList<>();
+	
 	public static void setMainController(MainSceneController controller)
 	{
 	    mainController = controller;
@@ -44,7 +46,6 @@ public class MessageManager {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -101,7 +102,6 @@ public class MessageManager {
 
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-//        System.out.println(response.body());
         return mapper.readValue(response.body(), Conversation.class);
 	}
 	
@@ -145,6 +145,12 @@ public class MessageManager {
 	public static void subscribeToConversation(UUID conversationId) 
 	{
 //		System.out.println("SUB SESSION = " + WebSocketClientManager.getSession());
+		for(StompSession.Subscription sub : subscriptions)
+		{
+			sub.unsubscribe();
+		}
+		subscriptions.clear();
+		
 		StompSession.Subscription sub = WebSocketClientManager.getSession().subscribe("/topic/conversation/" + conversationId,
 	        new StompFrameHandler() {
 	    	
@@ -158,16 +164,15 @@ public class MessageManager {
 	            public void handleFrame(StompHeaders headers, Object payload) 
 	            {
 	            	Message msg = (Message) payload;
-	            	System.out.println("11111111");
+	            	
 	                Platform.runLater(() -> {
-	                    try {
-	                    	boolean isMessageAdded = false;
-	                    	if(!isMessageAdded)
-	                    	{
-	                    		mainController.addMessage(msg);
-                    			isMessageAdded = true;
-	                    	}
-	                    } catch (IOException e) {
+	                    try 
+	                    {
+                    		mainController.addMessage(msg);
+                    		System.out.println("Message Received");
+	                    } 
+	                    catch (IOException e) 
+	                    {
 	                        System.out.println("Something went wrong while adding a message");
 	                        e.printStackTrace();
 	                    }
@@ -175,6 +180,7 @@ public class MessageManager {
 	            }
 	        }
 	    );
+		subscriptions.add(sub);
 //	    System.out.println("Subscribed to = " + conversationId);
 	}
 }
