@@ -44,24 +44,26 @@ public class RegisterController {
 	}
 	
 	
-	public void ConfirmRegister(ActionEvent event) throws IOException, InterruptedException
-	{
-		System.out.println("Register Has Started");
-		
-		if(passwordTextField.getText().equals(repasswordTextField.getText()))
-		{
-			ServerManagement server = new ServerManagement();
-			SceneSwitcher sceneSwitcher = new SceneSwitcher();
-			
-			server.SignUp(usernameTextField, passwordTextField, emailTextField);
-			sceneSwitcher.SwitchToMainScene(event);
-		}
-		else
-			// errortext bura yazcan 
-		{
-			System.out.println("Passwords are not matching");
-		}
-	}
+	public void ConfirmRegister(ActionEvent event) throws IOException, InterruptedException {
+        System.out.println("Register Has Started");
+
+        if(passwordTextField.getText().equals(repasswordTextField.getText())) {
+            ServerManagement server = new ServerManagement();
+            SceneSwitcher sceneSwitcher = new SceneSwitcher();
+
+            server.SignUp(usernameTextField, passwordTextField, emailTextField);
+
+            if (ServerManagement.isConnectionError()) {
+                errorText.setVisible(true);
+                errorText.setText("No internet connection or server is offline.");
+            } else {
+                sceneSwitcher.SwitchToMainScene(event);
+            }
+        } else {
+            errorText.setVisible(true);
+            errorText.setText("Passwords are not matching");
+        }
+    }
 	@FXML
 	public void closeWindow(ActionEvent event) {
 	    System.exit(0);

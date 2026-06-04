@@ -12,7 +12,6 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.login.LoginResponse;
 
@@ -25,7 +24,11 @@ public class ServerManagement {
 	
 	private static String usertoken;
 	private static String username;
-	
+	private static boolean connectionError = false;
+
+	public static boolean isConnectionError() {
+	    return connectionError;
+	}
 	
 	public static String getAdress()
 	{
@@ -34,96 +37,95 @@ public class ServerManagement {
 	
 	// /auth/
 	//This function is called from LoginController.java
-	public void SignUp(TextField usernameField, TextField passwordField, TextField emailField) throws IOException, InterruptedException
-	{
-	    String username = usernameField.getText();
-	    String password = passwordField.getText();
-	    String email = emailField.getText();
+	public void SignUp(TextField usernameField, TextField passwordField, TextField emailField) throws IOException, InterruptedException {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        String email = emailField.getText();
 
-	    HttpClient client = HttpClient.newHttpClient();
+        HttpClient client = HttpClient.newBuilder()
+                .connectTimeout(java.time.Duration.ofSeconds(2))
+                .build();
 
-	    String json = """
-	    {
-	        "username": "%s",
-	        "password": "%s",
-	        "email": "%s"
-	    }
-	    """.formatted(username, password, email);
+        String json = """
+        {
+            "username": "%s",
+            "password": "%s",
+            "email": "%s"
+        }
+        """.formatted(username, password, email);
 
-	    HttpRequest request = HttpRequest.newBuilder()
-	            .uri(URI.create(adress + "/auth/register"))
-	            .header("Content-Type", "application/json")
-	            .POST(HttpRequest.BodyPublishers.ofString(json))
-	            .build();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(adress + "/auth/register"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
 
-	    HttpResponse<String> response;
-	    try {
-	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
-	    }catch (Exception e) {
-			System.out.println("No connection to the server1111...");
-			return;
-		}
+        HttpResponse<String> response;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            connectionError = false;
+        } catch (Exception e) {
+            System.out.println("No connection to the server...");
+            connectionError = true;
+            return;
+        }
 
-	    System.out.println(response.body());
-	    try {
-	    	ObjectMapper mapper = new ObjectMapper();
-	    	LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
-		    usertoken = data.token;
-		    this.username = data.username;
-	    	return; //login successful
-		} catch (Exception e) {
-			return; //login unsuccessful
-		}
-	}
+        System.out.println(response.body());
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
+            usertoken = data.token;
+            this.username = data.username;
+            return;
+        } catch (Exception e) {
+            return;
+        }
+    }
 	
 	//This function is called from LoginController.java
-	public boolean SignIn(TextField emailField, TextField passwordField, Label errorText) throws IOException, InterruptedException {
-		String username = emailField.getText();
-		String password = passwordField.getText();
-		
-		HttpClient client = HttpClient.newHttpClient();
-//		client.newBuilder().connectTimeout(500); YUSUF BURASI (ᵕ • ᴗ •)
-		//Duration bu üstteki fonksiyona nasıl ekleniyor çöz. Özetle zaman aşımı ekle 
+	public boolean SignIn(TextField emailField, TextField passwordField) throws IOException, InterruptedException {
+        String username = emailField.getText();
+        String password = passwordField.getText();
 
-	    String json = """
-	    {
-	        "email": "%s",
-	        "password": "%s"
-	    }
-	    """.formatted(username, password);
+        HttpClient client = HttpClient.newBuilder()
+                .connectTimeout(java.time.Duration.ofSeconds(2))
+                .build();
 
-	    HttpRequest request = HttpRequest.newBuilder()
-	            .uri(URI.create(adress + "/auth/login"))
-	            .header("Content-Type", "application/json")
-	            .POST(HttpRequest.BodyPublishers.ofString(json))
-	            .build();
+        String json = """
+        {
+            "email": "%s",
+            "password": "%s"
+        }
+        """.formatted(username, password);
 
-	    HttpResponse<String> response;
-	    try {
-	    	response = client.send(request, HttpResponse.BodyHandlers.ofString());	    	
-	    }catch (Exception e) {
-	    	errorText.setVisible(true);
-	    	errorText.setText("No connection to the server");
-			System.out.println("No connection to the server22222...");
-			
-			return false;
-		}
-	    
-//	    System.out.println(response.body());
-	    try {
-	    	ObjectMapper mapper = new ObjectMapper();
-	    	LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
-	    	
-		    usertoken = data.token;
-		    this.username = data.username;
-		    
-	    	return true; //login successful
-		} catch (Exception e) {
-			errorText.setVisible(true);
-			errorText.setText("E-mail or password is incorrect.");
-			return false; //login unsuccessful
-		}
-	}
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(adress + "/auth/login"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            connectionError = false;
+        } catch (Exception e) {
+            System.out.println("No connection to the server...");
+            connectionError = true;
+            return false;
+        }
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            LoginResponse data = mapper.readValue(response.body(), LoginResponse.class);
+
+            usertoken = data.token;
+            this.username = data.username;
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 	
 	
 //Session Management (/session/)
