@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import main.mainscene.MainSceneController;
 import main.mainscene.community.CommunityAPIClient;
@@ -30,6 +31,8 @@ public class ServerInfoController {
     private TextArea serverDescription;
     @FXML
     private HBox serverTags;
+	private Region overlay;
+	private Parent popup;
     
     public void setInfos(CommunityInfo info) throws IOException
     {	
@@ -77,11 +80,22 @@ public class ServerInfoController {
     	if(CommunityAPIClient.quitCommunity(conversationId))
     	{
     		mainSceneController.CloseChat();
+    		mainSceneController.closePopup(overlay, popup);
     	}
     }
 
 	public void setMainSceneController(MainSceneController mainSceneController) 
 	{
 		this.mainSceneController = mainSceneController;
+	}
+
+	public void setPopup(Parent popup) 
+	{
+		this.popup = popup;
+	}
+
+	public void setOverlay(Region overlay)
+	{
+		this.overlay = overlay;
 	}
 }

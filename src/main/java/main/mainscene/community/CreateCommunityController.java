@@ -100,10 +100,6 @@ public class CreateCommunityController {
 			mainSceneController.openCommunityChat(community);
 			mainSceneController.closePopup(overlay, popup);
 		}
-		else
-		{
-			System.out.println("AAAAAAA");
-		}
 	}
 	
 	public VBox getTagContainer()

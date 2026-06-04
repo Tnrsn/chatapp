@@ -158,7 +158,6 @@ public class MainSceneController {
 		    public void handleFrame(StompHeaders headers, Object payload) {
 		    	Platform.runLater(() ->
 		    	{
-		    		System.out.println("AAAAAAAAAA");
 					try {
 						refreshCommunitySideBar();
 					} catch (IOException | InterruptedException e) {
@@ -285,6 +284,9 @@ public class MainSceneController {
         Region overlay = new Region();
         overlay.setStyle("-fx-background-color: rgba(0,0,0,0.6);");
         overlay.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        controller.setPopup(popup);
+        controller.setOverlay(overlay);
 
         mainStack.getChildren().addAll(overlay, popup);
 
