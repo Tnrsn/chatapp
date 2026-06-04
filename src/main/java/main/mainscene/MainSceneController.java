@@ -40,6 +40,7 @@ import main.app.WebSocketPing;
 import main.app.WindowController;
 import main.mainscene.community.Community;
 import main.mainscene.community.CommunitySearchResults;
+import main.mainscene.community.CreateCommunityController;
 import main.mainscene.community.info.ServerInfoController;
 import main.mainscene.communityblock.CommunityBlockController;
 import main.mainscene.message.Conversation;
@@ -242,6 +243,11 @@ public class MainSceneController {
 
         StackPane.setAlignment(popup, Pos.CENTER);
         StackPane.setAlignment(popup, Pos.CENTER);
+        
+        CreateCommunityController controller = loader.getController();
+        controller.setMainSceneController(this);
+        controller.setOverlay(overlay);
+        controller.setPopup(popup);
         
         escHandler = event -> 
         {

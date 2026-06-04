@@ -17,7 +17,7 @@ public class CommunityAPIClient {
 	
     private static final HttpClient client = HttpClient.newHttpClient();
 
-    public static void createCommunity(String name, String description, boolean isPublic, List<String> tags) 
+    public static Community createCommunity(String name, String description, boolean isPublic, List<String> tags) 
     {
         try {
             CommunityRequest request = new CommunityRequest();
@@ -37,17 +37,22 @@ public class CommunityAPIClient {
 
             HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
+            Community community = mapper.readValue(response.body(), Community.class);
+            
             if (response.statusCode() != 200) 
             {
                 System.out.println("Failed to create community: " + response.body());
+                return null;
             }
             else
             {
-            	//open the community conversation from here
+            	System.out.println("TESSSTTTT = " + community.getName());
+            	return community;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
     
