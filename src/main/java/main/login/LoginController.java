@@ -63,19 +63,28 @@ public class LoginController {
 	}
 	
 
-	public void Login(ActionEvent event) throws IOException, InterruptedException, SQLException 
-	{
-		ServerManagement server = new ServerManagement();
+	public void Login(ActionEvent event) throws IOException, InterruptedException, SQLException
+    {
+        ServerManagement server = new ServerManagement();
 
-		if(server.SignIn(emailTextField, passwordTextField, errorText))
-		{
-			//Login Successful
-			SceneSwitcher sceneSwitcher = new SceneSwitcher();
-			sceneSwitcher.SwitchToMainScene(event);
-			System.out.println("Login Successful");
-
-		}
-	}
+        if(server.SignIn(emailTextField, passwordTextField))
+        {
+            SceneSwitcher sceneSwitcher = new SceneSwitcher();
+            sceneSwitcher.SwitchToMainScene(event);
+            System.out.println("Login Successful");
+        }
+        else
+        {
+            System.out.println("Login Unsuccessful");
+            errorText.setVisible(true);
+            
+            if (ServerManagement.isConnectionError()) {
+                errorText.setText("No internet connection or server is offline.");
+            } else {
+                errorText.setText("E-mail or password is incorrect.");
+            }
+        }
+    }
 	@FXML
 	public void closeWindow(ActionEvent event) {
 	    System.exit(0);
