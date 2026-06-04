@@ -17,6 +17,7 @@ You can verify it with:
 
 
 -----------------------Running the Project------------------
+
 Run the JavaFX application using the Maven goal:
 
     javafx:run
