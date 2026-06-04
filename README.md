@@ -1,22 +1,27 @@
-English:
+--------------------------------Project Setup--------------------------
+----Requirements
+        Java 21 or newer
+        Apache Maven
+        Maven Installation
 
-Java 21 or above needed
+Download and install Maven from the official site:
+    https://maven.apache.org
 
-Download final version of Apache PATH From this link 
+After installation, make sure Maven is added to your system PATH so the mvn command works in your terminal.
 
-https://maven.apache.org
+You can verify it with:
+mvn -v
 
-You can run it by writing 'javafx:run' to Goals.
 
+-----------------------Running the Project------------------
+Run the JavaFX application using the Maven goal:
+    javafx:run
 
-Türkçe:
+You can execute this:
+    From your IDE (Maven Goals panel)
+    Or via terminal using:
+    mvn javafx:run
 
-Java 21 veya üstü lazım.
-
-Buradan Apache maven son sürüm indirin
-
-https://maven.apache.org
-
-Maven Apache i PATH e ekleyin
-
-Çalıştırıken Goals kısmına 'javafx:run' yazıp çalıştırabilirsiniz.
+-------Notes------
+-Make sure you're using Java 21+ before running the project
+-If JavaFX dependencies are managed via Maven, no separate JavaFX SDK installation is needed
