@@ -80,7 +80,7 @@ public class CommunityBlockController {
 			
 			Parent block = loader.load();
 			block.getStylesheets().add(getClass().getResource("/main/mainscene/communityblock/CommunityBlock.fxml").toExternalForm());
-			SearchScreenTagsController tag = loader.getController(); //80
+			SearchScreenTagsController tag = loader.getController();
 			tag.setTag(s);
 			
 			tagList.getChildren().add(block);

@@ -215,14 +215,19 @@
             		            </rowConstraints>
             		    </GridPane>
                		<HBox fx:id="toolBar" alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="50.0" prefWidth="1800.0" GridPane.hgrow="ALWAYS">
-               		         <Label fx:id="channelNameText" maxHeight="-Infinity" prefHeight="25.0" prefWidth="174.0" text="Channel_Name">
-                           <font>
-                              <Font name="Segoe UI Bold" size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="25.0" />
-                           </HBox.margin>
-                        </Label>
+                        <HBox alignment="CENTER">
+                           <children>
+                     		         <Label fx:id="channelNameText" maxHeight="-Infinity" prefHeight="25.0" prefWidth="174.0" text="Channel_Name" visible="false">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="25.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Button fx:id="conversationInfo" mnemonicParsing="false" onAction="#openConversationInfo" text="i" visible="false" />
+                           </children>
+                        </HBox>
                		    <TextField fx:id="searchField" maxHeight="-Infinity" minWidth="5.0" onAction="#handleSearch" prefHeight="36.0" promptText="Search..." HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
