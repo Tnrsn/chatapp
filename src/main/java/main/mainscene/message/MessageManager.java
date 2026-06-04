@@ -35,6 +35,12 @@ public class MessageManager {
 	    mainController = controller;
 	}
 	
+	public static List<StompSession.Subscription> getSubscriptions()
+	{
+		return subscriptions;
+	}
+	
+	
 	public static List<Message> getMessages(UUID conversationId, String userToken) throws IOException, InterruptedException
 	{
         HttpClient client = HttpClient.newHttpClient();
