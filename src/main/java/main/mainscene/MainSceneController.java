@@ -43,6 +43,7 @@ import main.app.WindowController;
 import main.mainscene.community.Community;
 import main.mainscene.community.CommunityCreatedEvent;
 import main.mainscene.community.CommunitySearchResults;
+import main.mainscene.community.info.ServerInfoController;
 import main.mainscene.communityblock.CommunityBlockController;
 import main.mainscene.message.Conversation;
 import main.mainscene.message.Message;
@@ -228,6 +229,8 @@ public class MainSceneController {
 	@FXML
 	private StackPane mainStack;
 	private EventHandler<KeyEvent> escHandler;
+	@FXML
+	private Community currentCommunity;
 	
 	@FXML
 	public void openCreateServer() throws IOException
@@ -265,6 +268,38 @@ public class MainSceneController {
 	        escHandler = null;
 	    }
 	}
+	
+	@FXML
+    public void openConversationInfo() throws IOException, InterruptedException
+    {
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/mainscene/community/info/ServerInfo.fxml"));
+
+        Parent popup = loader.load();
+        popup.getStylesheets().add(getClass().getResource("/main/mainscene/community/info/ServerInfo.css").toExternalForm());
+        
+        ServerInfoController controller = loader.getController();
+        
+        
+        controller.setInfos(SearchManager.getCommunityInfo(currentCommunity.getId()));
+        
+        Region overlay = new Region();
+        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.6);");
+        overlay.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        mainStack.getChildren().addAll(overlay, popup);
+
+        StackPane.setAlignment(popup, Pos.CENTER);
+        StackPane.setAlignment(popup, Pos.CENTER);
+        
+        escHandler = event -> 
+        {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                closePopup(overlay, popup);
+            }
+        };
+
+        mainStack.getScene().addEventFilter(KeyEvent.KEY_PRESSED, escHandler);
+    }
 	
 // -------------------------SEARCH MENU---------------------------------------
 	private SearchMode currentSearchMode = SearchMode.COMMUNITIES;
@@ -532,6 +567,8 @@ public class MainSceneController {
     private Conversation conversation;
     @FXML
     private Label channelNameText;
+    @FXML
+    private Button conversationInfo;
     
     public void openDMChat(UUID receiverId) throws IOException, InterruptedException
     {
@@ -539,12 +576,14 @@ public class MainSceneController {
     	searchMenu.setVisible(false);
 
 		channelNameText.setText(MessageManager.getUsernameById(receiverId));    		
+		channelNameText.setVisible(true);
 
     	conversation = MessageManager.getConversation(receiverId, ServerManagement.getToken());
     	loadChat(conversation.getId(), ServerManagement.getToken());
     	MessageManager.subscribeToConversation(conversation.getId());
     	
 		Platform.runLater(() -> {
+			conversationInfo.setVisible(false);
 		    messageScroll.setVvalue(1.0);
 		});
     }
@@ -572,14 +611,15 @@ public class MainSceneController {
     	messageScroll.setVisible(true);
     	searchMenu.setVisible(false);
     	
+    	currentCommunity = community;
+    	channelNameText.setVisible(true);
     	channelNameText.setText(community.getName());
-    	System.out.println("2222222");
     	conversation = MessageManager.getCommunityConversation(community.getId(), ServerManagement.getToken());
-    	System.out.println("conv id= " + conversation.getId());
     	loadChat(conversation.getId(), ServerManagement.getToken());
     	MessageManager.subscribeToConversation(conversation.getId());
     	
 		Platform.runLater(() -> {
+			conversationInfo.setVisible(true);
 		    messageScroll.setVvalue(1.0);
 		});
     }

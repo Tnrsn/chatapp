@@ -6,42 +6,39 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="600.0" styleClass="server-root-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.server.ServerInfoController">
-   
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="601.0" styleClass="server-root-pane" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainscene.community.info.ServerInfoController">
+
    <stylesheets>
       <URL value="@ServerInfo.css" />
    </stylesheets>
 
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+
    <children>
-      <HBox spacing="30.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+      <HBox prefWidth="442.0" spacing="30.0">
          <children>
-            
+
             <VBox minWidth="200.0" prefWidth="200.0" spacing="15.0" HBox.hgrow="NEVER">
                <children>
+
                   <VBox spacing="5.0">
                      <children>
-                        <Label text="Server Name" textFill="WHITE" wrapText="true">
+                        <Label fx:id="serverName" text="Server Name" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Segoe UI Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label text="ID: #12345" textFill="#a3a3a3">
-                           <font>
-                              <Font name="Segoe UI" size="14.0" />
-                           </font>
-                        </Label>
                      </children>
                   </VBox>
-                  
-                  <Circle fill="#548c2f" radius="35.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                  
+
                   <Label text="Members" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
@@ -50,42 +47,47 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  
-                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: #2b2b2b; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefWidth="200.0" style="-fx-background: #2b2b2b; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                      <content>
-                        <VBox fx:id="serverMembersList" spacing="5.0" styleClass="member-list-box">
+                        <VBox fx:id="serverMembersList" prefWidth="198.0" spacing="5.0" styleClass="member-list-box">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </VBox>
                      </content>
                   </ScrollPane>
+
                </children>
             </VBox>
 
-            <VBox spacing="15.0" HBox.hgrow="ALWAYS">
+            <VBox prefWidth="219.0" spacing="15.0" HBox.hgrow="ALWAYS">
                <children>
-                  <TextArea editable="false" prefHeight="150.0" promptText="Server Description..." styleClass="server-description-box" wrapText="true">
+
+                  <TextArea fx:id="serverDescription" editable="false" prefHeight="150.0" promptText="Server Description..." styleClass="server-description-box" wrapText="true">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
                   </TextArea>
-                  
-                  <Region VBox.vgrow="ALWAYS" />
-                  
+                  <HBox fx:id="serverTags" prefHeight="59.0" prefWidth="321.0" spacing="10.0" />
+
+                  <Region prefWidth="321.0" VBox.vgrow="ALWAYS" />
+
                   <HBox alignment="BOTTOM_RIGHT">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" styleClass="join-server-button" text="Join Server">
+                        <Button mnemonicParsing="false" onAction="#QuitServer" prefHeight="40.0" prefWidth="120.0" styleClass="join-server-button" text="Quit Server">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Button>
                      </children>
                   </HBox>
+
                </children>
             </VBox>
-            
+
          </children>
       </HBox>
    </children>
-</AnchorPane>
+
+</StackPane>

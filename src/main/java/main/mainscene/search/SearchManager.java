@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import main.app.ServerManagement;
 import main.mainscene.community.Community;
 import main.mainscene.community.CommunitySearchResults;
+import main.mainscene.community.info.CommunityInfo;
 import main.mainscene.user.User;
 
 public class SearchManager {
@@ -96,7 +98,7 @@ public class SearchManager {
 	    ObjectMapper mapper = new ObjectMapper();
 	    List<Community> communities = mapper.readValue(response.body(), new TypeReference<List<Community>>() {});
 	    
-	    System.out.println("Get Community");
+//	    System.out.println("Get Community");
 //	    for(Community community : communities)
 //	    {
 //	    	System.out.println(community.getName());
@@ -108,11 +110,8 @@ public class SearchManager {
 	public static List<CommunitySearchResults> searchCommunities(String search) throws IOException, InterruptedException
 	{
 		HttpClient client = HttpClient.newHttpClient();
-		
-	    HttpRequest request = HttpRequest.newBuilder()
-	            .uri(URI.create(adress + "/search/community?search=" + search))
-	            .GET()
-	            .build();
+	    HttpRequest request = HttpRequest.newBuilder().uri(URI.create(adress + "/search/community?search=" + search))
+	            .GET().build();
 	    
 	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 	    
@@ -121,11 +120,24 @@ public class SearchManager {
 	    
 	    
 	    System.out.println("Get Community");
-	    for(CommunitySearchResults result : searchResults)
-	    {
-	    	System.out.println(result.getCommunity().getName());
-	    }
+//	    for(CommunitySearchResults result : searchResults)
+//	    {
+//	    	System.out.println(result.getCommunity().getName());
+//	    }
 	    
 	    return searchResults;
+	}
+	
+	public static CommunityInfo getCommunityInfo(UUID communityId) throws IOException, InterruptedException
+	{
+	    HttpClient client = HttpClient.newHttpClient();
+	    String url = adress + "/community/getinfo?token=" + ServerManagement.getToken() + "&communityId=" + communityId;
+
+	    HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+
+	    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+	    ObjectMapper mapper = new ObjectMapper();
+	    return mapper.readValue(response.body(), CommunityInfo.class);
 	}
 }
