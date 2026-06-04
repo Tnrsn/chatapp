@@ -13,7 +13,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import main.mainscene.MainSceneController;
 import main.mainscene.community.tags.CommunityTagsController;
 
 public class CreateCommunityController {
@@ -33,6 +35,9 @@ public class CreateCommunityController {
 	private TextArea serverDescription;
 	
 	private final List<String> tags = new ArrayList<>();
+	private MainSceneController mainSceneController;
+	private Region overlay;
+	private Parent popup;
 	
 	@FXML
 	public void initialize() {
@@ -85,10 +90,16 @@ public class CreateCommunityController {
 	}
 	
 	@FXML
-	public void CreateServer(ActionEvent event)
+	public void CreateServer(ActionEvent event) throws IOException, InterruptedException
 	{
-	    CommunityAPIClient.createCommunity(serverName.getText(), serverDescription.getText(), isPublic.isSelected(), 
+		Community community = CommunityAPIClient.createCommunity(serverName.getText(), serverDescription.getText(), isPublic.isSelected(), 
 	    		new ArrayList<>(tags));
+		
+		if(community != null)
+		{
+			mainSceneController.openCommunityChat(community);
+			mainSceneController.closePopup(overlay, popup);
+		}
 	}
 	
 	public VBox getTagContainer()
@@ -99,5 +110,27 @@ public class CreateCommunityController {
 	public List<String> getTags()
 	{
 		return tags;
+	}
+
+	
+	public void setMainSceneController(MainSceneController mainSceneController) {
+		this.mainSceneController = mainSceneController;
+		
+	}
+
+	public Region getOverlay() {
+		return overlay;
+	}
+
+	public void setOverlay(Region overlay) {
+		this.overlay = overlay;
+	}
+
+	public Parent getPopup() {
+		return popup;
+	}
+
+	public void setPopup(Parent popup) {
+		this.popup = popup;
 	}
 }

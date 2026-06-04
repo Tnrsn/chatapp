@@ -1,6 +1,5 @@
 package main.mainscene;
 
-import java.awt.Desktop;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
@@ -30,7 +29,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -41,8 +39,8 @@ import main.app.WebSocketClientManager;
 import main.app.WebSocketPing;
 import main.app.WindowController;
 import main.mainscene.community.Community;
-import main.mainscene.community.CommunityCreatedEvent;
 import main.mainscene.community.CommunitySearchResults;
+import main.mainscene.community.CreateCommunityController;
 import main.mainscene.community.info.ServerInfoController;
 import main.mainscene.communityblock.CommunityBlockController;
 import main.mainscene.message.Conversation;
@@ -51,7 +49,6 @@ import main.mainscene.message.MessageController;
 import main.mainscene.message.MessageLL;
 import main.mainscene.message.MessageManager;
 import main.mainscene.message.MessageNode;
-import main.mainscene.message.MessageRequest;
 import main.mainscene.peopleblock.PeopleBlockController;
 import main.mainscene.peopleblock.SearchMode;
 import main.mainscene.search.SearchManager;
@@ -124,8 +121,6 @@ public class MainSceneController {
 	            }
 	        }
 	    });
-	    
-	    
 	}
 	
 	public String getUserId()
@@ -145,7 +140,7 @@ public class MainSceneController {
 			System.out.println("No connection to the server...");
 			return null;
 		}
-//	    "f754fab2-3043-43e6-9223-051d8f203f51"
+
 	    String userId = response.body().replace("\"", "");
 	    return userId;
 	}
@@ -163,7 +158,6 @@ public class MainSceneController {
 		    public void handleFrame(StompHeaders headers, Object payload) {
 		    	Platform.runLater(() ->
 		    	{
-		    		System.out.println("AAAAAAAAAA");
 					try {
 						refreshCommunitySideBar();
 					} catch (IOException | InterruptedException e) {
@@ -249,6 +243,11 @@ public class MainSceneController {
         StackPane.setAlignment(popup, Pos.CENTER);
         StackPane.setAlignment(popup, Pos.CENTER);
         
+        CreateCommunityController controller = loader.getController();
+        controller.setMainSceneController(this);
+        controller.setOverlay(overlay);
+        controller.setPopup(popup);
+        
         escHandler = event -> 
         {
             if (event.getCode() == KeyCode.ESCAPE) {
@@ -259,7 +258,7 @@ public class MainSceneController {
         mainStack.getScene().addEventFilter(KeyEvent.KEY_PRESSED, escHandler);
 	}
 
-	private void closePopup(Node overlay, Node popup) {
+	public void closePopup(Node overlay, Node popup) {
 
 	    mainStack.getChildren().removeAll(overlay, popup);
 
@@ -278,13 +277,16 @@ public class MainSceneController {
         popup.getStylesheets().add(getClass().getResource("/main/mainscene/community/info/ServerInfo.css").toExternalForm());
         
         ServerInfoController controller = loader.getController();
-        
+        controller.setMainSceneController(this);
         
         controller.setInfos(SearchManager.getCommunityInfo(currentCommunity.getId()));
         
         Region overlay = new Region();
         overlay.setStyle("-fx-background-color: rgba(0,0,0,0.6);");
         overlay.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        controller.setPopup(popup);
+        controller.setOverlay(overlay);
 
         mainStack.getChildren().addAll(overlay, popup);
 
@@ -686,5 +688,18 @@ public class MainSceneController {
     		messageVBox.getChildren().add(node);
     		current = current.getNext();
     	}
-    }    
+    }
+    
+    public void CloseChat()
+    {
+    	channelNameText.setVisible(false);
+    	conversation = null;
+    	messageVBox.getChildren().clear();
+    	currentCommunity = null;
+    	
+		for(StompSession.Subscription sub : MessageManager.getSubscriptions())
+		{
+			sub.unsubscribe();
+		}
+    }
 }

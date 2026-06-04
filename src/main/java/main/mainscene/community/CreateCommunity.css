@@ -19,6 +19,10 @@
     -fx-background-color: transparent;
 }
 
+#background {
+	-fx-background-color: #2b2b2b;
+}
+
 /*---------------Input Fields----------------*/
 .text-field {
     -fx-background-color: #2D2C2C;

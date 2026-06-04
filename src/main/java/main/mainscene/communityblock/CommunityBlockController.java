@@ -59,9 +59,10 @@ public class CommunityBlockController {
 	@FXML
 	public void joinCommunity(ActionEvent event) throws IOException, InterruptedException
 	{
-		CommunityAPIClient.joinCommunity(community.getId());
-		
-		System.out.println("You have joined to the community!");
+		if(CommunityAPIClient.joinCommunity(community.getId()))
+		{
+			mainController.openCommunityChat(community);
+		}
 	}
 
 	public List<String> getTags() {
@@ -84,7 +85,6 @@ public class CommunityBlockController {
 			tag.setTag(s);
 			
 			tagList.getChildren().add(block);
-			
 		}
 	}
 }
